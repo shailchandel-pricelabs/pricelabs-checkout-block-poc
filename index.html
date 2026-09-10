@@ -1,0 +1,1371 @@
+<meta charset="UTF-8">
+<title>Block This Date</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#e8505b;
+    --accent-dark:#c23b48;
+    --accent-tint:#fdeceb;
+    --ink:#1f2430;
+    --ink-soft:#565f70;
+    --canvas:#f4f5f8;
+    --surface:#ffffff;
+    --surface-raised:#ffffff;
+    --line:#e3e6ec;
+    --line-strong:#d2d6df;
+    --good:#2f9e64;
+    --good-tint:#e8f6ee;
+    --type-checkout:#e8505b;
+    --type-checkin:#3b7dc4;
+    --type-both:#7a5bd0;
+    --type-checkout-tint:#fdeceb;
+    --type-checkin-tint:#eaf2fa;
+    --type-both-tint:#f1edfa;
+    --shadow-sm: 0 1px 2px rgba(31,36,48,0.06);
+    --shadow-md: 0 8px 24px rgba(31,36,48,0.10);
+    --shadow-lg: 0 16px 48px rgba(31,36,48,0.16);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --accent:#ff6b74;
+      --accent-dark:#ff8a91;
+      --accent-tint:#3a2226;
+      --ink:#eef0f4;
+      --ink-soft:#a7adba;
+      --canvas:#14161c;
+      --surface:#1b1e26;
+      --surface-raised:#20232c;
+      --line:#2c303a;
+      --line-strong:#3a3f4b;
+      --good:#4cc98a;
+      --good-tint:#193226;
+      --type-checkout:#ff6b74;
+      --type-checkin:#6fa8e0;
+      --type-both:#a996ec;
+      --type-checkout-tint:#3a2226;
+      --type-checkin-tint:#1c2a38;
+      --type-both-tint:#2a2440;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --accent:#ff6b74;
+    --accent-dark:#ff8a91;
+    --accent-tint:#3a2226;
+    --ink:#eef0f4;
+    --ink-soft:#a7adba;
+    --canvas:#14161c;
+    --surface:#1b1e26;
+    --surface-raised:#20232c;
+    --line:#2c303a;
+    --line-strong:#3a3f4b;
+    --good:#4cc98a;
+    --good-tint:#193226;
+    --type-checkout:#ff6b74;
+    --type-checkin:#6fa8e0;
+    --type-both:#a996ec;
+    --type-checkout-tint:#3a2226;
+    --type-checkin-tint:#1c2a38;
+    --type-both-tint:#2a2440;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+    color-scheme: dark;
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background:var(--canvas);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size:14px;
+    line-height:1.5;
+  }
+  h1,h2,h3{ font-family:"Sora", ui-sans-serif, system-ui, sans-serif; text-wrap:balance; margin:0; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:40px 28px 72px; display:flex; flex-direction:column; gap:36px; }
+
+  /* ---------- Header ---------- */
+  .eyebrow{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent-dark);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:6px; height:6px; border-radius:50%;
+    background:var(--accent);
+    display:inline-block;
+  }
+  header{ display:flex; flex-direction:column; gap:10px; }
+  header h1{ font-size:30px; font-weight:700; letter-spacing:-0.01em; }
+  header p{ margin:0; color:var(--ink-soft); max-width:680px; font-size:15px; }
+
+  /* ---------- Before/After ---------- */
+  .compare{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:start;
+    gap:20px;
+  }
+  @media (max-width:860px){ .compare{ grid-template-columns:1fr; } }
+  .compare-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px 22px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    box-shadow:var(--shadow-sm);
+  }
+  .compare-card.proposed{ border-color:var(--good); }
+  .compare-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+  .compare-head h3{ font-size:15px; font-weight:600; }
+  .compare-metric{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:12px;
+    padding:3px 9px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .today .compare-metric{ background:var(--accent-tint); color:var(--accent-dark); }
+  .proposed .compare-metric{ background:var(--good-tint); color:var(--good); }
+  .steps{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px; }
+  .steps li{
+    display:flex; gap:10px; align-items:flex-start;
+    padding:8px 0;
+    border-top:1px solid var(--line);
+    font-size:13px;
+  }
+  .steps li:first-child{ border-top:none; }
+  .step-num{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:11px;
+    width:20px; height:20px; border-radius:6px;
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+    margin-top:1px;
+  }
+  .today .step-num{ background:var(--accent-tint); color:var(--accent-dark); }
+  .proposed .step-num{ background:var(--good-tint); color:var(--good); }
+  .steps li b{ font-weight:600; }
+  .steps li span.sub{ display:block; color:var(--ink-soft); font-size:12px; margin-top:1px; }
+  .tax{
+    margin-top:2px;
+    font-size:12px;
+    color:var(--accent-dark);
+    background:var(--accent-tint);
+    border-radius:8px;
+    padding:8px 10px;
+  }
+
+  /* ---------- Tab switcher ---------- */
+  .proto-label{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .proto-label h2{ font-size:18px; font-weight:600; }
+  .proto-label p{ margin:4px 0 0; color:var(--ink-soft); font-size:13px; max-width:560px; }
+  .tabswitch{
+    display:flex; gap:5px; background:var(--canvas); padding:4px;
+    border-radius:12px; border:1px solid var(--line); width:fit-content;
+  }
+  .tabswitch button{
+    font-family:"Sora", sans-serif; font-weight:600; font-size:12.5px;
+    padding:9px 15px 9px 11px; border-radius:9px; border:none; background:none;
+    color:var(--ink-soft); cursor:pointer; display:flex; align-items:center; gap:8px;
+    white-space:nowrap;
+  }
+  .tabswitch button .num{
+    font-family:"IBM Plex Mono", monospace; font-size:10px; width:17px; height:17px;
+    border-radius:50%; background:var(--line-strong); color:var(--surface);
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .tabswitch button.active{ background:var(--surface); color:var(--ink); box-shadow:var(--shadow-sm); }
+  .tabswitch button.active .num{ background:var(--accent); color:#fff; }
+
+  .variant-panel{ display:none; flex-direction:column; gap:14px; }
+  .variant-panel.active{ display:flex; }
+  .variant-desc{
+    font-size:13px; color:var(--ink-soft); background:var(--surface);
+    border:1px solid var(--line); border-radius:12px; padding:12px 16px;
+  }
+  .variant-desc b{ color:var(--ink); }
+
+  /* ---------- App shell (shared) ---------- */
+  .app{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:var(--shadow-md);
+    overflow:hidden;
+  }
+  .app-toolbar{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:16px 22px;
+    border-bottom:1px solid var(--line);
+    background:var(--surface-raised);
+    flex-wrap:wrap;
+  }
+  .scope-block{ display:flex; flex-direction:column; gap:5px; }
+  .scope-block label{
+    font-size:11px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--ink-soft); font-weight:600;
+  }
+  .scope-select{
+    font-family:inherit; font-size:13px; font-weight:600; color:var(--ink);
+    background:var(--canvas); border:1px solid var(--line-strong); border-radius:9px;
+    padding:8px 32px 8px 12px;
+    appearance:none;
+    background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6"><path d="M1 1l4 4 4-4" stroke="%23565f70" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    cursor:pointer;
+    min-width:190px;
+  }
+  .toolbar-divider{ width:1px; align-self:stretch; background:var(--line); }
+  .month-nav{ display:flex; align-items:center; gap:10px; margin-left:auto; }
+  .month-nav button{
+    width:30px; height:30px; border-radius:8px; border:1px solid var(--line-strong);
+    background:var(--surface); color:var(--ink); font-size:14px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .month-nav button:hover{ background:var(--canvas); }
+  .month-label{ font-family:"Sora"; font-weight:600; font-size:14px; min-width:150px; text-align:center; }
+
+  .app-body{ display:grid; grid-template-columns:1fr 300px; }
+  @media (max-width:880px){ .app-body{ grid-template-columns:1fr; } }
+  .app-body.full{ grid-template-columns:1fr; }
+
+  .cal-pane{ padding:20px 22px 24px; }
+  .cal-weekdays{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-bottom:8px; }
+  .cal-weekdays span{
+    text-align:center; font-size:11px; font-weight:600; color:var(--ink-soft);
+    text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+  .cal-cell{ aspect-ratio:1/0.86; }
+  .day{
+    width:100%; height:100%;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    display:flex; flex-direction:column; align-items:flex-start; justify-content:space-between;
+    padding:6px 7px;
+    cursor:pointer;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:12px;
+    color:var(--ink);
+    position:relative;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .day:hover{ border-color:var(--accent); }
+  .day.empty{ visibility:hidden; cursor:default; }
+  .day.selected{ background:var(--accent-tint); border-color:var(--accent); box-shadow:inset 0 0 0 1px var(--accent); }
+  .day-badge{
+    align-self:flex-end;
+    font-size:9px; font-weight:700; letter-spacing:0.02em;
+    padding:2px 5px; border-radius:5px;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+  }
+  .day-badge.co{ background:var(--type-checkout-tint); color:var(--type-checkout); }
+  .day-badge.ci{ background:var(--type-checkin-tint); color:var(--type-checkin); }
+  .day-badge.both{ background:var(--type-both-tint); color:var(--type-both); }
+  .check{
+    position:absolute; top:5px; right:6px;
+    width:14px; height:14px; border-radius:50%;
+    background:var(--accent); color:#fff;
+    font-size:9px; display:flex; align-items:center; justify-content:center;
+    font-family:"IBM Plex Sans";
+  }
+
+  /* ---------- Side panel (variant 1) ---------- */
+  .side-pane{
+    border-left:1px solid var(--line);
+    display:flex; flex-direction:column;
+    background:var(--surface-raised);
+  }
+  .side-section{ padding:18px 20px; border-bottom:1px solid var(--line); }
+  .side-section:last-child{ border-bottom:none; flex:1; overflow:auto; }
+  .side-section h4{
+    font-size:11px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--ink-soft); font-weight:700; margin:0 0 10px;
+  }
+  .add-row{ display:flex; gap:6px; }
+  .add-row input{
+    flex:1; font-family:inherit; font-size:12.5px;
+    border:1px solid var(--line-strong); border-radius:8px;
+    padding:8px 10px; background:var(--surface); color:var(--ink);
+  }
+  .add-row input:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .add-row button{
+    font-family:inherit; font-size:12px; font-weight:600;
+    border:1px solid var(--line-strong); border-radius:8px;
+    background:var(--surface); color:var(--ink); padding:0 12px; cursor:pointer;
+  }
+  .add-row button:hover{ background:var(--canvas); }
+  .hint{ font-size:11px; color:var(--ink-soft); margin-top:6px; }
+
+  .chip-tray{ display:flex; flex-wrap:wrap; gap:6px; min-height:28px; }
+  .chip{
+    display:flex; align-items:center; gap:6px;
+    background:var(--accent-tint); color:var(--accent-dark);
+    border-radius:999px; padding:4px 6px 4px 10px;
+    font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:11.5px; font-weight:600;
+  }
+  .chip button{
+    background:none; border:none; color:inherit; cursor:pointer;
+    width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-size:11px; opacity:0.75;
+  }
+  .chip button:hover{ opacity:1; background:rgba(0,0,0,0.08); }
+  .empty-note{ font-size:12px; color:var(--ink-soft); font-style:italic; }
+
+  .restrict-btn{
+    width:100%; margin-top:12px;
+    font-family:"Sora"; font-weight:600; font-size:13px;
+    background:var(--accent); color:#fff; border:none; border-radius:10px;
+    padding:11px; cursor:pointer;
+    box-shadow:var(--shadow-sm);
+    transition:transform .08s ease, background .12s ease;
+  }
+  .restrict-btn:disabled{ background:var(--line-strong); color:var(--ink-soft); cursor:not-allowed; box-shadow:none; }
+  .restrict-btn:not(:disabled):hover{ background:var(--accent-dark); }
+  .restrict-btn:not(:disabled):active{ transform:scale(0.98); }
+
+  .panel{
+    margin-top:14px; padding:14px; border-radius:12px;
+    background:var(--surface); border:1px solid var(--line-strong);
+    display:none; flex-direction:column; gap:12px;
+    animation:pop .14s ease;
+  }
+  .panel.open{ display:flex; }
+  @keyframes pop{ from{ opacity:0; transform:translateY(-4px);} to{opacity:1; transform:none;} }
+  .panel h5{ margin:0; font-size:12.5px; font-weight:700; }
+  .radio-opt{
+    display:flex; align-items:center; gap:9px;
+    border:1px solid var(--line); border-radius:9px; padding:9px 10px;
+    cursor:pointer; font-size:12.5px;
+  }
+  .radio-opt:has(input:checked){ border-color:var(--accent); background:var(--accent-tint); }
+  .radio-opt input{ accent-color:var(--accent); }
+  .radio-opt .dot{ width:8px; height:8px; border-radius:50%; flex:none; }
+  .scope-echo{
+    font-size:11.5px; color:var(--ink-soft); background:var(--canvas);
+    border-radius:8px; padding:8px 10px; display:flex; justify-content:space-between; gap:8px;
+  }
+  .scope-echo b{ color:var(--ink); }
+  .apply-row{ display:flex; gap:8px; }
+  .apply-row button{ font-family:"Sora"; font-weight:600; font-size:12.5px; border-radius:9px; padding:9px 10px; cursor:pointer; }
+  .apply-row .cancel{ background:none; border:1px solid var(--line-strong); color:var(--ink-soft); flex:none; padding:9px 14px; }
+  .apply-row .apply{ background:var(--good); border:none; color:#fff; flex:1; }
+  .apply-row .apply:hover{ filter:brightness(1.05); }
+
+  .active-list{ display:flex; flex-direction:column; gap:8px; }
+  .active-row{
+    display:flex; align-items:center; gap:10px;
+    border:1px solid var(--line); border-radius:10px; padding:8px 10px;
+  }
+  .active-row .dot{ width:9px; height:9px; border-radius:50%; flex:none; }
+  .active-row .meta{ flex:1; min-width:0; }
+  .active-row .meta b{ display:block; font-size:12.5px; font-family:"IBM Plex Mono"; }
+  .active-row .meta span{ display:block; font-size:11px; color:var(--ink-soft); }
+  .active-row .rm{ background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:13px; padding:2px 4px; }
+  .active-row .rm:hover{ color:var(--accent); }
+  .active-wrap{ padding:18px 22px 22px; border-top:1px solid var(--line); }
+  .active-wrap h4{
+    font-size:11px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--ink-soft); font-weight:700; margin:0 0 10px;
+  }
+
+  /* ---------- Toast ---------- */
+  .toast{
+    position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--surface);
+    padding:11px 18px; border-radius:10px; font-size:13px; font-weight:500;
+    box-shadow:var(--shadow-lg);
+    display:flex; align-items:center; gap:9px;
+    opacity:0; pointer-events:none; transition:opacity .18s ease, transform .18s ease;
+    z-index:80;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
+  .toast .tick{
+    width:16px; height:16px; border-radius:50%; background:var(--good); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:10px; flex:none;
+  }
+
+  /* ---------- Variant 2: selection bar + modal ---------- */
+  .selbar{
+    display:none; align-items:center; justify-content:space-between; gap:14px;
+    margin:0 22px 20px; padding:12px 16px; border-radius:12px;
+    background:var(--surface-raised); border:1px solid var(--line-strong); box-shadow:var(--shadow-md);
+  }
+  .selbar.show{ display:flex; }
+  .selbar .count{ font-family:"IBM Plex Mono"; font-size:13px; font-weight:600; }
+  .selbar .count span{ color:var(--ink-soft); font-weight:400; margin-left:6px; font-family:"IBM Plex Sans"; }
+  .selbar .actions{ display:flex; gap:8px; }
+  .selbar button{ font-family:"Sora"; font-weight:600; font-size:12.5px; border-radius:9px; padding:8px 14px; cursor:pointer; }
+  .selbar .clear{ background:none; border:1px solid var(--line-strong); color:var(--ink-soft); }
+  .selbar .clear:hover{ background:var(--canvas); }
+  .selbar .go{ background:var(--accent); border:none; color:#fff; }
+  .selbar .go:hover{ background:var(--accent-dark); }
+
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(15,17,22,0.5);
+    display:flex; align-items:center; justify-content:center; z-index:70; padding:20px;
+    opacity:0; pointer-events:none; transition:opacity .15s ease;
+  }
+  .modal-overlay.open{ opacity:1; pointer-events:auto; }
+  .modal-card{
+    width:400px; max-width:100%; background:var(--surface); border-radius:16px;
+    padding:22px; box-shadow:var(--shadow-lg); transform:translateY(10px) scale(0.98);
+    transition:transform .15s ease; display:flex; flex-direction:column; gap:14px;
+  }
+  .modal-overlay.open .modal-card{ transform:none; }
+  .modal-card h5{ margin:0; font-size:15.5px; font-weight:700; font-family:"Sora"; }
+  .modal-card .modal-sub{ margin:-8px 0 0; font-size:12.5px; color:var(--ink-soft); }
+  .modal-chiprow{ display:flex; flex-wrap:wrap; gap:6px; }
+  .modal-chiprow .chip{ background:var(--canvas); color:var(--ink); }
+
+  /* ---------- Variant 3: bulk table ---------- */
+  .bulk-toolbar{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; padding:16px 22px; border-bottom:1px solid var(--line); background:var(--surface-raised); }
+  .bulk-body{ padding:20px 22px 22px; display:flex; flex-direction:column; gap:18px; }
+  .bulk-sec-label{ font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); font-weight:700; margin:0 0 10px; }
+  .holiday-chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .holiday-chip{
+    font-family:"IBM Plex Sans"; font-size:12px; font-weight:600;
+    border:1px solid var(--line-strong); background:var(--surface); color:var(--ink);
+    border-radius:999px; padding:7px 14px; cursor:pointer;
+  }
+  .holiday-chip:hover:not(:disabled){ border-color:var(--accent); color:var(--accent-dark); }
+  .holiday-chip:disabled{ opacity:0.4; cursor:not-allowed; }
+  .holiday-chip .hd{ font-family:"IBM Plex Mono"; font-size:10.5px; color:var(--ink-soft); margin-left:6px; }
+
+  .bulk-table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:12px; }
+  table.bulk-table{ width:100%; border-collapse:collapse; font-size:13px; min-width:520px; }
+  .bulk-table thead th{
+    text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--ink-soft); font-weight:700; padding:10px 14px; background:var(--surface-raised);
+    border-bottom:1px solid var(--line);
+  }
+  .bulk-table td{ padding:9px 14px; border-bottom:1px solid var(--line); font-family:"IBM Plex Mono"; font-size:12.5px; vertical-align:middle; }
+  .bulk-table tbody tr:last-child td{ border-bottom:none; }
+  .bulk-table select{
+    font-family:"IBM Plex Sans"; font-size:12.5px; border:1px solid var(--line-strong);
+    border-radius:7px; padding:6px 8px; background:var(--surface); color:var(--ink); cursor:pointer;
+  }
+  .bulk-table .rm{ background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:14px; }
+  .bulk-table .rm:hover{ color:var(--accent); }
+  .bulk-empty td{ padding:28px; text-align:center; color:var(--ink-soft); font-size:12.5px; font-style:italic; font-family:"IBM Plex Sans"; }
+
+  .bulk-setall{ display:flex; align-items:center; gap:8px; margin-left:auto; }
+  .bulk-setall select{
+    font-family:"IBM Plex Sans"; font-size:12.5px; border:1px solid var(--line-strong);
+    border-radius:8px; padding:7px 10px; background:var(--surface); color:var(--ink); cursor:pointer;
+  }
+  .bulk-setall button{
+    font-family:"Sora"; font-weight:600; font-size:12px; border:1px solid var(--line-strong);
+    border-radius:8px; padding:7px 12px; background:var(--surface); color:var(--ink); cursor:pointer;
+  }
+  .bulk-setall button:hover{ background:var(--canvas); }
+
+  .bulk-footer{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .bulk-footer .summary{ font-size:12.5px; color:var(--ink-soft); }
+  .bulk-apply-btn{
+    font-family:"Sora"; font-weight:600; font-size:13px; background:var(--good); color:#fff;
+    border:none; border-radius:10px; padding:11px 22px; cursor:pointer;
+  }
+  .bulk-apply-btn:disabled{ background:var(--line-strong); color:var(--ink-soft); cursor:not-allowed; }
+  .bulk-apply-btn:not(:disabled):hover{ filter:brightness(1.05); }
+
+  /* ---------- Internals disclosure ---------- */
+  details.internals{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:4px 20px;
+  }
+  details.internals summary{
+    cursor:pointer; padding:14px 0; font-family:"Sora"; font-weight:600; font-size:13.5px;
+    list-style:none; display:flex; align-items:center; gap:8px; color:var(--ink);
+  }
+  details.internals summary::-webkit-details-marker{ display:none; }
+  details.internals summary::before{
+    content:"›"; display:inline-block; transition:transform .15s ease; font-size:16px; color:var(--ink-soft);
+  }
+  details.internals[open] summary::before{ transform:rotate(90deg); }
+  .internals-body{ padding:0 0 18px; color:var(--ink-soft); font-size:13px; display:flex; flex-direction:column; gap:10px; }
+  .internals-body code{
+    font-family:"IBM Plex Mono"; font-size:12px; background:var(--canvas);
+    padding:1px 6px; border-radius:5px; color:var(--ink);
+  }
+  .internals-diagram{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    font-family:"IBM Plex Mono"; font-size:12px;
+    padding:12px; background:var(--canvas); border-radius:10px;
+  }
+  .internals-diagram .box{
+    border:1px solid var(--line-strong); border-radius:8px; padding:8px 12px; background:var(--surface);
+  }
+  .internals-diagram .arrow{ color:var(--ink-soft); }
+
+  footer{ text-align:center; color:var(--ink-soft); font-size:12px; }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">PriceLabs · Multicalendar POC</span>
+    <h1>Blocking a checkout date, three ways</h1>
+    <p>Today, keeping guests from checking out on Dec 25 means building a generic override, finding a hidden toggle, then re-describing that single date as a day-of-week rule. Below are three interaction directions that collapse this into: pick date(s), pick the restriction, done — same underlying model, different UI shape. Use the tabs to compare them for the dev conversation.</p>
+  </header>
+
+  <section class="compare">
+    <div class="compare-card today">
+      <div class="compare-head">
+        <h3>Today — 7 steps, 3 screens</h3>
+        <span class="compare-metric">day-of-week workaround</span>
+      </div>
+      <ol class="steps">
+        <li><span class="step-num">1</span><div><b>Dynamic Pricing → Customizations</b></div></li>
+        <li><span class="step-num">2</span><div><b>Select the PMS / listing account</b></div></li>
+        <li><span class="step-num">3</span><div><b>Open Account Calendar, select date(s)</b></div></li>
+        <li><span class="step-num">4</span><div><b>Create a Date-Specific Override</b><span class="sub">a generic container — nothing check-in/out related exists yet</span></div></li>
+        <li><span class="step-num">5</span><div><b>Discover &amp; enable "Check-in and Check-out"</b><span class="sub">a nested, non-default toggle</span></div></li>
+        <li><span class="step-num">6</span><div><b>Cross out weekdays over a date range</b><span class="sub">Dec 25 is a Friday — so block "Friday" for a window narrow enough not to catch other Fridays</span></div></li>
+        <li><span class="step-num">7</span><div><b>Save, refresh</b></div></li>
+      </ol>
+      <div class="tax">The real cost: reframing one exact date as a recurring weekday rule scoped to a narrow window — a workaround, not a designed path.</div>
+    </div>
+
+    <div class="compare-card proposed">
+      <div class="compare-head">
+        <h3>Proposed — 2 clicks, 1 screen</h3>
+        <span class="compare-metric">direct date targeting</span>
+      </div>
+      <ol class="steps">
+        <li><span class="step-num">1</span><div><b>Pick scope, then select date(s)</b><span class="sub">this listing / this PMS account / all listings — chosen once, upfront</span></div></li>
+        <li><span class="step-num">2</span><div><b>Choose Block checkout / check-in / both</b><span class="sub">shown immediately after selecting — no separate override to discover</span></div></li>
+        <li><span class="step-num">3</span><div><b>Apply</b><span class="sub">override + day-of-week translation happen invisibly, underneath</span></div></li>
+      </ol>
+      <div class="tax" style="color:var(--good); background:var(--good-tint);">The user only ever thinks in exact dates. The day-of-week/override machinery still runs — they never have to touch it.</div>
+    </div>
+  </section>
+
+  <section style="display:flex; flex-direction:column; gap:16px;">
+    <div class="proto-label">
+      <div>
+        <h2>Three UI directions to try</h2>
+        <p>Same rule underneath — different surface. Pick dates, choose a restriction, apply. Compare which shape fits the dev conversation best.</p>
+      </div>
+      <div class="tabswitch" id="tabswitch">
+        <button class="active" data-tab="1"><span class="num">1</span> Contextual panel</button>
+        <button data-tab="2"><span class="num">2</span> Guided modal</button>
+        <button data-tab="3"><span class="num">3</span> Portfolio batch</button>
+      </div>
+    </div>
+
+    <!-- ============ VARIANT 1 : CONTEXTUAL SIDE PANEL ============ -->
+    <div class="variant-panel active" id="panel-1">
+      <div class="variant-desc"><b>Contextual panel —</b> click dates directly on the calendar; the restriction choice appears right next to your selection, docked in a permanent side panel. Best fit for spot-fixing one listing while looking at its calendar.</div>
+
+      <div class="app">
+        <div class="app-toolbar">
+          <div class="scope-block">
+            <label for="scopeSelect1">Scope</label>
+            <select class="scope-select" id="scopeSelect1">
+              <option>This listing — 12 Birch Lane</option>
+              <option>This PMS account — Pass Your Keys (Hostaway)</option>
+              <option>All listings — Pass Your Keys (48 listings)</option>
+            </select>
+          </div>
+          <div class="toolbar-divider"></div>
+          <div class="month-nav">
+            <button id="prevMonth1" aria-label="Previous month">‹</button>
+            <span class="month-label" id="monthLabel1"></span>
+            <button id="nextMonth1" aria-label="Next month">›</button>
+          </div>
+        </div>
+
+        <div class="app-body">
+          <div class="cal-pane">
+            <div class="cal-weekdays">
+              <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            </div>
+            <div class="cal-grid" id="calGrid1"></div>
+          </div>
+
+          <div class="side-pane">
+            <div class="side-section">
+              <h4>Add dates</h4>
+              <div class="add-row">
+                <input type="text" id="dateInput1" placeholder="e.g. Dec 25, Dec 31, Jan 1">
+                <button id="addDateBtn1">Add</button>
+              </div>
+              <div class="hint">Non-adjacent dates welcome — holidays rarely line up.</div>
+            </div>
+
+            <div class="side-section">
+              <h4>Selected dates</h4>
+              <div class="chip-tray" id="chipTray1">
+                <span class="empty-note">None yet — click the calendar or add above.</span>
+              </div>
+
+              <button class="restrict-btn" id="restrictBtn1" disabled>Restrict selected dates</button>
+
+              <div class="panel" id="restrictPanel1">
+                <h5>What should happen on these dates?</h5>
+                <label class="radio-opt">
+                  <input type="radio" name="rtype1" value="co" checked>
+                  <span class="dot" style="background:var(--type-checkout)"></span>
+                  Block checkout
+                </label>
+                <label class="radio-opt">
+                  <input type="radio" name="rtype1" value="ci">
+                  <span class="dot" style="background:var(--type-checkin)"></span>
+                  Block check-in
+                </label>
+                <label class="radio-opt">
+                  <input type="radio" name="rtype1" value="both">
+                  <span class="dot" style="background:var(--type-both)"></span>
+                  Block both
+                </label>
+                <div class="scope-echo"><span>Applies to</span><b id="scopeEcho1">This listing</b></div>
+                <div class="apply-row">
+                  <button class="cancel" id="cancelPanel1">Cancel</button>
+                  <button class="apply" id="applyPanel1">Apply</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="side-section">
+              <h4>Active restrictions</h4>
+              <div class="active-list" id="activeList1">
+                <span class="empty-note">Nothing restricted yet this session.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ VARIANT 2 : GUIDED MODAL ============ -->
+    <div class="variant-panel" id="panel-2">
+      <div class="variant-desc"><b>Guided modal —</b> the calendar stays full-width; picking dates surfaces a floating action bar, and one click opens a single modal with everything needed to finish. Best fit when the calendar should stay uncluttered and the action should feel deliberate.</div>
+
+      <div class="app">
+        <div class="app-toolbar">
+          <div class="scope-block">
+            <label for="scopeSelect2">Scope</label>
+            <select class="scope-select" id="scopeSelect2">
+              <option>This listing — 12 Birch Lane</option>
+              <option>This PMS account — Pass Your Keys (Hostaway)</option>
+              <option>All listings — Pass Your Keys (48 listings)</option>
+            </select>
+          </div>
+          <div class="toolbar-divider"></div>
+          <div class="scope-block">
+            <label for="dateInput2">Jump-add dates</label>
+            <div class="add-row" style="min-width:220px;">
+              <input type="text" id="dateInput2" placeholder="e.g. Dec 25, Jan 1">
+              <button id="addDateBtn2">Add</button>
+            </div>
+          </div>
+          <div class="month-nav">
+            <button id="prevMonth2" aria-label="Previous month">‹</button>
+            <span class="month-label" id="monthLabel2"></span>
+            <button id="nextMonth2" aria-label="Next month">›</button>
+          </div>
+        </div>
+
+        <div class="app-body full">
+          <div class="cal-pane">
+            <div class="cal-weekdays">
+              <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            </div>
+            <div class="cal-grid" id="calGrid2"></div>
+          </div>
+        </div>
+
+        <div class="selbar" id="selBar2">
+          <span class="count" id="selCount2">0 dates selected</span>
+          <div class="actions">
+            <button class="clear" id="clearSel2">Clear</button>
+            <button class="go" id="openModal2">Restrict these dates</button>
+          </div>
+        </div>
+
+        <div class="active-wrap">
+          <h4>Active restrictions</h4>
+          <div class="active-list" id="activeList2">
+            <span class="empty-note">Nothing restricted yet this session.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ VARIANT 3 : PORTFOLIO BATCH TABLE ============ -->
+    <div class="variant-panel" id="panel-3">
+      <div class="variant-desc"><b>Portfolio batch —</b> no calendar at all: add a short list of dates (holidays rarely fall in the same month), set one restriction type for the whole batch or override a few rows, apply once across an entire PMS connection. Best fit for portfolio-wide asks like Pass Your Keys blocking every Hostaway listing for the holidays.</div>
+
+      <div class="app">
+        <div class="bulk-toolbar">
+          <div class="scope-block">
+            <label for="scopeSelect3">Scope</label>
+            <select class="scope-select" id="scopeSelect3">
+              <option>This listing — 12 Birch Lane</option>
+              <option>This PMS account — Pass Your Keys (Hostaway)</option>
+              <option selected>All listings — Pass Your Keys (48 listings)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bulk-body">
+          <div>
+            <p class="bulk-sec-label">Quick-add holidays (2026)</p>
+            <div class="holiday-chips" id="holidayChips3"></div>
+          </div>
+
+          <div>
+            <p class="bulk-sec-label">Add specific dates</p>
+            <div class="add-row" style="max-width:420px;">
+              <input type="text" id="dateInput3" placeholder="e.g. Dec 25, Dec 31, Jan 1">
+              <button id="addRowBtn3">Add</button>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px;">
+              <p class="bulk-sec-label" style="margin:0;">Batch (<span id="rowCount3">0</span>)</p>
+              <div class="bulk-setall">
+                <select id="setAllType3">
+                  <option value="co">Block checkout</option>
+                  <option value="ci">Block check-in</option>
+                  <option value="both">Block both</option>
+                </select>
+                <button id="setAllBtn3">Set all rows</button>
+              </div>
+            </div>
+            <div class="bulk-table-wrap">
+              <table class="bulk-table">
+                <thead><tr><th>Date</th><th>Restriction</th><th></th></tr></thead>
+                <tbody id="tableBody3"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="bulk-footer">
+            <span class="summary" id="bulkSummary3">Nothing queued yet.</span>
+            <button class="bulk-apply-btn" id="applyAllBtn3" disabled>Apply to batch</button>
+          </div>
+        </div>
+
+        <div class="active-wrap">
+          <h4>Active restrictions</h4>
+          <div class="active-list" id="activeList3">
+            <span class="empty-note">Nothing restricted yet this session.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <details class="internals">
+    <summary>How this maps internally (for the dev conversation)</summary>
+    <div class="internals-body">
+      <p>The user never sees any of this in any of the three variants — but nothing about the backend model has to change. Each applied date still becomes a <code>Date-Specific Override</code> with check-in/checkout rules and a day-of-week exclusion; the UI now assembles it in one pass instead of asking the user to.</p>
+      <div class="internals-diagram">
+        <span class="box">Dec 25, 2026 selected</span>
+        <span class="arrow">→</span>
+        <span class="box">weekday = Friday</span>
+        <span class="arrow">→</span>
+        <span class="box">override: Dec 25–Dec 25, exclude Fri, Block Checkout</span>
+      </div>
+      <p>Non-adjacent picks (e.g. Dec 25 + Jan 1) become one override per contiguous run, or one per date if weekdays collide across the range — resolved silently, and listed as one line each under "Active restrictions" regardless of how many overrides it took underneath.</p>
+    </div>
+  </details>
+
+  <footer>Rough interaction POC · not connected to live account data</footer>
+</div>
+
+<div class="toast" id="toast"><span class="tick">✓</span><span id="toastText"></span></div>
+
+<!-- Variant 2 modal -->
+<div class="modal-overlay" id="modalOverlay2">
+  <div class="modal-card">
+    <h5>What should happen on these dates?</h5>
+    <p class="modal-sub" id="modalCountText2">3 dates selected</p>
+    <div class="modal-chiprow" id="modalChips2"></div>
+    <label class="radio-opt">
+      <input type="radio" name="rtype2" value="co" checked>
+      <span class="dot" style="background:var(--type-checkout)"></span>
+      Block checkout
+    </label>
+    <label class="radio-opt">
+      <input type="radio" name="rtype2" value="ci">
+      <span class="dot" style="background:var(--type-checkin)"></span>
+      Block check-in
+    </label>
+    <label class="radio-opt">
+      <input type="radio" name="rtype2" value="both">
+      <span class="dot" style="background:var(--type-both)"></span>
+      Block both
+    </label>
+    <div class="scope-echo"><span>Applies to</span><b id="modalScopeEcho2">This listing</b></div>
+    <div class="apply-row">
+      <button class="cancel" id="modalCancel2">Cancel</button>
+      <button class="apply" id="modalApply2">Apply</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* ---------------- shared helpers ---------------- */
+  var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+  function key(d){ return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate(); }
+  function fmt(d){ return MONTHS[d.getMonth()].slice(0,3)+' '+d.getDate(); }
+  function fmtFull(d){ return MONTHS[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear(); }
+  function parseDateFromKey(k){ var p = k.split('-'); return new Date(+p[0], +p[1], +p[2]); }
+
+  function typeMeta(t){
+    if(t==='co') return {label:'Block checkout', cls:'co', dot:'var(--type-checkout)'};
+    if(t==='ci') return {label:'Block check-in', cls:'ci', dot:'var(--type-checkin)'};
+    return {label:'Block both', cls:'both', dot:'var(--type-both)'};
+  }
+
+  var toast = document.getElementById('toast');
+  var toastText = document.getElementById('toastText');
+  function showToast(msg){
+    toastText.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function(){ toast.classList.remove('show'); }, 2600);
+  }
+
+  function renderActiveList(container, restrictions, onRemove){
+    if(restrictions.length===0){
+      container.innerHTML = '<span class="empty-note">Nothing restricted yet this session.</span>';
+      return;
+    }
+    container.innerHTML = '';
+    restrictions.slice().sort(function(a,b){ return a.date-b.date; }).forEach(function(r){
+      var m = typeMeta(r.type);
+      var row = document.createElement('div');
+      row.className = 'active-row';
+      row.innerHTML =
+        '<span class="dot" style="background:'+m.dot+'"></span>' +
+        '<span class="meta"><b>'+fmtFull(r.date)+'</b><span>'+m.label+' · '+r.scope+'</span></span>';
+      var rm = document.createElement('button');
+      rm.className = 'rm';
+      rm.textContent = '✕';
+      rm.setAttribute('aria-label','Remove restriction');
+      rm.addEventListener('click', function(){ onRemove(r); });
+      row.appendChild(rm);
+      container.appendChild(row);
+    });
+  }
+
+  /* ---------------- tab switching ---------------- */
+  var tabButtons = document.querySelectorAll('#tabswitch button');
+  tabButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabButtons.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.variant-panel').forEach(function(p){ p.classList.remove('active'); });
+      document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ================================================================
+     VARIANT 1 — contextual side panel
+     ================================================================ */
+  (function initVariant1(){
+    var monthCursor = new Date(2026, 11, 1);
+    var selected = new Set();
+    var restrictions = [];
+
+    var calGrid = document.getElementById('calGrid1');
+    var monthLabel = document.getElementById('monthLabel1');
+    var chipTray = document.getElementById('chipTray1');
+    var restrictBtn = document.getElementById('restrictBtn1');
+    var panel = document.getElementById('restrictPanel1');
+    var activeList = document.getElementById('activeList1');
+    var scopeSelect = document.getElementById('scopeSelect1');
+    var scopeEcho = document.getElementById('scopeEcho1');
+
+    function scopeText(){ return scopeSelect.options[scopeSelect.selectedIndex].text.split(' — ')[0]; }
+
+    function renderCalendar(){
+      monthLabel.textContent = MONTHS[monthCursor.getMonth()] + ' ' + monthCursor.getFullYear();
+      calGrid.innerHTML = '';
+      var first = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), 1);
+      var startDow = first.getDay();
+      var daysInMonth = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 0).getDate();
+
+      for(var i=0;i<startDow;i++){
+        var empty = document.createElement('div');
+        empty.className = 'cal-cell';
+        var e2 = document.createElement('div');
+        e2.className = 'day empty';
+        empty.appendChild(e2);
+        calGrid.appendChild(empty);
+      }
+      for(var d=1; d<=daysInMonth; d++){
+        var thisDate = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), d);
+        var k = key(thisDate);
+        var cell = document.createElement('div');
+        cell.className = 'cal-cell';
+        var day = document.createElement('div');
+        day.className = 'day' + (selected.has(k) ? ' selected' : '');
+
+        var num = document.createElement('span');
+        num.textContent = d;
+        day.appendChild(num);
+
+        var existing = restrictions.find(function(r){ return r.key===k; });
+        if(existing){
+          var m = typeMeta(existing.type);
+          var badge = document.createElement('span');
+          badge.className = 'day-badge ' + m.cls;
+          badge.textContent = m.cls==='both' ? 'CO+CI' : m.cls.toUpperCase();
+          day.appendChild(badge);
+        }
+        if(selected.has(k)){
+          var chk = document.createElement('span');
+          chk.className = 'check';
+          chk.textContent = '✓';
+          day.appendChild(chk);
+        }
+        day.addEventListener('click', (function(k){
+          return function(){
+            if(selected.has(k)) selected.delete(k); else selected.add(k);
+            renderCalendar(); renderChips();
+          };
+        })(k));
+        cell.appendChild(day);
+        calGrid.appendChild(cell);
+      }
+    }
+
+    function renderChips(){
+      chipTray.innerHTML = '';
+      if(selected.size===0){
+        chipTray.innerHTML = '<span class="empty-note">None yet — click the calendar or add above.</span>';
+        restrictBtn.disabled = true;
+        panel.classList.remove('open');
+        return;
+      }
+      restrictBtn.disabled = false;
+      Array.from(selected).map(parseDateFromKey).sort(function(a,b){return a-b;}).forEach(function(d){
+        var k = key(d);
+        var chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.innerHTML = '<span>'+fmt(d)+'</span>';
+        var rm = document.createElement('button');
+        rm.textContent = '×';
+        rm.setAttribute('aria-label','Remove '+fmt(d));
+        rm.addEventListener('click', function(){ selected.delete(k); renderCalendar(); renderChips(); });
+        chip.appendChild(rm);
+        chipTray.appendChild(chip);
+      });
+    }
+
+    document.getElementById('prevMonth1').addEventListener('click', function(){
+      monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()-1, 1); renderCalendar();
+    });
+    document.getElementById('nextMonth1').addEventListener('click', function(){
+      monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 1); renderCalendar();
+    });
+    scopeSelect.addEventListener('change', function(){ scopeEcho.textContent = scopeText(); });
+    scopeEcho.textContent = scopeText();
+
+    restrictBtn.addEventListener('click', function(){ panel.classList.add('open'); });
+    document.getElementById('cancelPanel1').addEventListener('click', function(){ panel.classList.remove('open'); });
+
+    document.getElementById('applyPanel1').addEventListener('click', function(){
+      var type = document.querySelector('input[name="rtype1"]:checked').value;
+      var scope = scopeText();
+      var dates = Array.from(selected).map(parseDateFromKey);
+      dates.forEach(function(d){
+        var k = key(d);
+        restrictions = restrictions.filter(function(r){ return r.key!==k; });
+        restrictions.push({key:k, date:d, type:type, scope:scope});
+      });
+      var m = typeMeta(type);
+      showToast(m.label+' on '+dates.length+' date'+(dates.length>1?'s':'')+' · '+scope);
+      selected.clear();
+      panel.classList.remove('open');
+      renderCalendar(); renderChips();
+      renderActiveListWrap();
+    });
+
+    document.getElementById('addDateBtn1').addEventListener('click', addFromInput);
+    document.getElementById('dateInput1').addEventListener('keydown', function(e){ if(e.key==='Enter') addFromInput(); });
+
+    function addFromInput(){
+      var input = document.getElementById('dateInput1');
+      var raw = input.value.trim();
+      if(!raw) return;
+      var jumped = null;
+      raw.split(',').forEach(function(part){
+        part = part.trim();
+        if(!part) return;
+        var parsed = new Date(part + ' ' + monthCursor.getFullYear());
+        if(isNaN(parsed)) parsed = new Date(part);
+        if(isNaN(parsed)) return;
+        if(monthCursor.getMonth()===11 && parsed.getMonth()===0){
+          parsed = new Date(monthCursor.getFullYear()+1, 0, parsed.getDate());
+        }
+        selected.add(key(parsed));
+        jumped = parsed;
+      });
+      input.value = '';
+      if(jumped) monthCursor = new Date(jumped.getFullYear(), jumped.getMonth(), 1);
+      renderCalendar(); renderChips();
+    }
+
+    function removeRestriction(r){
+      restrictions = restrictions.filter(function(x){ return x!==r; });
+      renderActiveListWrap();
+      renderCalendar();
+    }
+    function renderActiveListWrap(){
+      renderActiveList(activeList, restrictions, removeRestriction);
+    }
+
+    renderCalendar(); renderChips(); renderActiveListWrap();
+  })();
+
+  /* ================================================================
+     VARIANT 2 — guided modal
+     ================================================================ */
+  (function initVariant2(){
+    var monthCursor = new Date(2026, 11, 1);
+    var selected = new Set();
+    var restrictions = [];
+
+    var calGrid = document.getElementById('calGrid2');
+    var monthLabel = document.getElementById('monthLabel2');
+    var scopeSelect = document.getElementById('scopeSelect2');
+    var selBar = document.getElementById('selBar2');
+    var selCount = document.getElementById('selCount2');
+    var activeList = document.getElementById('activeList2');
+    var overlay = document.getElementById('modalOverlay2');
+    var modalCountText = document.getElementById('modalCountText2');
+    var modalChips = document.getElementById('modalChips2');
+    var modalScopeEcho = document.getElementById('modalScopeEcho2');
+
+    function scopeText(){ return scopeSelect.options[scopeSelect.selectedIndex].text.split(' — ')[0]; }
+
+    function renderCalendar(){
+      monthLabel.textContent = MONTHS[monthCursor.getMonth()] + ' ' + monthCursor.getFullYear();
+      calGrid.innerHTML = '';
+      var first = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), 1);
+      var startDow = first.getDay();
+      var daysInMonth = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 0).getDate();
+      for(var i=0;i<startDow;i++){
+        var empty = document.createElement('div');
+        empty.className = 'cal-cell';
+        var e2 = document.createElement('div');
+        e2.className = 'day empty';
+        empty.appendChild(e2);
+        calGrid.appendChild(empty);
+      }
+      for(var d=1; d<=daysInMonth; d++){
+        var thisDate = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), d);
+        var k = key(thisDate);
+        var cell = document.createElement('div');
+        cell.className = 'cal-cell';
+        var day = document.createElement('div');
+        day.className = 'day' + (selected.has(k) ? ' selected' : '');
+        var num = document.createElement('span');
+        num.textContent = d;
+        day.appendChild(num);
+        var existing = restrictions.find(function(r){ return r.key===k; });
+        if(existing){
+          var m = typeMeta(existing.type);
+          var badge = document.createElement('span');
+          badge.className = 'day-badge ' + m.cls;
+          badge.textContent = m.cls==='both' ? 'CO+CI' : m.cls.toUpperCase();
+          day.appendChild(badge);
+        }
+        if(selected.has(k)){
+          var chk = document.createElement('span');
+          chk.className = 'check'; chk.textContent = '✓';
+          day.appendChild(chk);
+        }
+        day.addEventListener('click', (function(k){
+          return function(){
+            if(selected.has(k)) selected.delete(k); else selected.add(k);
+            renderCalendar(); renderSelBar();
+          };
+        })(k));
+        cell.appendChild(day);
+        calGrid.appendChild(cell);
+      }
+    }
+
+    function renderSelBar(){
+      if(selected.size===0){ selBar.classList.remove('show'); return; }
+      selBar.classList.add('show');
+      selCount.textContent = selected.size + ' date' + (selected.size>1?'s':'') + ' selected';
+    }
+
+    document.getElementById('prevMonth2').addEventListener('click', function(){
+      monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()-1, 1); renderCalendar();
+    });
+    document.getElementById('nextMonth2').addEventListener('click', function(){
+      monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 1); renderCalendar();
+    });
+
+    document.getElementById('addDateBtn2').addEventListener('click', addFromInput);
+    document.getElementById('dateInput2').addEventListener('keydown', function(e){ if(e.key==='Enter') addFromInput(); });
+    function addFromInput(){
+      var input = document.getElementById('dateInput2');
+      var raw = input.value.trim();
+      if(!raw) return;
+      var jumped = null;
+      raw.split(',').forEach(function(part){
+        part = part.trim();
+        if(!part) return;
+        var parsed = new Date(part + ' ' + monthCursor.getFullYear());
+        if(isNaN(parsed)) parsed = new Date(part);
+        if(isNaN(parsed)) return;
+        if(monthCursor.getMonth()===11 && parsed.getMonth()===0){
+          parsed = new Date(monthCursor.getFullYear()+1, 0, parsed.getDate());
+        }
+        selected.add(key(parsed));
+        jumped = parsed;
+      });
+      input.value = '';
+      if(jumped) monthCursor = new Date(jumped.getFullYear(), jumped.getMonth(), 1);
+      renderCalendar(); renderSelBar();
+    }
+
+    document.getElementById('clearSel2').addEventListener('click', function(){
+      selected.clear(); renderCalendar(); renderSelBar();
+    });
+
+    document.getElementById('openModal2').addEventListener('click', function(){
+      var dates = Array.from(selected).map(parseDateFromKey).sort(function(a,b){return a-b;});
+      modalCountText.textContent = dates.length + ' date' + (dates.length>1?'s':'') + ' selected';
+      modalChips.innerHTML = '';
+      dates.forEach(function(d){
+        var chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.textContent = fmt(d);
+        modalChips.appendChild(chip);
+      });
+      modalScopeEcho.textContent = scopeText();
+      overlay.classList.add('open');
+    });
+    document.getElementById('modalCancel2').addEventListener('click', function(){ overlay.classList.remove('open'); });
+    overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.classList.remove('open'); });
+
+    document.getElementById('modalApply2').addEventListener('click', function(){
+      var type = document.querySelector('input[name="rtype2"]:checked').value;
+      var scope = scopeText();
+      var dates = Array.from(selected).map(parseDateFromKey);
+      dates.forEach(function(d){
+        var k = key(d);
+        restrictions = restrictions.filter(function(r){ return r.key!==k; });
+        restrictions.push({key:k, date:d, type:type, scope:scope});
+      });
+      var m = typeMeta(type);
+      showToast(m.label+' on '+dates.length+' date'+(dates.length>1?'s':'')+' · '+scope);
+      selected.clear();
+      overlay.classList.remove('open');
+      renderCalendar(); renderSelBar();
+      renderActiveListWrap();
+    });
+
+    function removeRestriction(r){
+      restrictions = restrictions.filter(function(x){ return x!==r; });
+      renderActiveListWrap();
+      renderCalendar();
+    }
+    function renderActiveListWrap(){
+      renderActiveList(activeList, restrictions, removeRestriction);
+    }
+
+    renderCalendar(); renderSelBar(); renderActiveListWrap();
+  })();
+
+  /* ================================================================
+     VARIANT 3 — portfolio batch table
+     ================================================================ */
+  (function initVariant3(){
+    function nthWeekday(year, month, weekday, n){
+      var d = new Date(year, month, 1);
+      var add = (weekday - d.getDay() + 7) % 7;
+      d.setDate(1 + add + (n-1)*7);
+      return d;
+    }
+    function lastWeekday(year, month, weekday){
+      var d = new Date(year, month+1, 0);
+      var sub = (d.getDay() - weekday + 7) % 7;
+      d.setDate(d.getDate() - sub);
+      return d;
+    }
+    var HOLIDAYS = [
+      {name:"New Year's Day", date:new Date(2026,0,1)},
+      {name:"Memorial Day", date:lastWeekday(2026,4,1)},
+      {name:"Independence Day", date:new Date(2026,6,4)},
+      {name:"Labor Day", date:nthWeekday(2026,8,1,1)},
+      {name:"Thanksgiving", date:nthWeekday(2026,10,4,4)},
+      {name:"Christmas Eve", date:new Date(2026,11,24)},
+      {name:"Christmas Day", date:new Date(2026,11,25)},
+      {name:"New Year's Eve", date:new Date(2026,11,31)}
+    ];
+
+    var rows = []; // {key, date, type}
+    var restrictions = [];
+
+    var scopeSelect = document.getElementById('scopeSelect3');
+    var holidayChips = document.getElementById('holidayChips3');
+    var tableBody = document.getElementById('tableBody3');
+    var rowCountEl = document.getElementById('rowCount3');
+    var bulkSummary = document.getElementById('bulkSummary3');
+    var applyAllBtn = document.getElementById('applyAllBtn3');
+    var activeList = document.getElementById('activeList3');
+
+    function scopeText(){ return scopeSelect.options[scopeSelect.selectedIndex].text.split(' — ')[0]; }
+
+    function renderHolidayChips(){
+      holidayChips.innerHTML = '';
+      HOLIDAYS.forEach(function(h){
+        var k = key(h.date);
+        var already = rows.some(function(r){ return r.key===k; });
+        var btn = document.createElement('button');
+        btn.className = 'holiday-chip';
+        btn.disabled = already;
+        btn.innerHTML = (already ? '✓ ' : '+ ') + h.name + '<span class="hd">' + fmt(h.date) + '</span>';
+        btn.addEventListener('click', function(){
+          if(rows.some(function(r){ return r.key===k; })) return;
+          rows.push({key:k, date:h.date, type:'co'});
+          renderAll();
+        });
+        holidayChips.appendChild(btn);
+      });
+    }
+
+    function renderTable(){
+      rowCountEl.textContent = rows.length;
+      if(rows.length===0){
+        tableBody.innerHTML = '<tr class="bulk-empty"><td colspan="3">No dates queued — quick-add a holiday above or type specific dates.</td></tr>';
+        applyAllBtn.disabled = true;
+        bulkSummary.textContent = 'Nothing queued yet.';
+        return;
+      }
+      applyAllBtn.disabled = false;
+      tableBody.innerHTML = '';
+      rows.slice().sort(function(a,b){ return a.date-b.date; }).forEach(function(row){
+        var tr = document.createElement('tr');
+        var tdDate = document.createElement('td');
+        tdDate.textContent = fmtFull(row.date);
+        var tdType = document.createElement('td');
+        var sel = document.createElement('select');
+        ['co','ci','both'].forEach(function(v){
+          var opt = document.createElement('option');
+          opt.value = v; opt.textContent = typeMeta(v).label;
+          if(v===row.type) opt.selected = true;
+          sel.appendChild(opt);
+        });
+        sel.addEventListener('change', function(){ row.type = sel.value; renderBulkSummary(); });
+        tdType.appendChild(sel);
+        var tdRm = document.createElement('td');
+        var rm = document.createElement('button');
+        rm.className = 'rm'; rm.textContent = '✕'; rm.setAttribute('aria-label','Remove row');
+        rm.addEventListener('click', function(){
+          rows = rows.filter(function(x){ return x!==row; });
+          renderAll();
+        });
+        tdRm.appendChild(rm);
+        tr.appendChild(tdDate); tr.appendChild(tdType); tr.appendChild(tdRm);
+        tableBody.appendChild(tr);
+      });
+      renderBulkSummary();
+    }
+
+    function renderBulkSummary(){
+      if(rows.length===0){ bulkSummary.textContent = 'Nothing queued yet.'; return; }
+      var counts = {co:0, ci:0, both:0};
+      rows.forEach(function(r){ counts[r.type]++; });
+      var parts = [];
+      if(counts.co) parts.push(counts.co+' checkout');
+      if(counts.ci) parts.push(counts.ci+' check-in');
+      if(counts.both) parts.push(counts.both+' both');
+      bulkSummary.textContent = rows.length+' date'+(rows.length>1?'s':'')+' queued — '+parts.join(', ')+' · '+scopeText();
+    }
+
+    function renderAll(){ renderHolidayChips(); renderTable(); }
+
+    document.getElementById('addRowBtn3').addEventListener('click', addFromInput);
+    document.getElementById('dateInput3').addEventListener('keydown', function(e){ if(e.key==='Enter') addFromInput(); });
+    function addFromInput(){
+      var input = document.getElementById('dateInput3');
+      var raw = input.value.trim();
+      if(!raw) return;
+      raw.split(',').forEach(function(part){
+        part = part.trim();
+        if(!part) return;
+        var parsed = new Date(part + ' 2026');
+        if(isNaN(parsed)) parsed = new Date(part);
+        if(isNaN(parsed)) return;
+        var k = key(parsed);
+        if(rows.some(function(r){ return r.key===k; })) return;
+        rows.push({key:k, date:parsed, type:'co'});
+      });
+      input.value = '';
+      renderAll();
+    }
+
+    document.getElementById('setAllBtn3').addEventListener('click', function(){
+      var v = document.getElementById('setAllType3').value;
+      rows.forEach(function(r){ r.type = v; });
+      renderTable();
+    });
+
+    scopeSelect.addEventListener('change', renderBulkSummary);
+
+    applyAllBtn.addEventListener('click', function(){
+      var scope = scopeText();
+      var counts = {co:0, ci:0, both:0};
+      rows.forEach(function(row){
+        restrictions = restrictions.filter(function(r){ return r.key!==row.key; });
+        restrictions.push({key:row.key, date:row.date, type:row.type, scope:scope});
+        counts[row.type]++;
+      });
+      var n = rows.length;
+      showToast('Applied '+n+' restriction'+(n>1?'s':'')+' · '+scope);
+      rows = [];
+      renderAll();
+      renderActiveListWrap();
+    });
+
+    function removeRestriction(r){
+      restrictions = restrictions.filter(function(x){ return x!==r; });
+      renderActiveListWrap();
+    }
+    function renderActiveListWrap(){
+      renderActiveList(activeList, restrictions, removeRestriction);
+    }
+
+    renderAll();
+    renderActiveListWrap();
+  })();
+
+})();
+</script>
