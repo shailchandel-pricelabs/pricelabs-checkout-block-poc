@@ -2,1927 +2,1268 @@
 <title>Block This Date</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --accent:#e8505b;
-    --accent-dark:#c23b48;
-    --accent-tint:#fdeceb;
-    --ink:#1f2430;
-    --ink-soft:#565f70;
-    --canvas:#f4f5f8;
-    --surface:#ffffff;
-    --surface-raised:#ffffff;
-    --line:#e3e6ec;
-    --line-strong:#d2d6df;
-    --good:#2f9e64;
-    --good-tint:#e8f6ee;
-    --type-checkout:#e8505b;
-    --type-checkin:#3b7dc4;
-    --type-both:#7a5bd0;
-    --type-checkout-tint:#fdeceb;
-    --type-checkin-tint:#eaf2fa;
-    --type-both-tint:#f1edfa;
-    --shadow-sm: 0 1px 2px rgba(31,36,48,0.06);
-    --shadow-md: 0 8px 24px rgba(31,36,48,0.10);
-    --shadow-lg: 0 16px 48px rgba(31,36,48,0.16);
-    color-scheme: light;
+    --accent:#e8505b; --accent-dark:#c23b48; --accent-tint:#fdeceb;
+    --ink:#1f2430; --ink-soft:#5a6273;
+    --canvas:#f4f5f8; --surface:#ffffff;
+    --line:#e3e6ec; --line-strong:#d0d5de;
+    --good:#2f9e64; --good-tint:#e6f5ec;
+    --type-checkout:#d6404b; --type-checkin:#2f6fb3; --type-both:#7353c9;
+    --type-checkout-tint:#fdeceb; --type-checkin-tint:#e8f1fb; --type-both-tint:#f0ebfa;
+    --warn-bg:#fff7e8; --warn-line:#f0c37c; --warn-ink:#a05f00;
+    --info-bg:#eef5fc; --info-line:#c3d9ef;
+    --d-low:#eef7ec; --d-normal:#d9eed3; --d-good:#ddeaf8; --d-high:#c6dcf3;
+    --scrim:rgba(15,17,22,0.45);
+    --shadow-sm:0 1px 2px rgba(31,36,48,0.06);
+    --shadow-md:0 8px 24px rgba(31,36,48,0.08);
+    --shadow-lg:0 16px 48px rgba(31,36,48,0.18);
+    color-scheme:light;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --accent:#ff6b74;
-      --accent-dark:#ff8a91;
-      --accent-tint:#3a2226;
-      --ink:#eef0f4;
-      --ink-soft:#a7adba;
-      --canvas:#14161c;
-      --surface:#1b1e26;
-      --surface-raised:#20232c;
-      --line:#2c303a;
-      --line-strong:#3a3f4b;
-      --good:#4cc98a;
-      --good-tint:#193226;
-      --type-checkout:#ff6b74;
-      --type-checkin:#6fa8e0;
-      --type-both:#a996ec;
-      --type-checkout-tint:#3a2226;
-      --type-checkin-tint:#1c2a38;
-      --type-both-tint:#2a2440;
-      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-      --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
-      --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
-      color-scheme: dark;
+      --accent:#ff6b74; --accent-dark:#ff8f96; --accent-tint:#3a2226;
+      --ink:#eef0f4; --ink-soft:#a7adba;
+      --canvas:#14161c; --surface:#1d2029;
+      --line:#2c303a; --line-strong:#3c414d;
+      --good:#4cc98a; --good-tint:#193226;
+      --type-checkout:#ff7a82; --type-checkin:#7db0e6; --type-both:#ad9af0;
+      --type-checkout-tint:#3a2226; --type-checkin-tint:#1b2a3a; --type-both-tint:#2a2440;
+      --warn-bg:#2f2611; --warn-line:#6b5220; --warn-ink:#f0b860;
+      --info-bg:#172331; --info-line:#2b4660;
+      --d-low:#1c271c; --d-normal:#1f3220; --d-good:#1a2836; --d-high:#1b2f47;
+      --scrim:rgba(0,0,0,0.6);
+      --shadow-sm:0 1px 2px rgba(0,0,0,0.3); --shadow-md:0 8px 24px rgba(0,0,0,0.4); --shadow-lg:0 16px 48px rgba(0,0,0,0.55);
+      color-scheme:dark;
     }
   }
   :root[data-theme="dark"]{
-    --accent:#ff6b74;
-    --accent-dark:#ff8a91;
-    --accent-tint:#3a2226;
-    --ink:#eef0f4;
-    --ink-soft:#a7adba;
-    --canvas:#14161c;
-    --surface:#1b1e26;
-    --surface-raised:#20232c;
-    --line:#2c303a;
-    --line-strong:#3a3f4b;
-    --good:#4cc98a;
-    --good-tint:#193226;
-    --type-checkout:#ff6b74;
-    --type-checkin:#6fa8e0;
-    --type-both:#a996ec;
-    --type-checkout-tint:#3a2226;
-    --type-checkin-tint:#1c2a38;
-    --type-both-tint:#2a2440;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
-    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
-    color-scheme: dark;
+    --accent:#ff6b74; --accent-dark:#ff8f96; --accent-tint:#3a2226;
+    --ink:#eef0f4; --ink-soft:#a7adba;
+    --canvas:#14161c; --surface:#1d2029;
+    --line:#2c303a; --line-strong:#3c414d;
+    --good:#4cc98a; --good-tint:#193226;
+    --type-checkout:#ff7a82; --type-checkin:#7db0e6; --type-both:#ad9af0;
+    --type-checkout-tint:#3a2226; --type-checkin-tint:#1b2a3a; --type-both-tint:#2a2440;
+    --warn-bg:#2f2611; --warn-line:#6b5220; --warn-ink:#f0b860;
+    --info-bg:#172331; --info-line:#2b4660;
+    --d-low:#1c271c; --d-normal:#1f3220; --d-good:#1a2836; --d-high:#1b2f47;
+    --scrim:rgba(0,0,0,0.6);
+    --shadow-sm:0 1px 2px rgba(0,0,0,0.3); --shadow-md:0 8px 24px rgba(0,0,0,0.4); --shadow-lg:0 16px 48px rgba(0,0,0,0.55);
+    color-scheme:dark;
   }
 
   *{ box-sizing:border-box; }
-  body{
-    margin:0;
-    background:var(--canvas);
-    color:var(--ink);
-    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-    font-size:14px;
-    line-height:1.5;
-  }
-  h1,h2,h3{ font-family:"Sora", ui-sans-serif, system-ui, sans-serif; text-wrap:balance; margin:0; }
-  .wrap{ max-width:1180px; margin:0 auto; padding:40px 28px 72px; display:flex; flex-direction:column; gap:36px; }
+  [hidden]{ display:none !important; }
+  body{ margin:0; background:var(--canvas); color:var(--ink); font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; font-size:14px; line-height:1.5; }
+  button, input, select, textarea{ font:inherit; color:inherit; }
+  button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:focus-visible, summary:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:24px 24px 56px; display:flex; flex-direction:column; gap:18px; }
 
-  /* ---------- Header ---------- */
-  .eyebrow{
-    font-family:"IBM Plex Mono", ui-monospace, monospace;
-    font-size:11px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:var(--accent-dark);
-    display:flex;
-    align-items:center;
-    gap:8px;
-  }
-  .eyebrow::before{
-    content:"";
-    width:6px; height:6px; border-radius:50%;
-    background:var(--accent);
-    display:inline-block;
-  }
-  header{ display:flex; flex-direction:column; gap:10px; }
-  header h1{ font-size:30px; font-weight:700; letter-spacing:-0.01em; }
-  header p{ margin:0; color:var(--ink-soft); max-width:680px; font-size:15px; }
+  /* ---------- Tabs ---------- */
+  .tabswitch{ display:flex; gap:4px; background:var(--surface); padding:4px; border-radius:12px; border:1px solid var(--line); width:fit-content; max-width:100%; overflow-x:auto; }
+  .tabswitch button{ font-family:"Sora", sans-serif; font-weight:600; font-size:13px; padding:9px 16px; border-radius:9px; border:none; background:none; color:var(--ink-soft); cursor:pointer; white-space:nowrap; display:flex; align-items:center; gap:8px; }
+  .tabswitch button:hover{ color:var(--ink); }
+  .tabswitch button[aria-selected="true"]{ background:var(--canvas); color:var(--ink); box-shadow:inset 0 0 0 1px var(--line-strong); }
+  .tabswitch .count{ font-family:"IBM Plex Mono", monospace; font-size:11px; background:var(--accent-tint); color:var(--accent-dark); border-radius:999px; padding:1px 7px; }
 
-  /* ---------- Before/After ---------- */
-  .compare{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    align-items:start;
-    gap:20px;
-  }
-  @media (max-width:860px){ .compare{ grid-template-columns:1fr; } }
-  .compare-card{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:14px;
-    padding:22px 22px 20px;
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-    box-shadow:var(--shadow-sm);
-  }
-  .compare-card.proposed{ border-color:var(--good); }
-  .compare-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
-  .compare-head h3{ font-size:15px; font-weight:600; }
-  .compare-metric{
-    font-family:"IBM Plex Mono", ui-monospace, monospace;
-    font-size:12px;
-    padding:3px 9px;
-    border-radius:999px;
-    white-space:nowrap;
-  }
-  .today .compare-metric{ background:var(--accent-tint); color:var(--accent-dark); }
-  .proposed .compare-metric{ background:var(--good-tint); color:var(--good); }
-  .steps{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px; }
-  .steps li{
-    display:flex; gap:10px; align-items:flex-start;
-    padding:8px 0;
-    border-top:1px solid var(--line);
-    font-size:13px;
-  }
-  .steps li:first-child{ border-top:none; }
-  .step-num{
-    font-family:"IBM Plex Mono", ui-monospace, monospace;
-    font-size:11px;
-    width:20px; height:20px; border-radius:6px;
-    display:flex; align-items:center; justify-content:center;
-    flex:none;
-    margin-top:1px;
-  }
-  .today .step-num{ background:var(--accent-tint); color:var(--accent-dark); }
-  .proposed .step-num{ background:var(--good-tint); color:var(--good); }
-  .steps li b{ font-weight:600; }
-  .steps li span.sub{ display:block; color:var(--ink-soft); font-size:12px; margin-top:1px; }
-  .tax{
-    margin-top:2px;
-    font-size:12px;
-    color:var(--accent-dark);
-    background:var(--accent-tint);
-    border-radius:8px;
-    padding:8px 10px;
-  }
-
-  /* ---------- Tab switcher ---------- */
-  .proto-label{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-  .proto-label h2{ font-size:18px; font-weight:600; }
-  .proto-label p{ margin:4px 0 0; color:var(--ink-soft); font-size:13px; max-width:560px; }
-  .tabswitch{
-    display:flex; gap:5px; background:var(--canvas); padding:4px;
-    border-radius:12px; border:1px solid var(--line); width:fit-content;
-  }
-  .tabswitch button{
-    font-family:"Sora", sans-serif; font-weight:600; font-size:12.5px;
-    padding:9px 15px 9px 11px; border-radius:9px; border:none; background:none;
-    color:var(--ink-soft); cursor:pointer; display:flex; align-items:center; gap:8px;
-    white-space:nowrap;
-  }
-  .tabswitch button .num{
-    font-family:"IBM Plex Mono", monospace; font-size:10px; width:17px; height:17px;
-    border-radius:50%; background:var(--line-strong); color:var(--surface);
-    display:flex; align-items:center; justify-content:center; flex:none;
-  }
-  .tabswitch button.active{ background:var(--surface); color:var(--ink); box-shadow:var(--shadow-sm); }
-  .tabswitch button.active .num{ background:var(--accent); color:#fff; }
-
-  .variant-panel{ display:none; flex-direction:column; gap:14px; }
-  .variant-panel.active{ display:flex; }
-  .variant-desc{
-    font-size:13px; color:var(--ink-soft); background:var(--surface);
-    border:1px solid var(--line); border-radius:12px; padding:12px 16px;
-  }
-  .variant-desc b{ color:var(--ink); }
-
-  /* ---------- App shell (shared) ---------- */
-  .app{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:16px;
-    box-shadow:var(--shadow-md);
-    overflow:hidden;
-  }
-  .app-toolbar{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    padding:16px 22px;
-    border-bottom:1px solid var(--line);
-    background:var(--surface-raised);
-    flex-wrap:wrap;
-  }
-  .scope-block{ display:flex; flex-direction:column; gap:5px; }
-  .scope-block label{
-    font-size:11px; text-transform:uppercase; letter-spacing:0.06em;
-    color:var(--ink-soft); font-weight:600;
-  }
-  .scope-select{
-    font-family:inherit; font-size:13px; font-weight:600; color:var(--ink);
-    background:var(--canvas); border:1px solid var(--line-strong); border-radius:9px;
-    padding:8px 32px 8px 12px;
-    appearance:none;
-    background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6"><path d="M1 1l4 4 4-4" stroke="%23565f70" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
-    background-repeat:no-repeat;
-    background-position:right 12px center;
-    cursor:pointer;
-    min-width:190px;
-  }
-  .toolbar-divider{ width:1px; align-self:stretch; background:var(--line); }
-  .month-nav{ display:flex; align-items:center; gap:10px; margin-left:auto; }
-  .month-nav button{
-    width:30px; height:30px; border-radius:8px; border:1px solid var(--line-strong);
-    background:var(--surface); color:var(--ink); font-size:14px; cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-  }
+  /* ---------- Pricing calendar shell ---------- */
+  .app{ background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow-md); overflow:hidden; }
+  .dso-toolbar{ display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+  .dso-select{ font-family:"IBM Plex Sans"; font-size:13px; font-weight:600; color:var(--ink); border:1px solid var(--line-strong); border-radius:8px; padding:8px 10px; background:var(--surface); cursor:pointer; max-width:100%; }
+  .month-nav{ display:flex; align-items:center; gap:8px; margin-left:auto; }
+  .month-nav button{ width:30px; height:30px; border-radius:8px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink); font-size:15px; cursor:pointer; }
   .month-nav button:hover{ background:var(--canvas); }
-  .month-label{ font-family:"Sora"; font-weight:600; font-size:14px; min-width:150px; text-align:center; }
-
-  .app-body{ display:grid; grid-template-columns:1fr 300px; }
-  @media (max-width:880px){ .app-body{ grid-template-columns:1fr; } }
-  .app-body.full{ grid-template-columns:1fr; }
-
-  .cal-pane{ padding:20px 22px 24px; }
-  .cal-weekdays{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-bottom:8px; }
-  .cal-weekdays span{
-    text-align:center; font-size:11px; font-weight:600; color:var(--ink-soft);
-    text-transform:uppercase; letter-spacing:0.04em;
-  }
-  .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
-  .cal-cell{ aspect-ratio:1/0.86; }
-  .day{
-    width:100%; height:100%;
-    border-radius:10px;
-    border:1px solid var(--line);
-    background:var(--surface);
-    display:flex; flex-direction:column; align-items:flex-start; justify-content:space-between;
-    padding:6px 7px;
-    cursor:pointer;
-    font-family:"IBM Plex Mono", ui-monospace, monospace;
-    font-size:12px;
-    color:var(--ink);
-    position:relative;
-    transition:border-color .12s ease, background .12s ease;
-  }
-  .day:hover{ border-color:var(--accent); }
-  .day.empty{ visibility:hidden; cursor:default; }
-  .day.selected{ background:var(--accent-tint); border-color:var(--accent); box-shadow:inset 0 0 0 1px var(--accent); }
-  .day-badge{
-    align-self:flex-end;
-    font-size:9px; font-weight:700; letter-spacing:0.02em;
-    padding:2px 5px; border-radius:5px;
-    font-family:"IBM Plex Mono", ui-monospace, monospace;
-  }
-  .day-badge.co{ background:var(--type-checkout-tint); color:var(--type-checkout); }
-  .day-badge.ci{ background:var(--type-checkin-tint); color:var(--type-checkin); }
-  .day-badge.both{ background:var(--type-both-tint); color:var(--type-both); }
-  .check{
-    position:absolute; top:5px; right:6px;
-    width:14px; height:14px; border-radius:50%;
-    background:var(--accent); color:#fff;
-    font-size:9px; display:flex; align-items:center; justify-content:center;
-    font-family:"IBM Plex Sans";
-  }
-
-  /* ---------- Side panel (variant 1) ---------- */
-  .side-pane{
-    border-left:1px solid var(--line);
-    display:flex; flex-direction:column;
-    background:var(--surface-raised);
-  }
-  .side-section{ padding:18px 20px; border-bottom:1px solid var(--line); }
-  .side-section:last-child{ border-bottom:none; flex:1; overflow:auto; }
-  .side-section h4{
-    font-size:11px; text-transform:uppercase; letter-spacing:0.06em;
-    color:var(--ink-soft); font-weight:700; margin:0 0 10px;
-  }
-  .add-row{ display:flex; gap:6px; }
-  .add-row input{
-    flex:1; font-family:inherit; font-size:12.5px;
-    border:1px solid var(--line-strong); border-radius:8px;
-    padding:8px 10px; background:var(--surface); color:var(--ink);
-  }
-  .add-row input:focus{ outline:2px solid var(--accent); outline-offset:1px; }
-  .add-row button{
-    font-family:inherit; font-size:12px; font-weight:600;
-    border:1px solid var(--line-strong); border-radius:8px;
-    background:var(--surface); color:var(--ink); padding:0 12px; cursor:pointer;
-  }
-  .add-row button:hover{ background:var(--canvas); }
-  .hint{ font-size:11px; color:var(--ink-soft); margin-top:6px; }
-
-  .chip-tray{ display:flex; flex-wrap:wrap; gap:6px; min-height:28px; }
-  .chip{
-    display:flex; align-items:center; gap:6px;
-    background:var(--accent-tint); color:var(--accent-dark);
-    border-radius:999px; padding:4px 6px 4px 10px;
-    font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:11.5px; font-weight:600;
-  }
-  .chip button{
-    background:none; border:none; color:inherit; cursor:pointer;
-    width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-    font-size:11px; opacity:0.75;
-  }
-  .chip button:hover{ opacity:1; background:rgba(0,0,0,0.08); }
-  .empty-note{ font-size:12px; color:var(--ink-soft); font-style:italic; }
-
-  .restrict-btn{
-    width:100%; margin-top:12px;
-    font-family:"Sora"; font-weight:600; font-size:13px;
-    background:var(--accent); color:#fff; border:none; border-radius:10px;
-    padding:11px; cursor:pointer;
-    box-shadow:var(--shadow-sm);
-    transition:transform .08s ease, background .12s ease;
-  }
-  .restrict-btn:disabled{ background:var(--line-strong); color:var(--ink-soft); cursor:not-allowed; box-shadow:none; }
-  .restrict-btn:not(:disabled):hover{ background:var(--accent-dark); }
-  .restrict-btn:not(:disabled):active{ transform:scale(0.98); }
-
-  .panel{
-    margin-top:14px; padding:14px; border-radius:12px;
-    background:var(--surface); border:1px solid var(--line-strong);
-    display:none; flex-direction:column; gap:12px;
-    animation:pop .14s ease;
-  }
-  .panel.open{ display:flex; }
-  @keyframes pop{ from{ opacity:0; transform:translateY(-4px);} to{opacity:1; transform:none;} }
-  .panel h5{ margin:0; font-size:12.5px; font-weight:700; }
-  .radio-opt{
-    display:flex; align-items:center; gap:9px;
-    border:1px solid var(--line); border-radius:9px; padding:9px 10px;
-    cursor:pointer; font-size:12.5px;
-  }
-  .radio-opt:has(input:checked){ border-color:var(--accent); background:var(--accent-tint); }
-  .radio-opt input{ accent-color:var(--accent); }
-  .radio-opt .dot{ width:8px; height:8px; border-radius:50%; flex:none; }
-  .scope-echo{
-    font-size:11.5px; color:var(--ink-soft); background:var(--canvas);
-    border-radius:8px; padding:8px 10px; display:flex; justify-content:space-between; gap:8px;
-  }
-  .scope-echo b{ color:var(--ink); }
-  .apply-row{ display:flex; gap:8px; }
-  .apply-row button{ font-family:"Sora"; font-weight:600; font-size:12.5px; border-radius:9px; padding:9px 10px; cursor:pointer; }
-  .apply-row .cancel{ background:none; border:1px solid var(--line-strong); color:var(--ink-soft); flex:none; padding:9px 14px; }
-  .apply-row .apply{ background:var(--good); border:none; color:#fff; flex:1; }
-  .apply-row .apply:hover{ filter:brightness(1.05); }
-
-  .active-list{ display:flex; flex-direction:column; gap:8px; }
-  .active-row{
-    display:flex; align-items:center; gap:10px;
-    border:1px solid var(--line); border-radius:10px; padding:8px 10px;
-  }
-  .active-row .dot{ width:9px; height:9px; border-radius:50%; flex:none; }
-  .active-row .meta{ flex:1; min-width:0; }
-  .active-row .meta b{ display:block; font-size:12.5px; font-family:"IBM Plex Mono"; }
-  .active-row .meta span{ display:block; font-size:11px; color:var(--ink-soft); }
-  .active-row .rm{ background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:13px; padding:2px 4px; }
-  .active-row .rm:hover{ color:var(--accent); }
-  .active-wrap{ padding:18px 22px 22px; border-top:1px solid var(--line); }
-  .active-wrap h4{
-    font-size:11px; text-transform:uppercase; letter-spacing:0.06em;
-    color:var(--ink-soft); font-weight:700; margin:0 0 10px;
-  }
-
-  /* ---------- Toast ---------- */
-  .toast{
-    position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px);
-    background:var(--ink); color:var(--surface);
-    padding:11px 18px; border-radius:10px; font-size:13px; font-weight:500;
-    box-shadow:var(--shadow-lg);
-    display:flex; align-items:center; gap:9px;
-    opacity:0; pointer-events:none; transition:opacity .18s ease, transform .18s ease;
-    z-index:80;
-  }
-  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
-  .toast .tick{
-    width:16px; height:16px; border-radius:50%; background:var(--good); color:#fff;
-    display:flex; align-items:center; justify-content:center; font-size:10px; flex:none;
-  }
-
-  /* ---------- Variant 2: selection bar + modal ---------- */
-  .selbar{
-    display:none; align-items:center; justify-content:space-between; gap:14px;
-    margin:0 22px 20px; padding:12px 16px; border-radius:12px;
-    background:var(--surface-raised); border:1px solid var(--line-strong); box-shadow:var(--shadow-md);
-  }
-  .selbar.show{ display:flex; }
-  .selbar .count{ font-family:"IBM Plex Mono"; font-size:13px; font-weight:600; }
-  .selbar .count span{ color:var(--ink-soft); font-weight:400; margin-left:6px; font-family:"IBM Plex Sans"; }
-  .selbar .actions{ display:flex; gap:8px; }
-  .selbar button{ font-family:"Sora"; font-weight:600; font-size:12.5px; border-radius:9px; padding:8px 14px; cursor:pointer; }
-  .selbar .clear{ background:none; border:1px solid var(--line-strong); color:var(--ink-soft); }
-  .selbar .clear:hover{ background:var(--canvas); }
-  .selbar .go{ background:var(--accent); border:none; color:#fff; }
-  .selbar .go:hover{ background:var(--accent-dark); }
-
-  .modal-overlay{
-    position:fixed; inset:0; background:rgba(15,17,22,0.5);
-    display:flex; align-items:center; justify-content:center; z-index:70; padding:20px;
-    opacity:0; pointer-events:none; transition:opacity .15s ease;
-  }
-  .modal-overlay.open{ opacity:1; pointer-events:auto; }
-  .modal-card{
-    width:400px; max-width:100%; background:var(--surface); border-radius:16px;
-    padding:22px; box-shadow:var(--shadow-lg); transform:translateY(10px) scale(0.98);
-    transition:transform .15s ease; display:flex; flex-direction:column; gap:14px;
-  }
-  .modal-overlay.open .modal-card{ transform:none; }
-  .modal-card h5{ margin:0; font-size:15.5px; font-weight:700; font-family:"Sora"; }
-  .modal-card .modal-sub{ margin:-8px 0 0; font-size:12.5px; color:var(--ink-soft); }
-  .modal-chiprow{ display:flex; flex-wrap:wrap; gap:6px; }
-  .modal-chiprow .chip{ background:var(--canvas); color:var(--ink); }
-
-  /* ---------- Variant 3: bulk table ---------- */
-  .bulk-toolbar{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; padding:16px 22px; border-bottom:1px solid var(--line); background:var(--surface-raised); }
-  .bulk-body{ padding:20px 22px 22px; display:flex; flex-direction:column; gap:18px; }
-  .bulk-sec-label{ font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); font-weight:700; margin:0 0 10px; }
-  .holiday-chips{ display:flex; flex-wrap:wrap; gap:8px; }
-  .holiday-chip{
-    font-family:"IBM Plex Sans"; font-size:12px; font-weight:600;
-    border:1px solid var(--line-strong); background:var(--surface); color:var(--ink);
-    border-radius:999px; padding:7px 14px; cursor:pointer;
-  }
-  .holiday-chip:hover:not(:disabled){ border-color:var(--accent); color:var(--accent-dark); }
-  .holiday-chip:disabled{ opacity:0.4; cursor:not-allowed; }
-  .holiday-chip .hd{ font-family:"IBM Plex Mono"; font-size:10.5px; color:var(--ink-soft); margin-left:6px; }
-
-  .bulk-table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:12px; }
-  table.bulk-table{ width:100%; border-collapse:collapse; font-size:13px; min-width:520px; }
-  .bulk-table thead th{
-    text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:0.05em;
-    color:var(--ink-soft); font-weight:700; padding:10px 14px; background:var(--surface-raised);
-    border-bottom:1px solid var(--line);
-  }
-  .bulk-table td{ padding:9px 14px; border-bottom:1px solid var(--line); font-family:"IBM Plex Mono"; font-size:12.5px; vertical-align:middle; }
-  .bulk-table tbody tr:last-child td{ border-bottom:none; }
-  .bulk-table select{
-    font-family:"IBM Plex Sans"; font-size:12.5px; border:1px solid var(--line-strong);
-    border-radius:7px; padding:6px 8px; background:var(--surface); color:var(--ink); cursor:pointer;
-  }
-  .bulk-table .rm{ background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:14px; }
-  .bulk-table .rm:hover{ color:var(--accent); }
-  .bulk-empty td{ padding:28px; text-align:center; color:var(--ink-soft); font-size:12.5px; font-style:italic; font-family:"IBM Plex Sans"; }
-
-  .bulk-setall{ display:flex; align-items:center; gap:8px; margin-left:auto; }
-  .bulk-setall select{
-    font-family:"IBM Plex Sans"; font-size:12.5px; border:1px solid var(--line-strong);
-    border-radius:8px; padding:7px 10px; background:var(--surface); color:var(--ink); cursor:pointer;
-  }
-  .bulk-setall button{
-    font-family:"Sora"; font-weight:600; font-size:12px; border:1px solid var(--line-strong);
-    border-radius:8px; padding:7px 12px; background:var(--surface); color:var(--ink); cursor:pointer;
-  }
-  .bulk-setall button:hover{ background:var(--canvas); }
-
-  .bulk-footer{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-  .bulk-footer .summary{ font-size:12.5px; color:var(--ink-soft); }
-  .bulk-apply-btn{
-    font-family:"Sora"; font-weight:600; font-size:13px; background:var(--good); color:#fff;
-    border:none; border-radius:10px; padding:11px 22px; cursor:pointer;
-  }
-  .bulk-apply-btn:disabled{ background:var(--line-strong); color:var(--ink-soft); cursor:not-allowed; }
-  .bulk-apply-btn:not(:disabled):hover{ filter:brightness(1.05); }
-
-  /* ---------- Variant 0: real DSO modal recreation ---------- */
-  .dso-toolbar{ display:flex; align-items:center; gap:14px; padding:14px 22px; border-bottom:1px solid var(--line); background:var(--surface-raised); flex-wrap:wrap; }
-  .dso-toolbar .pms-tag{ font-family:"IBM Plex Mono"; font-size:11.5px; font-weight:600; color:var(--ink-soft); background:var(--canvas); border:1px solid var(--line-strong); border-radius:7px; padding:5px 10px; }
-  .dso-add-btn{
-    margin-left:auto; display:flex; align-items:center; gap:6px;
-    font-family:"Sora"; font-weight:600; font-size:12.5px;
-    background:var(--accent); color:#fff; border:none; border-radius:9px;
-    padding:9px 14px; cursor:pointer;
-  }
-  .dso-add-btn:hover{ background:var(--accent-dark); }
-  .dso-cal-pane{ padding:18px 22px 22px; }
-  .dso-cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
-  .dso-day{
-    aspect-ratio:1/0.8; border-radius:9px; border:1px solid var(--line);
-    display:flex; align-items:flex-start; padding:7px; font-family:"IBM Plex Mono"; font-size:12px;
-    cursor:pointer; position:relative; transition:border-color .12s ease;
-  }
+  .month-label{ font-family:"Sora"; font-weight:600; font-size:14px; min-width:132px; text-align:center; }
+  .cal-pane{ padding:14px 18px 16px; }
+  .cal-weekdays{ display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); gap:5px; margin-bottom:6px; }
+  .cal-weekdays span{ text-align:center; font-size:11px; font-weight:600; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.05em; }
+  .cal-grid{ display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); gap:5px; }
+  .dso-day{ position:relative; min-height:76px; border-radius:8px; border:1px solid var(--line); padding:5px 6px; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; user-select:none; -webkit-user-select:none; overflow:hidden; transition:border-color .12s ease; }
   .dso-day:hover{ border-color:var(--accent); }
-  .dso-day.today-mark{ background:var(--accent-tint); border-color:var(--accent-tint); }
   .dso-day.empty{ visibility:hidden; }
-  .dso-day .dso-dot{ position:absolute; bottom:6px; right:6px; width:7px; height:7px; border-radius:50%; background:var(--accent); }
-  .dso-day{ flex-direction:column; justify-content:space-between; user-select:none; }
-  .dso-day .price-num{ font-size:11px; color:var(--ink-soft); align-self:flex-start; }
-  .dso-day.demand-low{ background:#eaf5e9; border-color:#d7ecd4; }
-  .dso-day.demand-normal{ background:#d8edd3; border-color:#c3e3bc; }
-  .dso-day.demand-good{ background:#dbeaf7; border-color:#c4def1; }
-  .dso-day.demand-high{ background:#c3dcf2; border-color:#aecfec; }
-  :root[data-theme="dark"] .dso-day.demand-low,
-  :root:not([data-theme="light"]) .dso-day.demand-low{ background:#1d2a1d; border-color:#28381f; }
-  :root[data-theme="dark"] .dso-day.demand-normal,
-  :root:not([data-theme="light"]) .dso-day.demand-normal{ background:#203322; border-color:#2b4228; }
-  :root[data-theme="dark"] .dso-day.demand-good,
-  :root:not([data-theme="light"]) .dso-day.demand-good{ background:#1b2a38; border-color:#223a4c; }
-  :root[data-theme="dark"] .dso-day.demand-high,
-  :root:not([data-theme="light"]) .dso-day.demand-high{ background:#1b3049; border-color:#204266; }
+  .dso-day.demand-low{ background:var(--d-low); }
+  .dso-day.demand-normal{ background:var(--d-normal); }
+  .dso-day.demand-good{ background:var(--d-good); }
+  .dso-day.demand-high{ background:var(--d-high); }
   .dso-day.drag-selecting{ outline:2px solid var(--accent); outline-offset:-2px; }
-  .dso-legend{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:10px 22px 16px; font-size:11px; color:var(--ink-soft); border-top:1px solid var(--line); }
-  .dso-legend b{ color:var(--ink); font-weight:600; }
-  .dso-legend .sw{ width:10px; height:10px; border-radius:3px; display:inline-block; margin-right:5px; vertical-align:-1px; }
-
-  .dso-warning{
-    display:flex; gap:9px; align-items:flex-start; font-size:12px; line-height:1.5;
-    background:var(--accent-tint); border:1px solid var(--accent); color:var(--ink);
-    border-radius:9px; padding:10px 12px; margin-top:8px;
+  .cell-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:4px; min-width:0; }
+  .cell-badges{ display:flex; min-width:0; }
+  .cell-num{ font-family:"IBM Plex Mono"; font-size:11.5px; font-weight:600; margin-left:auto; }
+  .cell-price{ font-family:"IBM Plex Mono"; font-size:14px; font-weight:600; text-align:center; }
+  .rbadge{ font-family:"IBM Plex Mono"; font-size:9px; font-weight:700; padding:2px 4px; border-radius:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+  .rbadge.ci{ background:var(--type-checkin-tint); color:var(--type-checkin); }
+  .rbadge.co{ background:var(--type-checkout-tint); color:var(--type-checkout); }
+  .rbadge.both{ background:var(--type-both-tint); color:var(--type-both); }
+  .ovdot{ width:7px; height:7px; border-radius:50%; background:var(--ink-soft); margin-top:3px; }
+  .dso-legend{ display:flex; align-items:center; gap:8px 14px; flex-wrap:wrap; padding:10px 18px 14px; font-size:11.5px; color:var(--ink-soft); border-top:1px solid var(--line); }
+  .dso-legend .sw{ width:11px; height:11px; border-radius:3px; display:inline-block; margin-right:5px; vertical-align:-1px; border:1px solid var(--line-strong); }
+  .dso-legend .rbadge{ margin-right:4px; }
+  .dso-legend .hint{ margin-left:auto; }
+  @media (max-width:640px){
+    .wrap{ padding:16px 12px 40px; }
+    .dso-day{ min-height:56px; padding:3px 4px; }
+    .cell-price{ font-size:10.5px; }
+    .rbadge{ font-size:8px; padding:1px 3px; }
+    .dso-legend .hint{ margin-left:0; }
   }
-  .dso-warning a{ color:var(--type-checkin); font-weight:600; text-decoration:none; white-space:nowrap; }
-  .dso-warning a:hover{ text-decoration:underline; }
-  .dso-warning .wicon{ flex:none; }
-  .dso-field input:disabled, .dso-field-wrap input:disabled{ opacity:0.55; cursor:not-allowed; }
-  .switch.disabled{ pointer-events:none; opacity:0.5; }
-  .dso-select{
-    font-family:"IBM Plex Sans"; font-size:12.5px; font-weight:600; color:var(--ink);
-    border:1px solid var(--line-strong); border-radius:8px; padding:8px 10px; background:var(--surface); cursor:pointer;
-  }
 
-  .dso-modal-card{ width:460px; max-height:85vh; overflow:auto; }
-  .dso-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
-  .dso-head-titles h5{ font-size:17px; }
-  .dso-head-titles a{ color:var(--type-checkin); font-size:12.5px; text-decoration:none; font-weight:600; }
-  .dso-head-titles a:hover{ text-decoration:underline; }
-  .dso-close{ background:none; border:none; color:var(--ink-soft); font-size:20px; cursor:pointer; line-height:1; padding:2px; }
+  /* ---------- Date Specific Overrides drawer ---------- */
+  .drawer-overlay{ position:fixed; inset:0; background:var(--scrim); z-index:70; opacity:0; visibility:hidden; transition:opacity .18s ease, visibility 0s linear .18s; }
+  .drawer-overlay.open{ opacity:1; visibility:visible; transition:opacity .18s ease; }
+  .drawer{ position:absolute; top:0; right:0; bottom:0; width:min(480px, 100%); background:var(--surface); display:flex; flex-direction:column; box-shadow:var(--shadow-lg); transform:translateX(28px); transition:transform .2s ease; }
+  .drawer-overlay.open .drawer{ transform:none; }
+  @media (prefers-reduced-motion: reduce){ .drawer, .drawer-overlay{ transition:none; } }
+  .drawer-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; padding:16px 20px 12px; border-bottom:1px solid var(--line); }
+  .drawer-head h5{ margin:0; font-family:"Sora"; font-size:19px; font-weight:700; letter-spacing:-0.01em; }
+  .dso-sub{ margin:2px 0 0; font-size:12.5px; color:var(--ink-soft); }
+  .ext{ color:var(--type-checkin); font-weight:600; text-decoration:none; }
+  .ext:hover{ text-decoration:underline; }
+  .dso-close{ background:none; border:none; color:var(--ink-soft); font-size:22px; cursor:pointer; line-height:1; padding:2px 4px; }
   .dso-close:hover{ color:var(--ink); }
-  .dso-sub{ margin:0; font-size:12px; color:var(--ink-soft); }
+  .drawer-body{ flex:1; overflow:auto; padding:14px 20px 22px; display:flex; flex-direction:column; gap:14px; }
+  .drawer-foot{ display:flex; align-items:center; gap:12px; padding:12px 20px; border-top:1px solid var(--line); background:var(--surface); }
 
   .dso-daterow{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-  .dso-date-field{
-    display:flex; align-items:center; gap:7px; font-family:"IBM Plex Mono"; font-size:12.5px; font-weight:600;
-    border:1px solid var(--line-strong); border-radius:9px; padding:8px 11px; background:var(--surface); color:var(--ink);
-  }
-  .dso-dupe-btn{ width:32px; height:32px; border-radius:8px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft); cursor:pointer; flex:none; }
-  .dso-dupe-btn:hover{ background:var(--canvas); }
-  .dso-check-row{ display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink); cursor:pointer; }
-  .dso-check-row input{ accent-color:var(--accent); }
+  .dso-daterange{ display:flex; align-items:stretch; border:1px solid var(--line-strong); border-radius:7px; overflow:hidden; font-size:13px; }
+  .dso-daterange > span{ padding:7px 9px; display:flex; align-items:center; white-space:nowrap; }
+  .dso-daterange > span + span{ border-left:1px solid var(--line-strong); }
+  .dso-dupe-btn{ width:34px; height:34px; border-radius:7px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft); cursor:pointer; flex:none; }
+  .dso-check-row{ display:flex; align-items:center; gap:8px; font-size:12.5px; cursor:pointer; width:fit-content; }
+  .dso-check-row input{ accent-color:var(--accent); width:15px; height:15px; margin:0; }
 
-  .dso-sec-head{
-    display:flex; align-items:center; justify-content:space-between;
-    background:var(--canvas); border-radius:8px; padding:8px 10px;
-    font-size:12.5px; font-weight:700; color:var(--ink); position:relative;
-  }
-  .dso-sec-head .kebab{
-    width:22px; height:22px; display:flex; align-items:center; justify-content:center;
-    background:var(--surface); border:1px solid var(--line-strong); color:var(--ink-soft);
-    cursor:pointer; font-size:13px; border-radius:6px;
-  }
-  .dso-sec-head .kebab:hover{ border-color:var(--accent); color:var(--accent-dark); }
-  .dso-kebab-menu{
-    display:none; position:absolute; top:calc(100% + 4px); right:0; z-index:10;
-    background:var(--surface); border:1px solid var(--line-strong); border-radius:10px;
-    box-shadow:var(--shadow-md); padding:10px 12px; width:260px; text-align:left;
-  }
+  .dso-sec-head{ display:flex; align-items:center; justify-content:space-between; background:var(--canvas); border-radius:7px; padding:8px 10px; font-size:13px; font-weight:700; position:relative; }
+  .kebab{ width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; background:var(--surface); border:1px solid var(--line-strong); color:var(--ink-soft); border-radius:5px; font-size:13px; line-height:1; cursor:pointer; }
+  span.kebab{ cursor:default; }
+  button.kebab:hover{ border-color:var(--accent); color:var(--accent-dark); }
+  .dso-kebab-menu{ display:none; position:absolute; top:calc(100% + 4px); right:0; z-index:10; background:var(--surface); border:1px solid var(--line-strong); border-radius:10px; box-shadow:var(--shadow-md); padding:10px 12px; width:280px; font-weight:400; }
   .dso-kebab-menu.open{ display:block; }
-  .dso-kebab-menu .kebab-title{ font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft); font-weight:700; margin:0 0 8px; }
-  .dso-kebab-menu label{ display:flex; align-items:center; gap:8px; font-size:12px; font-weight:500; color:var(--ink); padding:4px 0; cursor:pointer; }
+  .kebab-title{ font-size:11px; font-weight:700; color:var(--ink-soft); margin:0 0 6px; }
+  .dso-kebab-menu label{ display:flex; align-items:center; gap:8px; font-size:12.5px; padding:4px 0; cursor:pointer; }
   .dso-kebab-menu input{ accent-color:var(--accent); }
 
-  .dso-field-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  .dso-field label{ display:block; font-size:12px; font-weight:600; color:var(--ink); margin-bottom:6px; }
-  .dso-field-combo{ display:flex; }
-  .dso-field-combo select{
-    font-family:"IBM Plex Sans"; font-size:12.5px; border:1px solid var(--line-strong); border-right:none;
-    border-radius:8px 0 0 8px; padding:8px 8px; background:var(--canvas); color:var(--ink); cursor:pointer; width:84px;
-  }
-  .dso-field-combo .combo-input{ position:relative; flex:1; }
-  .dso-field-combo input{
-    width:100%; font-family:"IBM Plex Mono"; font-size:12.5px; border:1px solid var(--line-strong);
-    border-radius:0 8px 8px 0; padding:8px 34px 8px 10px; background:var(--surface); color:var(--ink);
-  }
-  .dso-field-combo input:focus, .dso-field input:focus{ outline:2px solid var(--accent); outline-offset:-1px; }
-  .dso-field-combo .unit{ position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:11px; color:var(--ink-soft); pointer-events:none; }
-  .dso-field input.plain{ width:100%; font-family:"IBM Plex Mono"; font-size:12.5px; border:1px solid var(--line-strong); border-radius:8px; padding:8px 34px 8px 10px; background:var(--surface); color:var(--ink); }
-  .dso-field-wrap{ position:relative; }
-  .dso-field-wrap .unit{ position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:11px; color:var(--ink-soft); pointer-events:none; }
-  .dso-helper{ font-size:11px; color:var(--ink-soft); margin-top:6px; }
+  .f-label{ display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--ink); margin:0 0 6px; }
+  .f-row{ display:flex; gap:8px; }
+  .f-half{ max-width:268px; }
+  .f-select{ font-family:"IBM Plex Sans"; font-size:13px; border:1px solid var(--line-strong); border-radius:7px; padding:8px 10px; background:var(--surface); color:var(--ink); cursor:pointer; width:118px; flex:none; }
+  .f-select.wide{ width:100%; max-width:340px; }
+  .f-input{ position:relative; flex:1; min-width:0; }
+  .f-input input{ width:100%; font-family:"IBM Plex Mono"; font-size:13px; border:1px solid var(--line-strong); border-radius:7px; padding:8px 46px 8px 10px; background:var(--surface); color:var(--ink); }
+  .f-input .unit{ position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:11px; color:var(--ink-soft); pointer-events:none; }
+  .f-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:440px){ .f-grid{ grid-template-columns:1fr; } }
+  .minstay-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .minstay{ flex:none; width:128px; }
+  .minstay input{ padding-right:60px; }
+  .dso-helper{ font-size:11.5px; color:var(--ink-soft); }
+  .dso-helper.indent{ margin:-8px 0 0 23px; }
 
   .dso-switch-row{ display:flex; align-items:center; gap:10px; }
-  .switch{ position:relative; width:36px; height:20px; flex:none; }
-  .switch input{ opacity:0; width:0; height:0; position:absolute; }
-  .switch .track{ position:absolute; inset:0; background:var(--line-strong); border-radius:999px; cursor:pointer; transition:background .15s ease; }
-  .switch .thumb{ position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:#fff; transition:transform .15s ease; box-shadow:var(--shadow-sm); }
+  .switch{ position:relative; width:38px; height:21px; flex:none; cursor:pointer; }
+  .switch input{ position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer; }
+  .switch .track{ position:absolute; inset:0; background:var(--line-strong); border-radius:999px; transition:background .15s ease; pointer-events:none; }
+  .switch .thumb{ position:absolute; top:2px; left:2px; width:17px; height:17px; border-radius:50%; background:#fff; box-shadow:var(--shadow-sm); transition:transform .15s ease; }
   .switch input:checked + .track{ background:var(--good); }
-  .switch input:checked + .track .thumb{ transform:translateX(16px); }
-  .dso-switch-row .lbl{ font-size:12.5px; font-weight:700; color:var(--ink); }
+  .switch input:checked + .track .thumb{ transform:translateX(17px); }
+  .switch input:focus-visible + .track{ outline:2px solid var(--accent); outline-offset:2px; }
+  .switch.disabled{ opacity:0.55; cursor:not-allowed; }
+  .switch.disabled input{ cursor:not-allowed; }
+  .dso-switch-row .lbl{ font-size:13px; font-weight:700; }
 
-  .dso-pill-block{ margin-top:12px; }
-  .dso-pill-block .pb-label{ font-size:12px; font-weight:600; color:var(--ink); margin-bottom:7px; }
+  .ci-grid{ display:grid; grid-template-columns:138px 1fr; gap:10px 10px; align-items:start; }
+  .ci-grid .lbl{ font-size:12.5px; padding-top:5px; }
+  .req{ color:var(--accent-dark); }
+  @media (max-width:440px){ .ci-grid{ grid-template-columns:1fr; gap:4px; } }
   .pill-row{ display:flex; gap:5px; flex-wrap:wrap; }
-  .pill{
-    font-family:"IBM Plex Sans"; font-size:12px; font-weight:600; color:var(--ink-soft);
-    background:var(--surface); border:1px solid var(--line-strong); border-radius:7px;
-    padding:6px 10px; cursor:pointer; min-width:34px; text-align:center;
-  }
-  .pill:hover{ border-color:var(--accent); }
+  .pill{ font-family:"IBM Plex Sans"; font-size:12px; font-weight:500; color:var(--ink-soft); background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:5px 9px; min-width:34px; cursor:pointer; }
+  .pill.day:not(.on){ text-decoration:line-through; }
   .pill.on{ background:var(--accent-tint); border-color:var(--accent); color:var(--accent-dark); }
-  .pill.all-pill{ font-weight:700; }
-  .dso-error{ font-size:11px; color:var(--accent-dark); margin-top:6px; }
+  .pill.all-pill{ color:var(--ink); border-color:var(--ink-soft); font-weight:600; }
+  .pill:hover{ border-color:var(--accent); }
+  .dso-error{ font-size:11px; color:var(--accent-dark); margin-top:4px; }
 
-  .dso-note-area{
-    width:100%; margin-top:8px; font-family:"IBM Plex Sans"; font-size:12.5px; border:1px solid var(--line-strong);
-    border-radius:8px; padding:10px; background:var(--surface); color:var(--ink); resize:vertical; min-height:56px;
-  }
-  .dso-note-area:focus{ outline:2px solid var(--accent); outline-offset:-1px; }
+  .dso-warning{ display:flex; gap:9px; align-items:flex-start; font-size:12.5px; line-height:1.5; background:var(--warn-bg); border:1px solid var(--warn-line); border-radius:8px; padding:10px 12px; }
+  .dso-warning .wicon{ color:var(--warn-ink); flex:none; }
+  .dso-note{ display:flex; gap:9px; align-items:flex-start; font-size:12.5px; line-height:1.5; background:var(--info-bg); border:1px solid var(--info-line); border-radius:8px; padding:10px 12px; }
+  .dso-note .wicon{ color:var(--type-checkin); flex:none; font-weight:700; }
+  .linkish{ border:none; background:none; padding:0; color:var(--type-checkin); font-weight:600; cursor:pointer; text-decoration:underline; text-underline-offset:2px; font-size:12.5px; text-align:left; }
+  .linkish:hover{ color:var(--ink); }
+  .new-tag{ font-family:"IBM Plex Mono"; font-size:9.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--good); background:var(--good-tint); border-radius:4px; padding:2px 5px; }
 
-  .dso-footer{ display:flex; align-items:center; gap:12px; border-top:1px solid var(--line); padding-top:14px; margin-top:4px; }
-  .dso-trash{ width:34px; height:34px; border-radius:8px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft); cursor:pointer; flex:none; font-size:14px; }
-  .dso-trash:hover{ border-color:var(--accent); color:var(--accent-dark); }
-  .dso-adr{ font-family:"IBM Plex Mono"; font-size:11.5px; color:var(--ink-soft); line-height:1.3; }
-  .dso-adr b{ color:var(--ink); }
-  .dso-footer-actions{ margin-left:auto; display:flex; gap:8px; }
-  .dso-btn{ font-family:"Sora"; font-weight:600; font-size:12.5px; border-radius:9px; padding:9px 14px; cursor:pointer; }
-  .dso-btn-cancel{ background:none; border:1px solid var(--line-strong); color:var(--ink-soft); }
+  .dso-note-area{ width:100%; font-family:"IBM Plex Sans"; font-size:12.5px; border:1px solid var(--line-strong); border-radius:7px; padding:10px; background:var(--surface); color:var(--ink); resize:vertical; min-height:78px; }
+
+  .dso-trash{ width:36px; height:36px; border-radius:7px; border:1px solid var(--line-strong); background:var(--surface); cursor:pointer; flex:none; font-size:14px; }
+  .dso-trash:hover{ border-color:var(--accent); }
+  .dso-adr{ font-size:12.5px; line-height:1.6; display:grid; grid-template-columns:auto auto; column-gap:12px; }
+  .dso-adr b{ font-weight:600; font-family:"IBM Plex Mono"; }
+  .dso-footer-actions{ margin-left:auto; display:flex; gap:10px; }
+  .dso-btn{ font-family:"Sora"; font-weight:600; font-size:13px; border-radius:7px; padding:10px 22px; cursor:pointer; }
+  .dso-btn-cancel{ background:var(--surface); border:1px solid var(--line-strong); color:var(--ink); }
   .dso-btn-cancel:hover{ background:var(--canvas); }
-  .dso-btn-add{ background:var(--accent); border:none; color:#fff; display:flex; align-items:center; gap:6px; }
-  .dso-btn-add:hover{ background:var(--accent-dark); }
-  .dso-btn-add .caret{ border-left:1px solid rgba(255,255,255,0.4); padding-left:6px; font-size:10px; }
+  .dso-btn-add{ background:var(--accent); border:1px solid var(--accent); color:#fff; min-width:104px; }
+  .dso-btn-add:hover{ background:var(--accent-dark); border-color:var(--accent-dark); }
 
-  /* ---------- Internals disclosure ---------- */
-  details.internals{
-    background:var(--surface); border:1px solid var(--line); border-radius:14px;
-    padding:4px 20px;
+  /* proposed-only controls */
+  .range-chips{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+  .rchip{ display:inline-flex; align-items:center; gap:4px; border:1px solid var(--line-strong); border-radius:7px; padding:6px 6px 6px 10px; font-size:13px; background:var(--surface); white-space:nowrap; }
+  .rchip .cal-ico{ margin-right:2px; }
+  .rchip button{ border:none; background:none; color:var(--ink-soft); cursor:pointer; font-size:14px; width:20px; height:20px; border-radius:4px; line-height:1; }
+  .rchip button:hover{ background:var(--canvas); color:var(--accent-dark); }
+  .add-dates-btn{ display:inline-flex; align-items:center; gap:6px; border:1px dashed var(--line-strong); background:none; border-radius:7px; padding:6px 10px; font-size:12.5px; font-weight:600; color:var(--type-checkin); cursor:pointer; }
+  .add-dates-btn:hover{ border-color:var(--type-checkin); }
+  .add-dates-row{ display:flex; gap:6px; margin-top:8px; }
+  .add-dates-row input{ flex:1; min-width:0; font-size:13px; border:1px solid var(--line-strong); border-radius:7px; padding:8px 10px; background:var(--surface); color:var(--ink); }
+  .add-dates-row .dso-btn{ padding:8px 14px; }
+  .seg{ display:grid; grid-template-columns:repeat(4, 1fr); border:1px solid var(--line-strong); border-radius:8px; overflow:hidden; }
+  .seg button{ font-size:12.5px; font-weight:600; padding:9px 6px; border:none; border-left:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft); cursor:pointer; }
+  .seg button:first-child{ border-left:none; }
+  .seg button:hover{ color:var(--ink); }
+  .seg button.on{ background:var(--accent-tint); color:var(--accent-dark); }
+  .seg button.on[data-v="none"]{ background:var(--canvas); color:var(--ink); }
+  .seg.disabled{ opacity:0.5; pointer-events:none; }
+  @media (max-width:420px){
+    .seg{ grid-template-columns:repeat(2, 1fr); }
+    .seg button:nth-child(3){ border-left:none; }
+    .seg button:nth-child(n+3){ border-top:1px solid var(--line-strong); }
   }
-  details.internals summary{
-    cursor:pointer; padding:14px 0; font-family:"Sora"; font-weight:600; font-size:13.5px;
-    list-style:none; display:flex; align-items:center; gap:8px; color:var(--ink);
-  }
-  details.internals summary::-webkit-details-marker{ display:none; }
-  details.internals summary::before{
-    content:"›"; display:inline-block; transition:transform .15s ease; font-size:16px; color:var(--ink-soft);
-  }
-  details.internals[open] summary::before{ transform:rotate(90deg); }
-  .internals-body{ padding:0 0 18px; color:var(--ink-soft); font-size:13px; display:flex; flex-direction:column; gap:10px; }
-  .internals-body code{
-    font-family:"IBM Plex Mono"; font-size:12px; background:var(--canvas);
-    padding:1px 6px; border-radius:5px; color:var(--ink);
-  }
-  .internals-diagram{
-    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-    font-family:"IBM Plex Mono"; font-size:12px;
-    padding:12px; background:var(--canvas); border-radius:10px;
-  }
-  .internals-diagram .box{
-    border:1px solid var(--line-strong); border-radius:8px; padding:8px 12px; background:var(--surface);
-  }
-  .internals-diagram .arrow{ color:var(--ink-soft); }
+  .rpreview{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:3px; font-size:12.5px; }
+  .rpreview li{ display:flex; gap:12px; align-items:baseline; flex-wrap:wrap; }
+  .rpreview .d{ font-family:"IBM Plex Mono"; font-weight:600; min-width:96px; }
+  .rpreview .ok{ color:var(--good); }
+  .rpreview .no{ color:var(--accent-dark); font-weight:600; }
+  .rpreview .more{ color:var(--ink-soft); }
+  details.saved-as{ font-size:12px; color:var(--ink-soft); }
+  details.saved-as summary{ cursor:pointer; width:fit-content; }
+  details.saved-as pre{ margin:6px 0 0; font-family:"IBM Plex Mono"; font-size:11.5px; color:var(--ink); background:var(--canvas); padding:8px 10px; border-radius:7px; white-space:pre-wrap; overflow-x:auto; }
+
+  /* ---------- Support cases ---------- */
+  .case-filters{ display:flex; flex-wrap:wrap; gap:6px; }
+  .fchip{ border:1px solid var(--line-strong); background:var(--surface); border-radius:999px; padding:6px 12px; font-size:12.5px; font-weight:600; color:var(--ink-soft); cursor:pointer; display:inline-flex; gap:6px; align-items:center; }
+  .fchip .n{ font-family:"IBM Plex Mono"; font-size:11px; }
+  .fchip:hover{ color:var(--ink); }
+  .fchip[aria-pressed="true"]{ background:var(--ink); border-color:var(--ink); color:var(--surface); }
+  .case-list{ display:flex; flex-direction:column; gap:14px; }
+  .case{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:14px; }
+  .case-head{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .case-id{ font-family:"IBM Plex Mono"; font-size:11.5px; font-weight:700; color:var(--ink-soft); margin-right:4px; }
+  .tag{ font-size:11.5px; font-weight:600; background:var(--canvas); border:1px solid var(--line); border-radius:5px; padding:1px 7px; color:var(--ink-soft); }
+  .ticket{ font-family:"Sora", sans-serif; font-size:15.5px; font-weight:500; line-height:1.5; margin:0; max-width:72ch; text-wrap:pretty; }
+  .ticket::before{ content:"\201C"; }
+  .ticket::after{ content:"\201D"; }
+  .case-cols{ display:grid; grid-template-columns:1.35fr 1fr; gap:14px; align-items:start; }
+  @media (max-width:820px){ .case-cols{ grid-template-columns:1fr; } }
+  .case-col{ border:1px solid var(--line); border-radius:10px; padding:12px 14px 14px; display:flex; flex-direction:column; gap:10px; }
+  .case-col h4{ margin:0; font-family:"Sora"; font-size:12.5px; font-weight:600; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .steps-count{ font-family:"IBM Plex Mono"; font-size:11px; font-weight:600; border-radius:999px; padding:2px 8px; white-space:nowrap; }
+  .case-col.cur .steps-count{ background:var(--accent-tint); color:var(--accent-dark); }
+  .case-col.pro .steps-count{ background:var(--good-tint); color:var(--good); }
+  .case-col ol{ margin:0; padding-left:20px; font-size:13px; display:flex; flex-direction:column; gap:6px; }
+  .case-col ol li::marker{ font-family:"IBM Plex Mono"; font-size:11.5px; color:var(--ink-soft); }
+  .gotcha{ font-size:12.5px; background:var(--warn-bg); border:1px solid var(--warn-line); border-radius:8px; padding:8px 10px; }
+  .gotcha b{ color:var(--warn-ink); }
+  .try-btn{ align-self:flex-start; font-family:"Sora"; font-size:12px; font-weight:600; border:1px solid var(--line-strong); background:var(--surface); border-radius:7px; padding:7px 12px; cursor:pointer; color:var(--ink); }
+  .try-btn:hover{ border-color:var(--accent); color:var(--accent-dark); }
+
+  /* ---------- Toast ---------- */
+  .toast{ position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(16px); background:var(--ink); color:var(--surface); padding:11px 18px; border-radius:10px; font-size:13px; font-weight:500; box-shadow:var(--shadow-lg); display:flex; align-items:center; gap:9px; opacity:0; pointer-events:none; transition:opacity .18s ease, transform .18s ease; z-index:90; max-width:calc(100% - 32px); }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  .toast .tick{ width:16px; height:16px; border-radius:50%; background:var(--good); color:#fff; display:flex; align-items:center; justify-content:center; font-size:10px; flex:none; }
 
   footer{ text-align:center; color:var(--ink-soft); font-size:12px; }
 </style>
 
 <div class="wrap">
 
-  <header>
-    <span class="eyebrow">PriceLabs · Multicalendar POC</span>
-    <h1>Blocking check-in or checkout on a date, three ways</h1>
-    <p>Today, keeping guests from checking in <i>or</i> checking out on Dec 25 means building a generic override, finding a hidden toggle, then re-describing that single date as a day-of-week rule — same friction whichever direction you're blocking. Below are three interaction directions that collapse this into: pick date(s), pick check-in / checkout / both, done — same underlying model, different UI shape. Use the tabs to compare them for the dev conversation.</p>
-  </header>
+  <div class="tabswitch" id="tabswitch" role="tablist" aria-label="Views">
+    <button role="tab" aria-selected="true" aria-controls="tab-current" data-tab="current">Current flow</button>
+    <button role="tab" aria-selected="false" aria-controls="tab-proposed" data-tab="proposed">Proposed flow</button>
+    <button role="tab" aria-selected="false" aria-controls="tab-cases" data-tab="cases">Support cases <span class="count" id="caseCount"></span></button>
+  </div>
 
-  <section class="compare">
-    <div class="compare-card today">
-      <div class="compare-head">
-        <h3>Today — 7 steps, 3 screens</h3>
-        <span class="compare-metric">day-of-week workaround</span>
+  <section id="tab-current" role="tabpanel" aria-label="Current flow">
+    <div class="app">
+      <div class="dso-toolbar">
+        <select class="dso-select" id="cListing" aria-label="Listing"></select>
+        <div class="month-nav">
+          <button id="cPrev" aria-label="Previous month">‹</button>
+          <span class="month-label" id="cMonth"></span>
+          <button id="cNext" aria-label="Next month">›</button>
+        </div>
       </div>
-      <ol class="steps">
-        <li><span class="step-num">1</span><div><b>Dynamic Pricing → Customizations</b></div></li>
-        <li><span class="step-num">2</span><div><b>Select the PMS / listing account</b></div></li>
-        <li><span class="step-num">3</span><div><b>Open Account Calendar, select date(s)</b></div></li>
-        <li><span class="step-num">4</span><div><b>Create a Date-Specific Override</b><span class="sub">a generic container — nothing check-in/out related exists yet</span></div></li>
-        <li><span class="step-num">5</span><div><b>Discover &amp; enable "Check-in and Check-out"</b><span class="sub">a nested, non-default toggle</span></div></li>
-        <li><span class="step-num">6</span><div><b>Cross out weekdays over a date range</b><span class="sub">Dec 25 is a Friday — so block "Friday" for a window narrow enough not to catch other Fridays</span></div></li>
-        <li><span class="step-num">7</span><div><b>Save, refresh</b></div></li>
-      </ol>
-      <div class="tax">The real cost: reframing one exact date as a recurring weekday rule scoped to a narrow window — a workaround, not a designed path.</div>
-    </div>
-
-    <div class="compare-card proposed">
-      <div class="compare-head">
-        <h3>Proposed — 2 clicks, 1 screen</h3>
-        <span class="compare-metric">direct date targeting</span>
+      <div class="cal-pane">
+        <div class="cal-weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+        <div class="cal-grid" id="cGrid"></div>
       </div>
-      <ol class="steps">
-        <li><span class="step-num">1</span><div><b>Pick scope, then select date(s)</b><span class="sub">this listing / this PMS account / all listings — chosen once, upfront</span></div></li>
-        <li><span class="step-num">2</span><div><b>Choose Block checkout / check-in / both</b><span class="sub">shown immediately after selecting — no separate override to discover</span></div></li>
-        <li><span class="step-num">3</span><div><b>Apply</b><span class="sub">override + day-of-week translation happen invisibly, underneath</span></div></li>
-      </ol>
-      <div class="tax" style="color:var(--good); background:var(--good-tint);">The user only ever thinks in exact dates. The day-of-week/override machinery still runs — they never have to touch it.</div>
+      <div class="dso-legend">
+        <span><span class="sw" style="background:var(--d-low)"></span>Low</span>
+        <span><span class="sw" style="background:var(--d-normal)"></span>Normal</span>
+        <span><span class="sw" style="background:var(--d-good)"></span>Good</span>
+        <span><span class="sw" style="background:var(--d-high)"></span>High</span>
+        <span><span class="rbadge ci">No CI</span><span class="rbadge co">No CO</span><span class="rbadge both">No CI/CO</span>Check-in / Check-out / Both restricted</span>
+        <span class="hint">Drag across dates to add an override</span>
+      </div>
     </div>
   </section>
 
-  <section style="display:flex; flex-direction:column; gap:16px;">
-    <div class="proto-label">
-      <div>
-        <h2>Today's real modal, plus three ways to simplify it</h2>
-        <p>Tab 0 is pulled field-for-field from the live app. Tabs 1–3 are proposed directions. Pick dates, choose a restriction, apply — compare which shape fits the dev conversation best.</p>
+  <section id="tab-proposed" role="tabpanel" aria-label="Proposed flow" hidden>
+    <div class="app">
+      <div class="dso-toolbar">
+        <select class="dso-select" id="pListing" aria-label="Listing"></select>
+        <div class="month-nav">
+          <button id="pPrev" aria-label="Previous month">‹</button>
+          <span class="month-label" id="pMonth"></span>
+          <button id="pNext" aria-label="Next month">›</button>
+        </div>
       </div>
-      <div class="tabswitch" id="tabswitch">
-        <button class="active" data-tab="0"><span class="num">0</span> Today (real app)</button>
-        <button data-tab="1"><span class="num">1</span> Contextual panel</button>
-        <button data-tab="2"><span class="num">2</span> Guided modal</button>
-        <button data-tab="3"><span class="num">3</span> Portfolio batch</button>
+      <div class="cal-pane">
+        <div class="cal-weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+        <div class="cal-grid" id="pGrid"></div>
       </div>
-    </div>
-
-    <!-- ============ VARIANT 0 : TODAY'S REAL DSO MODAL ============ -->
-    <div class="variant-panel active" id="panel-0">
-      <div class="variant-desc"><b>Today, for real —</b> recreated field-for-field from <code>app.pricelabs.co</code>'s pricing calendar. <b>Drag across date cells</b> (exactly like the live app) to open Date Specific Overrides pre-filled with that range — a single click works too, for a one-night range. Switch listings below: the Check-In/Check-Out toggle is only usable once an account has a default Check In/Out set up elsewhere — until then it's locked behind a warning, which is friction on top of the friction.</div>
-
-      <div class="app">
-        <div class="dso-toolbar">
-          <select class="dso-select" id="listingSelect0">
-            <option value="beach">Beach Town Guest House 2 · USD</option>
-            <option value="asd">Asd · INR</option>
-            <option value="jefferson" selected>Jefferson St · USD</option>
-          </select>
-          <div class="month-nav" style="margin-left:16px;">
-            <button id="prevMonth0" aria-label="Previous month">‹</button>
-            <span class="month-label" id="monthLabel0"></span>
-            <button id="nextMonth0" aria-label="Next month">›</button>
-          </div>
-          <button class="dso-add-btn" id="dsoAddBtn">+ Add</button>
-        </div>
-        <div class="dso-cal-pane">
-          <div class="cal-weekdays">
-            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-          </div>
-          <div class="dso-cal-grid" id="calGrid0"></div>
-        </div>
-        <div class="dso-legend">
-          <span><span class="sw" style="background:#d8edd3;"></span><b>Low</b></span>
-          <span><span class="sw" style="background:#c3e3bc;"></span><b>Normal</b></span>
-          <span><span class="sw" style="background:#dbeaf7;"></span><b>Good</b></span>
-          <span><span class="sw" style="background:#c3dcf2;"></span><b>High</b></span>
-          <span>🚫 restriction saved on this date</span>
-        </div>
+      <div class="dso-legend">
+        <span><span class="sw" style="background:var(--d-low)"></span>Low</span>
+        <span><span class="sw" style="background:var(--d-normal)"></span>Normal</span>
+        <span><span class="sw" style="background:var(--d-good)"></span>Good</span>
+        <span><span class="sw" style="background:var(--d-high)"></span>High</span>
+        <span><span class="rbadge ci">No CI</span><span class="rbadge co">No CO</span><span class="rbadge both">No CI/CO</span>Check-in / Check-out / Both restricted</span>
+        <span class="hint">Drag across dates to add an override</span>
       </div>
     </div>
-
-    <!-- ============ VARIANT 1 : CONTEXTUAL SIDE PANEL ============ -->
-    <div class="variant-panel" id="panel-1">
-      <div class="variant-desc"><b>Contextual panel —</b> click dates directly on the calendar; the restriction choice appears right next to your selection, docked in a permanent side panel. Best fit for spot-fixing one listing while looking at its calendar.</div>
-
-      <div class="app">
-        <div class="app-toolbar">
-          <div class="scope-block">
-            <label for="scopeSelect1">Scope</label>
-            <select class="scope-select" id="scopeSelect1">
-              <option>This listing — 12 Birch Lane</option>
-              <option>This PMS account — Pass Your Keys (Hostaway)</option>
-              <option>All listings — Pass Your Keys (48 listings)</option>
-            </select>
-          </div>
-          <div class="toolbar-divider"></div>
-          <div class="month-nav">
-            <button id="prevMonth1" aria-label="Previous month">‹</button>
-            <span class="month-label" id="monthLabel1"></span>
-            <button id="nextMonth1" aria-label="Next month">›</button>
-          </div>
-        </div>
-
-        <div class="app-body">
-          <div class="cal-pane">
-            <div class="cal-weekdays">
-              <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-            </div>
-            <div class="cal-grid" id="calGrid1"></div>
-          </div>
-
-          <div class="side-pane">
-            <div class="side-section">
-              <h4>Add dates</h4>
-              <div class="add-row">
-                <input type="text" id="dateInput1" placeholder="e.g. Dec 25, Dec 31, Jan 1">
-                <button id="addDateBtn1">Add</button>
-              </div>
-              <div class="hint">Non-adjacent dates welcome — holidays rarely line up.</div>
-            </div>
-
-            <div class="side-section">
-              <h4>Selected dates</h4>
-              <div class="chip-tray" id="chipTray1">
-                <span class="empty-note">None yet — click the calendar or add above.</span>
-              </div>
-
-              <button class="restrict-btn" id="restrictBtn1" disabled>Restrict selected dates</button>
-
-              <div class="panel" id="restrictPanel1">
-                <h5>What should happen on these dates?</h5>
-                <label class="radio-opt">
-                  <input type="radio" name="rtype1" value="co" checked>
-                  <span class="dot" style="background:var(--type-checkout)"></span>
-                  Block checkout
-                </label>
-                <label class="radio-opt">
-                  <input type="radio" name="rtype1" value="ci">
-                  <span class="dot" style="background:var(--type-checkin)"></span>
-                  Block check-in
-                </label>
-                <label class="radio-opt">
-                  <input type="radio" name="rtype1" value="both">
-                  <span class="dot" style="background:var(--type-both)"></span>
-                  Block both
-                </label>
-                <div class="scope-echo"><span>Applies to</span><b id="scopeEcho1">This listing</b></div>
-                <div class="apply-row">
-                  <button class="cancel" id="cancelPanel1">Cancel</button>
-                  <button class="apply" id="applyPanel1">Apply</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="side-section">
-              <h4>Active restrictions</h4>
-              <div class="active-list" id="activeList1">
-                <span class="empty-note">Nothing restricted yet this session.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ============ VARIANT 2 : GUIDED MODAL ============ -->
-    <div class="variant-panel" id="panel-2">
-      <div class="variant-desc"><b>Guided modal —</b> the calendar stays full-width; picking dates surfaces a floating action bar, and one click opens a single modal with everything needed to finish. Best fit when the calendar should stay uncluttered and the action should feel deliberate.</div>
-
-      <div class="app">
-        <div class="app-toolbar">
-          <div class="scope-block">
-            <label for="scopeSelect2">Scope</label>
-            <select class="scope-select" id="scopeSelect2">
-              <option>This listing — 12 Birch Lane</option>
-              <option>This PMS account — Pass Your Keys (Hostaway)</option>
-              <option>All listings — Pass Your Keys (48 listings)</option>
-            </select>
-          </div>
-          <div class="toolbar-divider"></div>
-          <div class="scope-block">
-            <label for="dateInput2">Jump-add dates</label>
-            <div class="add-row" style="min-width:220px;">
-              <input type="text" id="dateInput2" placeholder="e.g. Dec 25, Jan 1">
-              <button id="addDateBtn2">Add</button>
-            </div>
-          </div>
-          <div class="month-nav">
-            <button id="prevMonth2" aria-label="Previous month">‹</button>
-            <span class="month-label" id="monthLabel2"></span>
-            <button id="nextMonth2" aria-label="Next month">›</button>
-          </div>
-        </div>
-
-        <div class="app-body full">
-          <div class="cal-pane">
-            <div class="cal-weekdays">
-              <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-            </div>
-            <div class="cal-grid" id="calGrid2"></div>
-          </div>
-        </div>
-
-        <div class="selbar" id="selBar2">
-          <span class="count" id="selCount2">0 dates selected</span>
-          <div class="actions">
-            <button class="clear" id="clearSel2">Clear</button>
-            <button class="go" id="openModal2">Restrict these dates</button>
-          </div>
-        </div>
-
-        <div class="active-wrap">
-          <h4>Active restrictions</h4>
-          <div class="active-list" id="activeList2">
-            <span class="empty-note">Nothing restricted yet this session.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ============ VARIANT 3 : PORTFOLIO BATCH TABLE ============ -->
-    <div class="variant-panel" id="panel-3">
-      <div class="variant-desc"><b>Portfolio batch —</b> no calendar at all: add a short list of dates (holidays rarely fall in the same month), set one restriction type for the whole batch or override a few rows, apply once across an entire PMS connection. Best fit for portfolio-wide asks like Pass Your Keys blocking every Hostaway listing for the holidays.</div>
-
-      <div class="app">
-        <div class="bulk-toolbar">
-          <div class="scope-block">
-            <label for="scopeSelect3">Scope</label>
-            <select class="scope-select" id="scopeSelect3">
-              <option>This listing — 12 Birch Lane</option>
-              <option>This PMS account — Pass Your Keys (Hostaway)</option>
-              <option selected>All listings — Pass Your Keys (48 listings)</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="bulk-body">
-          <div>
-            <p class="bulk-sec-label">Quick-add holidays (2026)</p>
-            <div class="holiday-chips" id="holidayChips3"></div>
-          </div>
-
-          <div>
-            <p class="bulk-sec-label">Add specific dates</p>
-            <div class="add-row" style="max-width:420px;">
-              <input type="text" id="dateInput3" placeholder="e.g. Dec 25, Dec 31, Jan 1">
-              <button id="addRowBtn3">Add</button>
-            </div>
-          </div>
-
-          <div>
-            <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px;">
-              <p class="bulk-sec-label" style="margin:0;">Batch (<span id="rowCount3">0</span>)</p>
-              <div class="bulk-setall">
-                <select id="setAllType3">
-                  <option value="co">Block checkout</option>
-                  <option value="ci">Block check-in</option>
-                  <option value="both">Block both</option>
-                </select>
-                <button id="setAllBtn3">Set all rows</button>
-              </div>
-            </div>
-            <div class="bulk-table-wrap">
-              <table class="bulk-table">
-                <thead><tr><th>Date</th><th>Restriction</th><th></th></tr></thead>
-                <tbody id="tableBody3"></tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="bulk-footer">
-            <span class="summary" id="bulkSummary3">Nothing queued yet.</span>
-            <button class="bulk-apply-btn" id="applyAllBtn3" disabled>Apply to batch</button>
-          </div>
-        </div>
-
-        <div class="active-wrap">
-          <h4>Active restrictions</h4>
-          <div class="active-list" id="activeList3">
-            <span class="empty-note">Nothing restricted yet this session.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </section>
 
-  <details class="internals">
-    <summary>How this maps internally (for the dev conversation)</summary>
-    <div class="internals-body">
-      <p>The user never sees any of this in any of the three variants — but nothing about the backend model has to change. Each applied date still becomes a <code>Date-Specific Override</code> with check-in/checkout rules and a day-of-week exclusion; the UI now assembles it in one pass instead of asking the user to.</p>
-      <div class="internals-diagram">
-        <span class="box">Dec 25, 2026 selected</span>
-        <span class="arrow">→</span>
-        <span class="box">weekday = Friday</span>
-        <span class="arrow">→</span>
-        <span class="box">override: Dec 25–Dec 25, exclude Fri, Block Checkout</span>
-      </div>
-      <p>Non-adjacent picks (e.g. Dec 25 + Jan 1) become one override per contiguous run, or one per date if weekdays collide across the range — resolved silently, and listed as one line each under "Active restrictions" regardless of how many overrides it took underneath.</p>
+  <section id="tab-cases" role="tabpanel" aria-label="Support cases" hidden>
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div class="case-filters" id="caseFilters" role="group" aria-label="Filter cases"></div>
+      <div class="case-list" id="caseList"></div>
     </div>
-  </details>
+  </section>
 
-  <footer>Rough interaction POC · not connected to live account data</footer>
+  <footer>Interaction POC · sample listings, not connected to a live account</footer>
 </div>
 
-<div class="toast" id="toast"><span class="tick">✓</span><span id="toastText"></span></div>
-
-<!-- Variant 2 modal -->
-<div class="modal-overlay" id="modalOverlay2">
-  <div class="modal-card">
-    <h5>What should happen on these dates?</h5>
-    <p class="modal-sub" id="modalCountText2">3 dates selected</p>
-    <div class="modal-chiprow" id="modalChips2"></div>
-    <label class="radio-opt">
-      <input type="radio" name="rtype2" value="co" checked>
-      <span class="dot" style="background:var(--type-checkout)"></span>
-      Block checkout
-    </label>
-    <label class="radio-opt">
-      <input type="radio" name="rtype2" value="ci">
-      <span class="dot" style="background:var(--type-checkin)"></span>
-      Block check-in
-    </label>
-    <label class="radio-opt">
-      <input type="radio" name="rtype2" value="both">
-      <span class="dot" style="background:var(--type-both)"></span>
-      Block both
-    </label>
-    <div class="scope-echo"><span>Applies to</span><b id="modalScopeEcho2">This listing</b></div>
-    <div class="apply-row">
-      <button class="cancel" id="modalCancel2">Cancel</button>
-      <button class="apply" id="modalApply2">Apply</button>
-    </div>
-  </div>
-</div>
-
-<!-- Variant 0: real Date Specific Overrides modal -->
-<div class="modal-overlay" id="dsoOverlay">
-  <div class="modal-card dso-modal-card">
-    <div class="dso-head">
-      <div class="dso-head-titles">
-        <h5>Date Specific Overrides</h5>
-        <a href="#" onclick="return false;">Learn More ↗</a>
-      </div>
-      <button class="dso-close" id="dsoClose" aria-label="Close">×</button>
-    </div>
-    <p class="dso-sub"><span id="dsoListingName">Jefferson St</span> | <a href="#" onclick="return false;">Learn More ↗</a></p>
-
-    <div class="dso-daterow">
-      <div class="dso-date-field">📅 <span id="dsoDateStart">Oct 7, 2026</span></div>
-      <div class="dso-date-field"><span id="dsoDateEnd">Oct 7, 2026</span></div>
-      <button class="dso-dupe-btn" id="dsoDupeBtn" title="Duplicate date range">⧉</button>
-      <label class="dso-check-row">
-        <input type="checkbox" id="dsoApplyDaysToggle">
-        Apply on Specific Days of the Week
-      </label>
-    </div>
-    <div class="pill-row" id="pillrow-applydays" style="display:none;"></div>
-
-    <div class="dso-sec-head">
-      Price Settings
-      <button class="kebab" id="priceKebabBtn">⋮</button>
-    </div>
-    <div class="dso-field">
-      <label>New Final Price</label>
-      <div class="dso-field-combo">
-        <select id="priceTypeSelect">
-          <option value="fixed" selected>Fixed</option>
-          <option value="percent">Percent</option>
-        </select>
-        <div class="combo-input"><input type="text" placeholder=""><span class="unit" id="priceUnit1">USD</span></div>
-      </div>
-    </div>
-    <div class="dso-field-grid">
-      <div class="dso-field">
-        <label>Minimum Price</label>
-        <div class="dso-field-combo">
-          <select id="minPriceTypeSelect"><option value="fixed" selected>Fixed</option><option value="percent">Percent</option></select>
-          <div class="combo-input"><input type="text" placeholder=""><span class="unit" id="priceUnit2">USD</span></div>
-        </div>
-      </div>
-      <div class="dso-field">
-        <label>Maximum Price</label>
-        <div class="dso-field-combo">
-          <select id="maxPriceTypeSelect"><option value="fixed" selected>Fixed</option><option value="percent">Percent</option></select>
-          <div class="combo-input"><input type="text" placeholder=""><span class="unit" id="priceUnit3">USD</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="dso-field">
-      <label>Base Price</label>
-      <div class="dso-field-wrap"><input type="text" class="plain" placeholder=""><span class="unit" id="priceUnit4">USD</span></div>
-    </div>
-
-    <div class="dso-sec-head">Stay Restrictions</div>
-    <div class="dso-field">
-      <label>Minimum Stay</label>
-      <div class="dso-field-wrap"><input type="text" class="plain" id="minStayInput" placeholder="Night(s)"><span class="unit">Night(s)</span></div>
-      <div class="dso-helper" id="minStayHelper">Can be overridden by orphan day customization ⓘ</div>
-      <div class="dso-warning" id="minStayWarning" style="display:none;">
-        <span class="wicon">⚠️</span>
-        <span>You need to set up a default minimum stay under <b>Customization → Stay Restrictions</b> before adding an override. The default helps apply restrictions if a date-specific override is removed. <a href="#" onclick="return false;">Learn More ↗</a></span>
-      </div>
-    </div>
-
-    <div class="dso-switch-row" style="margin-top:14px;">
-      <label class="switch" id="checkinoutSwitchWrap">
-        <input type="checkbox" id="checkinoutToggle">
-        <span class="track"><span class="thumb"></span></span>
-      </label>
-      <span class="lbl">Check-In/Check-Out</span>
-    </div>
-    <div class="dso-warning" id="checkinoutWarning" style="display:none;">
-      <span class="wicon">⚠️</span>
-      <span>You need to set up a default Check In/Out under <b>Customization → Stay Restrictions</b> before adding an override. The default helps apply restrictions if a date-specific override is removed. <a href="#" onclick="return false;">Learn More ↗</a></span>
-    </div>
-    <div id="checkinoutFields" style="display:none;">
-      <div class="dso-pill-block">
-        <div class="pb-label">Allow Check-In On*:</div>
-        <div class="pill-row" id="pillrow-checkin"></div>
-        <div class="dso-error" id="checkinError">At least one check-in day should be selected</div>
-      </div>
-      <div class="dso-pill-block">
-        <div class="pb-label">Allow Check-Out On*:</div>
-        <div class="pill-row" id="pillrow-checkout"></div>
-        <div class="dso-error" id="checkoutError">At least one check-out day should be selected</div>
-      </div>
-      <div class="dso-field" style="margin-top:12px;">
-        <label>Enforce Weekly</label>
-        <select class="dso-select" id="enforceWeeklySelect" style="width:100%;">
-          <option value="disabled" selected>Disabled</option>
-          <option value="enable">Enable</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="dso-sec-head" style="margin-top:14px;">
-      More Options
-      <button class="kebab" id="moreKebabBtn">⋮</button>
-      <div class="dso-kebab-menu" id="moreKebabMenu">
-        <p class="kebab-title">More Settings</p>
-        <label><input type="checkbox"> Keep Merge Checked by Default at Listing Level</label>
-        <label><input type="checkbox" checked> Always Show Notes Input</label>
-      </div>
-    </div>
-    <label class="dso-check-row"><input type="checkbox" checked> Merge with Existing Overrides</label>
-    <div class="dso-helper" style="margin-top:-6px; margin-left:24px;">Blank fields keep existing overrides; entered values replace them.</div>
-    <label class="dso-check-row"><input type="checkbox" id="autoExpireCheck"> Auto Expire Override <span title="Automatically remove this override after it expires">ⓘ</span></label>
-    <label class="dso-check-row"><input type="checkbox" id="noteCheck" checked> Note or Reason for Override</label>
-    <textarea class="dso-note-area" id="noteArea" placeholder="Press 'Shift+Enter' to add a new line"></textarea>
-
-    <div class="dso-footer">
-      <button class="dso-trash" id="dsoTrashBtn" title="Delete override">🗑</button>
-      <div class="dso-adr">ADR: <b id="dsoAdrVal">123</b><br>Total: <b id="dsoTotalVal">123</b></div>
-      <div class="dso-footer-actions">
-        <button class="dso-btn dso-btn-cancel" id="dsoCancelBtn">Cancel</button>
-        <button class="dso-btn dso-btn-add" id="dsoAddConfirmBtn">Add <span class="caret">▾</span></button>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="toast" id="toast" role="status" aria-live="polite"><span class="tick">✓</span><span id="toastText"></span></div>
 
 <script>
 (function(){
-  /* ---------------- shared helpers ---------------- */
+  'use strict';
+
+  /* ---------------- helpers ---------------- */
   var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var WD = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+  var WD_LONG = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  var ALL = [0,1,2,3,4,5,6];
+  var DEMAND = ['demand-low','demand-normal','demand-good','demand-high'];
+  var MON_IDX = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
 
+  function $(id){ return document.getElementById(id); }
   function key(d){ return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate(); }
-  function fmt(d){ return MONTHS[d.getMonth()].slice(0,3)+' '+d.getDate(); }
-  function fmtFull(d){ return MONTHS[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear(); }
-  function parseDateFromKey(k){ var p = k.split('-'); return new Date(+p[0], +p[1], +p[2]); }
+  function parseKey(k){ var p = k.split('-'); return new Date(+p[0], +p[1], +p[2]); }
+  function ymd(s){ var p = s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function addDays(d, n){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()+n); }
+  function nights(a, b){ return Math.round((b - a) / 86400000) + 1; }
+  function dayIdx(d){ return (d.getDay() + 6) % 7; }
+  function fmtFull(d){ return MONTHS[d.getMonth()].slice(0,3)+' '+d.getDate()+', '+d.getFullYear(); }
+  function fmtShort(d){ return MONTHS[d.getMonth()].slice(0,3)+' '+d.getDate(); }
+  function rangeLabel(a, b){ return +a === +b ? fmtFull(a) : fmtShort(a)+' – '+fmtFull(b); }
+  function money(n){ return Math.round(n).toLocaleString('en-US'); }
+  function eachDay(a, b, fn){ for(var d = new Date(a.getFullYear(), a.getMonth(), a.getDate()); d <= b; d = addDays(d, 1)) fn(d); }
 
-  function typeMeta(t){
-    if(t==='co') return {label:'Block checkout', cls:'co', dot:'var(--type-checkout)'};
-    if(t==='ci') return {label:'Block check-in', cls:'ci', dot:'var(--type-checkin)'};
-    return {label:'Block both', cls:'both', dot:'var(--type-both)'};
-  }
-
-  var toast = document.getElementById('toast');
-  var toastText = document.getElementById('toastText');
-  function showToast(msg){
+  var toastEl = $('toast'), toastText = $('toastText'), toastTimer;
+  function toast(msg){
     toastText.textContent = msg;
-    toast.classList.add('show');
-    clearTimeout(showToast._t);
-    showToast._t = setTimeout(function(){ toast.classList.remove('show'); }, 2600);
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2800);
   }
 
-  function renderActiveList(container, restrictions, onRemove){
-    if(restrictions.length===0){
-      container.innerHTML = '<span class="empty-note">Nothing restricted yet this session.</span>';
-      return;
+  function listingsFresh(){
+    return {
+      jefferson: { name:'Jefferson St', pms:'Demo PMS', currency:'USD', adr:341, minStayDefault:true, ciDefault:true, ciSupported:true },
+      beach:     { name:'Beach Town Guest House 2', pms:'', currency:'USD', adr:80, minStayDefault:true, ciDefault:false, ciSupported:true },
+      asd:       { name:'Asd', pms:'', currency:'INR', adr:6200, minStayDefault:false, ciDefault:false, ciSupported:true },
+      sabee:     { name:'Studio · Split', pms:'SabeeApp', currency:'EUR', adr:123, minStayDefault:true, ciDefault:true, ciSupported:false }
+    };
+  }
+  function fillListingSelect(sel, L, def){
+    Object.keys(L).forEach(function(k){
+      var o = document.createElement('option');
+      o.value = k;
+      o.textContent = L[k].name + (L[k].pms ? ' · ' + L[k].pms : '') + ' · ' + L[k].currency;
+      if(k === def) o.selected = true;
+      sel.appendChild(o);
+    });
+  }
+  function seedMarks(marks, seed){
+    Object.keys(seed).forEach(function(s){
+      var m = seed[s];
+      marks[key(ymd(s))] = { ov:true, ci:!!m.ci, co:!!m.co };
+    });
+  }
+
+  function makePillGroup(container, onChange){
+    var selected = new Set();
+    function render(){
+      container.innerHTML = '';
+      var all = document.createElement('button');
+      all.type = 'button'; all.className = 'pill all-pill'; all.textContent = 'All';
+      all.addEventListener('click', function(){
+        if(selected.size === 7) selected.clear(); else ALL.forEach(function(i){ selected.add(i); });
+        render(); if(onChange) onChange();
+      });
+      container.appendChild(all);
+      WD.forEach(function(lbl, i){
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'pill day' + (selected.has(i) ? ' on' : '');
+        b.textContent = lbl;
+        b.setAttribute('aria-pressed', selected.has(i) ? 'true' : 'false');
+        b.addEventListener('click', function(){
+          if(selected.has(i)) selected.delete(i); else selected.add(i);
+          render(); if(onChange) onChange();
+        });
+        container.appendChild(b);
+      });
     }
-    container.innerHTML = '';
-    restrictions.slice().sort(function(a,b){ return a.date-b.date; }).forEach(function(r){
-      var m = typeMeta(r.type);
-      var row = document.createElement('div');
-      row.className = 'active-row';
-      row.innerHTML =
-        '<span class="dot" style="background:'+m.dot+'"></span>' +
-        '<span class="meta"><b>'+fmtFull(r.date)+'</b><span>'+m.label+' · '+r.scope+'</span></span>';
-      var rm = document.createElement('button');
-      rm.className = 'rm';
-      rm.textContent = '✕';
-      rm.setAttribute('aria-label','Remove restriction');
-      rm.addEventListener('click', function(){ onRemove(r); });
-      row.appendChild(rm);
-      container.appendChild(row);
-    });
+    render();
+    return { selected:selected, set:function(arr){ selected.clear(); arr.forEach(function(i){ selected.add(i); }); render(); } };
   }
 
-  /* ---------------- tab switching ---------------- */
-  var tabButtons = document.querySelectorAll('#tabswitch button');
-  tabButtons.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      tabButtons.forEach(function(b){ b.classList.remove('active'); });
-      btn.classList.add('active');
-      document.querySelectorAll('.variant-panel').forEach(function(p){ p.classList.remove('active'); });
-      document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
-    });
+  function makeCalendar(o){
+    var cursor = new Date(2026, 11, 1), dragging = false, dragStart = null, cells = {};
+    function clear(){ Object.keys(cells).forEach(function(k){ cells[k].classList.remove('drag-selecting'); }); }
+    function highlight(a, b){
+      clear();
+      var lo = a < b ? a : b, hi = a < b ? b : a;
+      Object.keys(cells).forEach(function(k){
+        var d = parseKey(k);
+        if(d >= lo && d <= hi) cells[k].classList.add('drag-selecting');
+      });
+    }
+    function render(){
+      o.label.textContent = MONTHS[cursor.getMonth()] + ' ' + cursor.getFullYear();
+      o.grid.innerHTML = '';
+      cells = {};
+      var L = o.getListing(), marks = o.getMarks();
+      var first = new Date(cursor.getFullYear(), cursor.getMonth(), 1);
+      var lead = dayIdx(first);
+      var dim = new Date(cursor.getFullYear(), cursor.getMonth()+1, 0).getDate();
+      for(var i = 0; i < lead; i++){
+        var e = document.createElement('div'); e.className = 'dso-day empty'; o.grid.appendChild(e);
+      }
+      for(var d = 1; d <= dim; d++){
+        var dt = new Date(cursor.getFullYear(), cursor.getMonth(), d), k = key(dt);
+        var c = document.createElement('div');
+        c.className = 'dso-day ' + DEMAND[(d*3 + cursor.getMonth()) % 4];
+        c.tabIndex = 0;
+        c.setAttribute('role', 'button');
+        var m = marks[k];
+        c.setAttribute('aria-label', fmtFull(dt) + (m && (m.ci || m.co) ? ', restricted' : m ? ', has override' : ''));
+        var top = document.createElement('div'); top.className = 'cell-top';
+        var badges = document.createElement('span'); badges.className = 'cell-badges';
+        if(m){
+          if(m.ci || m.co){
+            var b = document.createElement('span');
+            b.className = 'rbadge ' + (m.ci && m.co ? 'both' : m.ci ? 'ci' : 'co');
+            b.textContent = m.ci && m.co ? 'No CI/CO' : m.ci ? 'No CI' : 'No CO';
+            badges.appendChild(b);
+          } else {
+            var dot = document.createElement('span'); dot.className = 'ovdot'; dot.title = 'Date-specific override'; badges.appendChild(dot);
+          }
+        }
+        var num = document.createElement('span'); num.className = 'cell-num'; num.textContent = d;
+        top.appendChild(badges); top.appendChild(num);
+        var price = document.createElement('span'); price.className = 'cell-price';
+        price.textContent = money(L.adr * (0.85 + 0.3 * (((d*7) % 10) / 10)));
+        c.appendChild(top); c.appendChild(price);
+        (function(dt){
+          c.addEventListener('mousedown', function(ev){ if(ev.button !== 0) return; dragging = true; dragStart = dt; highlight(dt, dt); ev.preventDefault(); });
+          c.addEventListener('mouseenter', function(){ if(dragging) highlight(dragStart, dt); });
+          c.addEventListener('mouseup', function(){
+            if(!dragging) return;
+            dragging = false;
+            var lo = dragStart < dt ? dragStart : dt, hi = dragStart < dt ? dt : dragStart;
+            o.onRange(lo, hi);
+          });
+          c.addEventListener('keydown', function(ev){ if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); o.onRange(dt, dt); } });
+        })(dt);
+        cells[k] = c;
+        o.grid.appendChild(c);
+      }
+    }
+    document.addEventListener('mouseup', function(){ if(dragging){ dragging = false; clear(); } });
+    o.prev.addEventListener('click', function(){ cursor = new Date(cursor.getFullYear(), cursor.getMonth()-1, 1); render(); });
+    o.next.addEventListener('click', function(){ cursor = new Date(cursor.getFullYear(), cursor.getMonth()+1, 1); render(); });
+    return { render:render, highlight:highlight, clear:clear, goTo:function(d){ cursor = new Date(d.getFullYear(), d.getMonth(), 1); render(); } };
+  }
+
+  /* ---------------- drawer markup ---------------- */
+  function pillRows(p){
+    return `
+      <div class="ci-grid">
+        <span class="lbl">Allow Check-In On<span class="req">*</span>:</span>
+        <div><div class="pill-row" id="${p}PillIn"></div><div class="dso-error" id="${p}ErrIn">At least one check-in day should be selected</div></div>
+        <span class="lbl">Allow Check-Out On<span class="req">*</span>:</span>
+        <div><div class="pill-row" id="${p}PillOut"></div><div class="dso-error" id="${p}ErrOut">At least one check-out day should be selected</div></div>
+      </div>
+      <div><label class="f-label" for="${p}Enforce">Enforce Weekly</label>
+        <select class="f-select" id="${p}Enforce" style="width:132px"><option value="disabled">Disabled</option><option value="enable">Enable</option></select></div>`;
+  }
+  function priceBlock(p){
+    var opts = '<option value="fixed">Fixed</option><option value="percent">Percent</option>';
+    return `
+      <div class="dso-sec-head">Price Settings <span class="kebab" aria-hidden="true">⋮</span></div>
+      <div><label class="f-label" for="${p}In1">New Final Price</label>
+        <div class="f-row f-half"><select class="f-select" id="${p}PT1" aria-label="New Final Price type">${opts}</select>
+        <div class="f-input"><input id="${p}In1" inputmode="decimal"><span class="unit" id="${p}PU1"></span></div></div></div>
+      <div class="f-grid">
+        <div><label class="f-label" for="${p}In2">Minimum Price</label>
+          <div class="f-row"><select class="f-select" id="${p}PT2" aria-label="Minimum Price type">${opts}</select>
+          <div class="f-input"><input id="${p}In2" inputmode="decimal"><span class="unit" id="${p}PU2"></span></div></div></div>
+        <div><label class="f-label" for="${p}In3">Maximum Price</label>
+          <div class="f-row"><select class="f-select" id="${p}PT3" aria-label="Maximum Price type">${opts}</select>
+          <div class="f-input"><input id="${p}In3" inputmode="decimal"><span class="unit" id="${p}PU3"></span></div></div></div>
+      </div>
+      <div><label class="f-label" for="${p}In4">Base Price</label>
+        <div class="f-input f-half"><input id="${p}In4" inputmode="decimal"><span class="unit" id="${p}PU4"></span></div></div>`;
+  }
+  function moreOptions(p){
+    return `
+      <div class="dso-sec-head">More Options
+        <button class="kebab" id="${p}Kebab" aria-label="More settings" aria-expanded="false">⋮</button>
+        <div class="dso-kebab-menu" id="${p}Menu">
+          <p class="kebab-title">More Settings</p>
+          <label><input type="checkbox"> Keep Merge Checked by Default at Listing Level</label>
+          <label><input type="checkbox" checked> Always Show Notes Input</label>
+        </div>
+      </div>
+      <div id="${p}MergeRow" hidden>
+        <label class="dso-check-row"><input type="checkbox" id="${p}Merge" checked> Merge with Existing Overrides</label>
+        <div class="dso-helper" style="margin:4px 0 0 23px;">Blank fields keep existing overrides; entered values replace them.</div>
+      </div>
+      <label class="dso-check-row"><input type="checkbox"> Auto Expire Override <span class="dso-helper" title="Info">ⓘ</span></label>
+      <label class="dso-check-row"><input type="checkbox" id="${p}NoteCheck" checked> Note or Reason for Override</label>
+      <div id="${p}NoteWrap"><label class="f-label" for="${p}Note">Note or Reason for Override</label>
+        <textarea class="dso-note-area" id="${p}Note" placeholder="Press 'Shift+Enter' to add a new line"></textarea></div>`;
+  }
+  function shell(p, body){
+    return `
+      <div class="drawer-overlay" id="${p}Overlay" aria-hidden="true">
+        <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="${p}Title">
+          <div class="drawer-head">
+            <div>
+              <h5 id="${p}Title">Date Specific Overrides</h5>
+              <p class="dso-sub"><span id="${p}ListingName"></span> | <a href="#" class="ext" onclick="return false">Learn More ↗</a></p>
+            </div>
+            <button class="dso-close" id="${p}Close" aria-label="Close">×</button>
+          </div>
+          <div class="drawer-body">${body}</div>
+          <div class="drawer-foot">
+            <button class="dso-trash" id="${p}Trash" hidden aria-label="Delete override" title="Delete override">🗑</button>
+            <div class="dso-adr"><span>ADR:</span><b id="${p}Adr"></b><span>Total:</span><b id="${p}Total"></b></div>
+            <div class="dso-footer-actions">
+              <button class="dso-btn dso-btn-cancel" id="${p}Cancel">Cancel</button>
+              <button class="dso-btn dso-btn-add" id="${p}Save">Add</button>
+            </div>
+          </div>
+        </aside>
+      </div>`;
+  }
+
+  var warnTail = 'before adding an override. The default helps apply restrictions if a date-specific override is removed. <a href="#" class="ext" onclick="return false">Learn More ↗</a>';
+
+  var currentBody = `
+    <div class="dso-daterow">
+      <div class="dso-daterange"><span aria-hidden="true">📅</span><span id="cDateStart"></span><span id="cDateEnd"></span></div>
+      <button class="dso-dupe-btn" aria-label="Pick dates" title="Pick dates">⧉</button>
+      <label class="dso-check-row"><input type="checkbox" id="cApplyDays"> Apply on Specific Days of the Week</label>
+    </div>
+    <div class="pill-row" id="cPillApply" hidden></div>
+    ${priceBlock('c')}
+    <div class="dso-sec-head">Stay Restrictions</div>
+    <div>
+      <label class="f-label" for="cMinStay">Minimum Stay</label>
+      <div class="minstay-row" id="cMinRow">
+        <div class="f-input minstay"><input id="cMinStay" inputmode="numeric"><span class="unit">Night(s)</span></div>
+        <span class="dso-helper">Can be overridden by orphan day customization ⓘ</span>
+      </div>
+      <div class="dso-warning" id="cMinWarn" hidden><span class="wicon">⚠</span><span>You need to set up a default minimum stay under <b>Customization → Stay Restrictions</b> ${warnTail}</span></div>
+    </div>
+    <div id="cCiBlock" style="display:flex; flex-direction:column; gap:12px;">
+      <div class="dso-switch-row">
+        <label class="switch" id="cCiSwitch"><input type="checkbox" id="cCiToggle" aria-label="Check-In/Check-Out"><span class="track"><span class="thumb"></span></span></label>
+        <span class="lbl">Check-In/Check-Out</span>
+      </div>
+      <div class="dso-warning" id="cCiWarn" hidden><span class="wicon">⚠</span><span>You need to set up a default Check In/Out under <b>Customization → Stay Restrictions</b> ${warnTail}</span></div>
+      <div id="cCiFields" hidden style="display:flex; flex-direction:column; gap:12px;">${pillRows('c')}</div>
+    </div>
+    ${moreOptions('c')}`;
+
+  var proposedBody = `
+    <div>
+      <label class="f-label" for="pScope">Apply to <span class="new-tag">New</span></label>
+      <select class="f-select wide" id="pScope">
+        <option value="listing">This listing only</option>
+        <option value="account" id="pScopeAcct">All listings in this PMS account</option>
+        <option value="all">All listings (every account)</option>
+      </select>
+    </div>
+    <div>
+      <div class="range-chips" id="pRanges"></div>
+      <div class="add-dates-row" id="pAddRow" hidden>
+        <input id="pAddInput" placeholder="e.g. Dec 31, Jan 1 – Jan 3" aria-label="Dates to add">
+        <button class="dso-btn dso-btn-cancel" id="pAddGo">Add</button>
+      </div>
+    </div>
+    <label class="dso-check-row"><input type="checkbox" id="pApplyDays"> Apply on Specific Days of the Week</label>
+    <div class="pill-row" id="pPillApply" hidden></div>
+    ${priceBlock('p')}
+    <div class="dso-sec-head">Stay Restrictions</div>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <label class="f-label" for="pMinStay" style="margin:0;">Minimum Stay</label>
+      <div class="minstay-row">
+        <div class="f-input minstay"><input id="pMinStay" inputmode="numeric"><span class="unit">Night(s)</span></div>
+        <span class="dso-helper">Can be overridden by orphan day customization ⓘ</span>
+      </div>
+      <div class="dso-note" id="pMinNote" hidden><span class="wicon">i</span><span>No default minimum stay on this account yet — when this override ends, minimum stay falls back to 1 night. <button class="linkish" id="pMinDefaultBtn">Save 1 night as the default</button></span></div>
+    </div>
+    <div id="pCiBlock" style="display:flex; flex-direction:column; gap:10px;">
+      <div class="f-label" style="margin:0;">Check-in &amp; check-out on these dates <span class="new-tag">New</span></div>
+      <div class="seg" id="pSeg" role="radiogroup" aria-label="Check-in and check-out on these dates">
+        <button type="button" role="radio" data-v="none">Allowed</button>
+        <button type="button" role="radio" data-v="ci">No check-in</button>
+        <button type="button" role="radio" data-v="co">No checkout</button>
+        <button type="button" role="radio" data-v="both">Neither</button>
+      </div>
+      <div class="dso-note" id="pCiUnsupported" hidden><span class="wicon">i</span><span><b id="pPmsName"></b> doesn't accept check-in/check-out restrictions from PriceLabs. Set them in <span id="pPmsName2"></span> directly — prices from this panel still sync.</span></div>
+      <div class="dso-note" id="pCiDefaultNote" hidden><span class="wicon">i</span><span>No default Check In/Out on this account yet — when this override ends, every day goes back to allowed. <button class="linkish" id="pCiDefaultBtn">Save that as the default</button></span></div>
+      <ul class="rpreview" id="pPreview" hidden></ul>
+      <details class="saved-as" id="pSaved" hidden><summary id="pSavedSum"></summary><pre id="pSavedCode"></pre></details>
+      <button class="linkish" id="pWeeklyLink" style="width:fit-content;">Repeat on weekdays instead</button>
+      <div id="pWeekly" hidden style="display:flex; flex-direction:column; gap:12px;">
+        ${pillRows('p')}
+        <button class="linkish" id="pDatesLink" style="width:fit-content;">Use exact dates instead</button>
+      </div>
+    </div>
+    ${moreOptions('p')}`;
+
+  document.body.insertAdjacentHTML('beforeend', shell('c', currentBody) + shell('p', proposedBody));
+
+  /* ---------------- shared drawer wiring ---------------- */
+  var openPrefix = null, WS = {};
+  function openOverlay(p){
+    var ov = $(p+'Overlay');
+    ov.classList.add('open'); ov.setAttribute('aria-hidden', 'false');
+    openPrefix = p;
+    setTimeout(function(){ $(p+'Close').focus(); }, 60);
+  }
+  function closeOverlay(p){
+    var ov = $(p+'Overlay');
+    ov.classList.remove('open'); ov.setAttribute('aria-hidden', 'true');
+    if(openPrefix === p) openPrefix = null;
+  }
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && openPrefix) WS[openPrefix].close(); });
+  document.addEventListener('click', function(){
+    ['c','p'].forEach(function(p){ $(p+'Menu').classList.remove('open'); $(p+'Kebab').setAttribute('aria-expanded','false'); });
   });
 
-  /* ================================================================
-     VARIANT 1 — contextual side panel
-     ================================================================ */
-  (function initVariant1(){
-    var monthCursor = new Date(2026, 11, 1);
-    var selected = new Set();
-    var restrictions = [];
-
-    var calGrid = document.getElementById('calGrid1');
-    var monthLabel = document.getElementById('monthLabel1');
-    var chipTray = document.getElementById('chipTray1');
-    var restrictBtn = document.getElementById('restrictBtn1');
-    var panel = document.getElementById('restrictPanel1');
-    var activeList = document.getElementById('activeList1');
-    var scopeSelect = document.getElementById('scopeSelect1');
-    var scopeEcho = document.getElementById('scopeEcho1');
-
-    function scopeText(){ return scopeSelect.options[scopeSelect.selectedIndex].text.split(' — ')[0]; }
-
-    function renderCalendar(){
-      monthLabel.textContent = MONTHS[monthCursor.getMonth()] + ' ' + monthCursor.getFullYear();
-      calGrid.innerHTML = '';
-      var first = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), 1);
-      var startDow = first.getDay();
-      var daysInMonth = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 0).getDate();
-
-      for(var i=0;i<startDow;i++){
-        var empty = document.createElement('div');
-        empty.className = 'cal-cell';
-        var e2 = document.createElement('div');
-        e2.className = 'day empty';
-        empty.appendChild(e2);
-        calGrid.appendChild(empty);
-      }
-      for(var d=1; d<=daysInMonth; d++){
-        var thisDate = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), d);
-        var k = key(thisDate);
-        var cell = document.createElement('div');
-        cell.className = 'cal-cell';
-        var day = document.createElement('div');
-        day.className = 'day' + (selected.has(k) ? ' selected' : '');
-
-        var num = document.createElement('span');
-        num.textContent = d;
-        day.appendChild(num);
-
-        var existing = restrictions.find(function(r){ return r.key===k; });
-        if(existing){
-          var m = typeMeta(existing.type);
-          var badge = document.createElement('span');
-          badge.className = 'day-badge ' + m.cls;
-          badge.textContent = m.cls==='both' ? 'CO+CI' : m.cls.toUpperCase();
-          day.appendChild(badge);
-        }
-        if(selected.has(k)){
-          var chk = document.createElement('span');
-          chk.className = 'check';
-          chk.textContent = '✓';
-          day.appendChild(chk);
-        }
-        day.addEventListener('click', (function(k){
-          return function(){
-            if(selected.has(k)) selected.delete(k); else selected.add(k);
-            renderCalendar(); renderChips();
-          };
-        })(k));
-        cell.appendChild(day);
-        calGrid.appendChild(cell);
-      }
-    }
-
-    function renderChips(){
-      chipTray.innerHTML = '';
-      if(selected.size===0){
-        chipTray.innerHTML = '<span class="empty-note">None yet — click the calendar or add above.</span>';
-        restrictBtn.disabled = true;
-        panel.classList.remove('open');
-        return;
-      }
-      restrictBtn.disabled = false;
-      Array.from(selected).map(parseDateFromKey).sort(function(a,b){return a-b;}).forEach(function(d){
-        var k = key(d);
-        var chip = document.createElement('span');
-        chip.className = 'chip';
-        chip.innerHTML = '<span>'+fmt(d)+'</span>';
-        var rm = document.createElement('button');
-        rm.textContent = '×';
-        rm.setAttribute('aria-label','Remove '+fmt(d));
-        rm.addEventListener('click', function(){ selected.delete(k); renderCalendar(); renderChips(); });
-        chip.appendChild(rm);
-        chipTray.appendChild(chip);
-      });
-    }
-
-    document.getElementById('prevMonth1').addEventListener('click', function(){
-      monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()-1, 1); renderCalendar();
+  function wirePrices(p, getL){
+    [1,2,3].forEach(function(i){
+      $(p+'PT'+i).addEventListener('change', function(){ $(p+'PU'+i).textContent = this.value === 'percent' ? '%' : getL().currency; });
     });
-    document.getElementById('nextMonth1').addEventListener('click', function(){
-      monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 1); renderCalendar();
-    });
-    scopeSelect.addEventListener('change', function(){ scopeEcho.textContent = scopeText(); });
-    scopeEcho.textContent = scopeText();
-
-    restrictBtn.addEventListener('click', function(){ panel.classList.add('open'); });
-    document.getElementById('cancelPanel1').addEventListener('click', function(){ panel.classList.remove('open'); });
-
-    document.getElementById('applyPanel1').addEventListener('click', function(){
-      var type = document.querySelector('input[name="rtype1"]:checked').value;
-      var scope = scopeText();
-      var dates = Array.from(selected).map(parseDateFromKey);
-      dates.forEach(function(d){
-        var k = key(d);
-        restrictions = restrictions.filter(function(r){ return r.key!==k; });
-        restrictions.push({key:k, date:d, type:type, scope:scope});
-      });
-      var m = typeMeta(type);
-      showToast(m.label+' on '+dates.length+' date'+(dates.length>1?'s':'')+' · '+scope);
-      selected.clear();
-      panel.classList.remove('open');
-      renderCalendar(); renderChips();
-      renderActiveListWrap();
-    });
-
-    document.getElementById('addDateBtn1').addEventListener('click', addFromInput);
-    document.getElementById('dateInput1').addEventListener('keydown', function(e){ if(e.key==='Enter') addFromInput(); });
-
-    function addFromInput(){
-      var input = document.getElementById('dateInput1');
-      var raw = input.value.trim();
-      if(!raw) return;
-      var jumped = null;
-      raw.split(',').forEach(function(part){
-        part = part.trim();
-        if(!part) return;
-        var parsed = new Date(part + ' ' + monthCursor.getFullYear());
-        if(isNaN(parsed)) parsed = new Date(part);
-        if(isNaN(parsed)) return;
-        if(monthCursor.getMonth()===11 && parsed.getMonth()===0){
-          parsed = new Date(monthCursor.getFullYear()+1, 0, parsed.getDate());
-        }
-        selected.add(key(parsed));
-        jumped = parsed;
-      });
-      input.value = '';
-      if(jumped) monthCursor = new Date(jumped.getFullYear(), jumped.getMonth(), 1);
-      renderCalendar(); renderChips();
-    }
-
-    function removeRestriction(r){
-      restrictions = restrictions.filter(function(x){ return x!==r; });
-      renderActiveListWrap();
-      renderCalendar();
-    }
-    function renderActiveListWrap(){
-      renderActiveList(activeList, restrictions, removeRestriction);
-    }
-
-    renderCalendar(); renderChips(); renderActiveListWrap();
-  })();
-
-  /* ================================================================
-     VARIANT 2 — guided modal
-     ================================================================ */
-  (function initVariant2(){
-    var monthCursor = new Date(2026, 11, 1);
-    var selected = new Set();
-    var restrictions = [];
-
-    var calGrid = document.getElementById('calGrid2');
-    var monthLabel = document.getElementById('monthLabel2');
-    var scopeSelect = document.getElementById('scopeSelect2');
-    var selBar = document.getElementById('selBar2');
-    var selCount = document.getElementById('selCount2');
-    var activeList = document.getElementById('activeList2');
-    var overlay = document.getElementById('modalOverlay2');
-    var modalCountText = document.getElementById('modalCountText2');
-    var modalChips = document.getElementById('modalChips2');
-    var modalScopeEcho = document.getElementById('modalScopeEcho2');
-
-    function scopeText(){ return scopeSelect.options[scopeSelect.selectedIndex].text.split(' — ')[0]; }
-
-    function renderCalendar(){
-      monthLabel.textContent = MONTHS[monthCursor.getMonth()] + ' ' + monthCursor.getFullYear();
-      calGrid.innerHTML = '';
-      var first = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), 1);
-      var startDow = first.getDay();
-      var daysInMonth = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 0).getDate();
-      for(var i=0;i<startDow;i++){
-        var empty = document.createElement('div');
-        empty.className = 'cal-cell';
-        var e2 = document.createElement('div');
-        e2.className = 'day empty';
-        empty.appendChild(e2);
-        calGrid.appendChild(empty);
-      }
-      for(var d=1; d<=daysInMonth; d++){
-        var thisDate = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), d);
-        var k = key(thisDate);
-        var cell = document.createElement('div');
-        cell.className = 'cal-cell';
-        var day = document.createElement('div');
-        day.className = 'day' + (selected.has(k) ? ' selected' : '');
-        var num = document.createElement('span');
-        num.textContent = d;
-        day.appendChild(num);
-        var existing = restrictions.find(function(r){ return r.key===k; });
-        if(existing){
-          var m = typeMeta(existing.type);
-          var badge = document.createElement('span');
-          badge.className = 'day-badge ' + m.cls;
-          badge.textContent = m.cls==='both' ? 'CO+CI' : m.cls.toUpperCase();
-          day.appendChild(badge);
-        }
-        if(selected.has(k)){
-          var chk = document.createElement('span');
-          chk.className = 'check'; chk.textContent = '✓';
-          day.appendChild(chk);
-        }
-        day.addEventListener('click', (function(k){
-          return function(){
-            if(selected.has(k)) selected.delete(k); else selected.add(k);
-            renderCalendar(); renderSelBar();
-          };
-        })(k));
-        cell.appendChild(day);
-        calGrid.appendChild(cell);
-      }
-    }
-
-    function renderSelBar(){
-      if(selected.size===0){ selBar.classList.remove('show'); return; }
-      selBar.classList.add('show');
-      selCount.textContent = selected.size + ' date' + (selected.size>1?'s':'') + ' selected';
-    }
-
-    document.getElementById('prevMonth2').addEventListener('click', function(){
-      monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()-1, 1); renderCalendar();
-    });
-    document.getElementById('nextMonth2').addEventListener('click', function(){
-      monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 1); renderCalendar();
-    });
-
-    document.getElementById('addDateBtn2').addEventListener('click', addFromInput);
-    document.getElementById('dateInput2').addEventListener('keydown', function(e){ if(e.key==='Enter') addFromInput(); });
-    function addFromInput(){
-      var input = document.getElementById('dateInput2');
-      var raw = input.value.trim();
-      if(!raw) return;
-      var jumped = null;
-      raw.split(',').forEach(function(part){
-        part = part.trim();
-        if(!part) return;
-        var parsed = new Date(part + ' ' + monthCursor.getFullYear());
-        if(isNaN(parsed)) parsed = new Date(part);
-        if(isNaN(parsed)) return;
-        if(monthCursor.getMonth()===11 && parsed.getMonth()===0){
-          parsed = new Date(monthCursor.getFullYear()+1, 0, parsed.getDate());
-        }
-        selected.add(key(parsed));
-        jumped = parsed;
-      });
-      input.value = '';
-      if(jumped) monthCursor = new Date(jumped.getFullYear(), jumped.getMonth(), 1);
-      renderCalendar(); renderSelBar();
-    }
-
-    document.getElementById('clearSel2').addEventListener('click', function(){
-      selected.clear(); renderCalendar(); renderSelBar();
-    });
-
-    document.getElementById('openModal2').addEventListener('click', function(){
-      var dates = Array.from(selected).map(parseDateFromKey).sort(function(a,b){return a-b;});
-      modalCountText.textContent = dates.length + ' date' + (dates.length>1?'s':'') + ' selected';
-      modalChips.innerHTML = '';
-      dates.forEach(function(d){
-        var chip = document.createElement('span');
-        chip.className = 'chip';
-        chip.textContent = fmt(d);
-        modalChips.appendChild(chip);
-      });
-      modalScopeEcho.textContent = scopeText();
-      overlay.classList.add('open');
-    });
-    document.getElementById('modalCancel2').addEventListener('click', function(){ overlay.classList.remove('open'); });
-    overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.classList.remove('open'); });
-
-    document.getElementById('modalApply2').addEventListener('click', function(){
-      var type = document.querySelector('input[name="rtype2"]:checked').value;
-      var scope = scopeText();
-      var dates = Array.from(selected).map(parseDateFromKey);
-      dates.forEach(function(d){
-        var k = key(d);
-        restrictions = restrictions.filter(function(r){ return r.key!==k; });
-        restrictions.push({key:k, date:d, type:type, scope:scope});
-      });
-      var m = typeMeta(type);
-      showToast(m.label+' on '+dates.length+' date'+(dates.length>1?'s':'')+' · '+scope);
-      selected.clear();
-      overlay.classList.remove('open');
-      renderCalendar(); renderSelBar();
-      renderActiveListWrap();
-    });
-
-    function removeRestriction(r){
-      restrictions = restrictions.filter(function(x){ return x!==r; });
-      renderActiveListWrap();
-      renderCalendar();
-    }
-    function renderActiveListWrap(){
-      renderActiveList(activeList, restrictions, removeRestriction);
-    }
-
-    renderCalendar(); renderSelBar(); renderActiveListWrap();
-  })();
-
-  /* ================================================================
-     VARIANT 3 — portfolio batch table
-     ================================================================ */
-  (function initVariant3(){
-    function nthWeekday(year, month, weekday, n){
-      var d = new Date(year, month, 1);
-      var add = (weekday - d.getDay() + 7) % 7;
-      d.setDate(1 + add + (n-1)*7);
-      return d;
-    }
-    function lastWeekday(year, month, weekday){
-      var d = new Date(year, month+1, 0);
-      var sub = (d.getDay() - weekday + 7) % 7;
-      d.setDate(d.getDate() - sub);
-      return d;
-    }
-    var HOLIDAYS = [
-      {name:"New Year's Day", date:new Date(2026,0,1)},
-      {name:"Memorial Day", date:lastWeekday(2026,4,1)},
-      {name:"Independence Day", date:new Date(2026,6,4)},
-      {name:"Labor Day", date:nthWeekday(2026,8,1,1)},
-      {name:"Thanksgiving", date:nthWeekday(2026,10,4,4)},
-      {name:"Christmas Eve", date:new Date(2026,11,24)},
-      {name:"Christmas Day", date:new Date(2026,11,25)},
-      {name:"New Year's Eve", date:new Date(2026,11,31)}
-    ];
-
-    var rows = []; // {key, date, type}
-    var restrictions = [];
-
-    var scopeSelect = document.getElementById('scopeSelect3');
-    var holidayChips = document.getElementById('holidayChips3');
-    var tableBody = document.getElementById('tableBody3');
-    var rowCountEl = document.getElementById('rowCount3');
-    var bulkSummary = document.getElementById('bulkSummary3');
-    var applyAllBtn = document.getElementById('applyAllBtn3');
-    var activeList = document.getElementById('activeList3');
-
-    function scopeText(){ return scopeSelect.options[scopeSelect.selectedIndex].text.split(' — ')[0]; }
-
-    function renderHolidayChips(){
-      holidayChips.innerHTML = '';
-      HOLIDAYS.forEach(function(h){
-        var k = key(h.date);
-        var already = rows.some(function(r){ return r.key===k; });
-        var btn = document.createElement('button');
-        btn.className = 'holiday-chip';
-        btn.disabled = already;
-        btn.innerHTML = (already ? '✓ ' : '+ ') + h.name + '<span class="hd">' + fmt(h.date) + '</span>';
-        btn.addEventListener('click', function(){
-          if(rows.some(function(r){ return r.key===k; })) return;
-          rows.push({key:k, date:h.date, type:'co'});
-          renderAll();
-        });
-        holidayChips.appendChild(btn);
-      });
-    }
-
-    function renderTable(){
-      rowCountEl.textContent = rows.length;
-      if(rows.length===0){
-        tableBody.innerHTML = '<tr class="bulk-empty"><td colspan="3">No dates queued — quick-add a holiday above or type specific dates.</td></tr>';
-        applyAllBtn.disabled = true;
-        bulkSummary.textContent = 'Nothing queued yet.';
-        return;
-      }
-      applyAllBtn.disabled = false;
-      tableBody.innerHTML = '';
-      rows.slice().sort(function(a,b){ return a.date-b.date; }).forEach(function(row){
-        var tr = document.createElement('tr');
-        var tdDate = document.createElement('td');
-        tdDate.textContent = fmtFull(row.date);
-        var tdType = document.createElement('td');
-        var sel = document.createElement('select');
-        ['co','ci','both'].forEach(function(v){
-          var opt = document.createElement('option');
-          opt.value = v; opt.textContent = typeMeta(v).label;
-          if(v===row.type) opt.selected = true;
-          sel.appendChild(opt);
-        });
-        sel.addEventListener('change', function(){ row.type = sel.value; renderBulkSummary(); });
-        tdType.appendChild(sel);
-        var tdRm = document.createElement('td');
-        var rm = document.createElement('button');
-        rm.className = 'rm'; rm.textContent = '✕'; rm.setAttribute('aria-label','Remove row');
-        rm.addEventListener('click', function(){
-          rows = rows.filter(function(x){ return x!==row; });
-          renderAll();
-        });
-        tdRm.appendChild(rm);
-        tr.appendChild(tdDate); tr.appendChild(tdType); tr.appendChild(tdRm);
-        tableBody.appendChild(tr);
-      });
-      renderBulkSummary();
-    }
-
-    function renderBulkSummary(){
-      if(rows.length===0){ bulkSummary.textContent = 'Nothing queued yet.'; return; }
-      var counts = {co:0, ci:0, both:0};
-      rows.forEach(function(r){ counts[r.type]++; });
-      var parts = [];
-      if(counts.co) parts.push(counts.co+' checkout');
-      if(counts.ci) parts.push(counts.ci+' check-in');
-      if(counts.both) parts.push(counts.both+' both');
-      bulkSummary.textContent = rows.length+' date'+(rows.length>1?'s':'')+' queued — '+parts.join(', ')+' · '+scopeText();
-    }
-
-    function renderAll(){ renderHolidayChips(); renderTable(); }
-
-    document.getElementById('addRowBtn3').addEventListener('click', addFromInput);
-    document.getElementById('dateInput3').addEventListener('keydown', function(e){ if(e.key==='Enter') addFromInput(); });
-    function addFromInput(){
-      var input = document.getElementById('dateInput3');
-      var raw = input.value.trim();
-      if(!raw) return;
-      raw.split(',').forEach(function(part){
-        part = part.trim();
-        if(!part) return;
-        var parsed = new Date(part + ' 2026');
-        if(isNaN(parsed)) parsed = new Date(part);
-        if(isNaN(parsed)) return;
-        var k = key(parsed);
-        if(rows.some(function(r){ return r.key===k; })) return;
-        rows.push({key:k, date:parsed, type:'co'});
-      });
-      input.value = '';
-      renderAll();
-    }
-
-    document.getElementById('setAllBtn3').addEventListener('click', function(){
-      var v = document.getElementById('setAllType3').value;
-      rows.forEach(function(r){ r.type = v; });
-      renderTable();
-    });
-
-    scopeSelect.addEventListener('change', renderBulkSummary);
-
-    applyAllBtn.addEventListener('click', function(){
-      var scope = scopeText();
-      var counts = {co:0, ci:0, both:0};
-      rows.forEach(function(row){
-        restrictions = restrictions.filter(function(r){ return r.key!==row.key; });
-        restrictions.push({key:row.key, date:row.date, type:row.type, scope:scope});
-        counts[row.type]++;
-      });
-      var n = rows.length;
-      showToast('Applied '+n+' restriction'+(n>1?'s':'')+' · '+scope);
-      rows = [];
-      renderAll();
-      renderActiveListWrap();
-    });
-
-    function removeRestriction(r){
-      restrictions = restrictions.filter(function(x){ return x!==r; });
-      renderActiveListWrap();
-    }
-    function renderActiveListWrap(){
-      renderActiveList(activeList, restrictions, removeRestriction);
-    }
-
-    renderAll();
-    renderActiveListWrap();
-  })();
-
-  /* ================================================================
-     VARIANT 0 — today's real Date Specific Overrides modal
-     ================================================================ */
-  (function initVariant0(){
-    var LISTINGS = {
-      beach:     { name:'Beach Town Guest House 2', currency:'USD', minStayConfigured:true,  checkinoutConfigured:false, baseADR:80  },
-      asd:       { name:'Asd',                      currency:'INR', minStayConfigured:false, checkinoutConfigured:false, baseADR:6200 },
-      jefferson: { name:'Jefferson St',              currency:'USD', minStayConfigured:true,  checkinoutConfigured:true,  baseADR:341 }
-    };
-    var DEMAND_CLASSES = ['demand-low','demand-normal','demand-good','demand-high'];
-
-    var monthCursor = new Date(2026, 11, 1);
-    var savedOverrides = new Set();
-    var selectedStart = null, selectedEnd = null;
-    var dragStart = null, dragging = false;
-    var dayEls = {};
-
-    var calGrid = document.getElementById('calGrid0');
-    var monthLabel = document.getElementById('monthLabel0');
-    var overlay = document.getElementById('dsoOverlay');
-    var listingSelect = document.getElementById('listingSelect0');
-
-    function currentListing(){ return LISTINGS[listingSelect.value]; }
-
-    function makePillGroup(container, onChange){
-      var selected = new Set();
-      var labels = ['Mo','Tu','We','Th','Fr','Sa','Su'];
-      function render(){
-        container.innerHTML = '';
-        var allBtn = document.createElement('button');
-        allBtn.type = 'button';
-        allBtn.className = 'pill all-pill';
-        allBtn.textContent = 'All';
-        allBtn.addEventListener('click', function(){
-          if(selected.size === 7){ selected.clear(); }
-          else { labels.forEach(function(_, i){ selected.add(i); }); }
-          render();
-          if(onChange) onChange();
-        });
-        container.appendChild(allBtn);
-        labels.forEach(function(lbl, i){
-          var b = document.createElement('button');
-          b.type = 'button';
-          b.className = 'pill' + (selected.has(i) ? ' on' : '');
-          b.textContent = lbl;
-          b.addEventListener('click', function(){
-            if(selected.has(i)) selected.delete(i); else selected.add(i);
-            render();
-            if(onChange) onChange();
-          });
-          container.appendChild(b);
-        });
-      }
-      render();
-      return { selected: selected, reset: function(){ selected.clear(); render(); } };
-    }
-
-    function updateCheckinError(){
-      document.getElementById('checkinError').style.display = checkinPills.selected.size===0 ? 'block' : 'none';
-    }
-    function updateCheckoutError(){
-      document.getElementById('checkoutError').style.display = checkoutPills.selected.size===0 ? 'block' : 'none';
-    }
-
-    var applyPills = makePillGroup(document.getElementById('pillrow-applydays'));
-    var checkinPills = makePillGroup(document.getElementById('pillrow-checkin'), updateCheckinError);
-    var checkoutPills = makePillGroup(document.getElementById('pillrow-checkout'), updateCheckoutError);
-
-    document.getElementById('dsoApplyDaysToggle').addEventListener('change', function(e){
-      document.getElementById('pillrow-applydays').style.display = e.target.checked ? 'flex' : 'none';
-    });
-    document.getElementById('checkinoutToggle').addEventListener('change', function(e){
-      document.getElementById('checkinoutFields').style.display = e.target.checked ? 'block' : 'none';
-      updateCheckinError(); updateCheckoutError();
-    });
-    document.getElementById('noteCheck').addEventListener('change', function(e){
-      document.getElementById('noteArea').style.display = e.target.checked ? 'block' : 'none';
-    });
-
-    function wirePriceType(selectId, unitId){
-      var sel = document.getElementById(selectId);
-      var unit = document.getElementById(unitId);
-      sel.addEventListener('change', function(){ unit.textContent = sel.value==='percent' ? '%' : currentListing().currency; });
-    }
-    wirePriceType('priceTypeSelect','priceUnit1');
-    wirePriceType('minPriceTypeSelect','priceUnit2');
-    wirePriceType('maxPriceTypeSelect','priceUnit3');
-
-    var moreKebabMenu = document.getElementById('moreKebabMenu');
-    document.getElementById('moreKebabBtn').addEventListener('click', function(e){
+  }
+  function resetPrices(p, currency){
+    [1,2,3].forEach(function(i){ $(p+'PT'+i).value = 'fixed'; $(p+'PU'+i).textContent = currency; $(p+'In'+i).value = ''; });
+    $(p+'PU4').textContent = currency; $(p+'In4').value = '';
+  }
+  function wireCommon(p, close){
+    $(p+'Kebab').addEventListener('click', function(e){
       e.stopPropagation();
-      moreKebabMenu.classList.toggle('open');
+      var open = $(p+'Menu').classList.toggle('open');
+      this.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
-    moreKebabMenu.addEventListener('click', function(e){ e.stopPropagation(); });
-    document.addEventListener('click', function(){ moreKebabMenu.classList.remove('open'); });
+    $(p+'Menu').addEventListener('click', function(e){ e.stopPropagation(); });
+    $(p+'NoteCheck').addEventListener('change', function(){ $(p+'NoteWrap').hidden = !this.checked; });
+    $(p+'Close').addEventListener('click', close);
+    $(p+'Cancel').addEventListener('click', close);
+    $(p+'Overlay').addEventListener('mousedown', function(e){ if(e.target === this) close(); });
+  }
+  function resetCommon(p, existing){
+    $(p+'MergeRow').hidden = !existing; $(p+'Merge').checked = true;
+    $(p+'Trash').hidden = !existing;
+    $(p+'NoteCheck').checked = true; $(p+'NoteWrap').hidden = false; $(p+'Note').value = '';
+    $(p+'Menu').classList.remove('open');
+  }
 
-    function clearDragHighlight(){
-      Object.keys(dayEls).forEach(function(k){ dayEls[k].classList.remove('drag-selecting'); });
+  /* ================================================================
+     CURRENT FLOW — faithful to app.pricelabs.co
+     ================================================================ */
+  var C = (function(){
+    var p = 'c', L = listingsFresh(), M = {}, start = null, end = null;
+    var sel = $('cListing'); fillListingSelect(sel, L, 'jefferson');
+    function cur(){ return L[sel.value]; }
+    function marks(){ return M[sel.value] || (M[sel.value] = {}); }
+    var cal = makeCalendar({ grid:$('cGrid'), label:$('cMonth'), prev:$('cPrev'), next:$('cNext'), getListing:cur, getMarks:marks, onRange:function(a,b){ open(a,b); } });
+    var pApply = makePillGroup($('cPillApply'));
+    var pIn = makePillGroup($('cPillIn'), errs), pOut = makePillGroup($('cPillOut'), errs);
+    function errs(){ $('cErrIn').hidden = pIn.selected.size > 0; $('cErrOut').hidden = pOut.selected.size > 0; }
+    wirePrices(p, cur);
+    wireCommon(p, close);
+    $('cApplyDays').addEventListener('change', function(){ $('cPillApply').hidden = !this.checked; });
+    $('cCiToggle').addEventListener('change', function(){ $('cCiFields').hidden = !this.checked; errs(); });
+
+    function hasExisting(){ var h = false, mk = marks(); eachDay(start, end, function(d){ if(mk[key(d)]) h = true; }); return h; }
+
+    function open(a, b, preset){
+      preset = preset || {};
+      start = a < b ? a : b; end = a < b ? b : a;
+      if(preset.seed){ seedMarks(marks(), preset.seed); cal.render(); }
+      var l = cur();
+      $('cListingName').textContent = l.name;
+      $('cDateStart').textContent = fmtFull(start);
+      $('cDateEnd').textContent = fmtFull(end);
+      resetPrices(p, l.currency);
+      $('cAdr').textContent = money(l.adr);
+      $('cTotal').textContent = money(l.adr * nights(start, end));
+
+      $('cMinRow').hidden = !l.minStayDefault;
+      $('cMinWarn').hidden = l.minStayDefault;
+      $('cMinStay').value = '';
+
+      $('cCiBlock').hidden = !l.ciSupported;
+      $('cCiSwitch').classList.toggle('disabled', !l.ciDefault);
+      $('cCiToggle').disabled = !l.ciDefault;
+      $('cCiWarn').hidden = l.ciDefault;
+      var on = !!preset.ciOn && l.ciDefault && l.ciSupported;
+      $('cCiToggle').checked = on;
+      $('cCiFields').hidden = !on;
+      pIn.set(preset.ciAllowed || []); pOut.set(preset.coAllowed || []); errs();
+      $('cEnforce').value = 'disabled';
+
+      $('cApplyDays').checked = false; $('cPillApply').hidden = true; pApply.set([]);
+      resetCommon(p, hasExisting());
+      cal.highlight(start, end);
+      openOverlay(p);
     }
-    function highlightRange(a, b){
-      clearDragHighlight();
-      var lo = a < b ? a : b, hi = a < b ? b : a;
-      Object.keys(dayEls).forEach(function(k){
-        var dt = parseDateFromKey(k);
-        if(dt >= lo && dt <= hi) dayEls[k].classList.add('drag-selecting');
+    function close(){ closeOverlay(p); cal.clear(); }
+
+    $('cTrash').addEventListener('click', function(){
+      var mk = marks();
+      eachDay(start, end, function(d){ delete mk[key(d)]; });
+      toast('Override removed · ' + rangeLabel(start, end));
+      close(); cal.render();
+    });
+    $('cSave').addEventListener('click', function(){
+      var on = $('cCiToggle').checked;
+      if(on && (pIn.selected.size === 0 || pOut.selected.size === 0)){
+        errs(); toast('Allow at least one check-in day and one check-out day');
+        return;
+      }
+      var merge = $('cMergeRow').hidden || $('cMerge').checked;
+      var applyOn = $('cApplyDays').checked && pApply.selected.size > 0;
+      var mk = marks(), n = 0;
+      eachDay(start, end, function(d){
+        if(applyOn && !pApply.selected.has(dayIdx(d))) return;
+        var k = key(d), prev = mk[k], m = { ov:true, ci:false, co:false };
+        if(on){ m.ci = !pIn.selected.has(dayIdx(d)); m.co = !pOut.selected.has(dayIdx(d)); }
+        else if(merge && prev){ m.ci = prev.ci; m.co = prev.co; }
+        mk[k] = m; n++;
       });
-    }
-
-    function renderCalendar(){
-      monthLabel.textContent = MONTHS[monthCursor.getMonth()] + ' ' + monthCursor.getFullYear();
-      calGrid.innerHTML = '';
-      dayEls = {};
-      var cfg = currentListing();
-      var first = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), 1);
-      var mondayIndex = (first.getDay() + 6) % 7;
-      var daysInMonth = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 0).getDate();
-      for(var i=0;i<mondayIndex;i++){
-        var e = document.createElement('div');
-        e.className = 'dso-day empty';
-        calGrid.appendChild(e);
-      }
-      for(var d=1; d<=daysInMonth; d++){
-        var thisDate = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), d);
-        var k = key(thisDate);
-        var cell = document.createElement('div');
-        cell.className = 'dso-day ' + DEMAND_CLASSES[(d+monthCursor.getMonth())%4] + (d===25 && monthCursor.getMonth()===11 ? ' today-mark' : '');
-        var num = document.createElement('span');
-        num.textContent = d;
-        cell.appendChild(num);
-        var price = document.createElement('span');
-        price.className = 'price-num';
-        price.textContent = Math.round(cfg.baseADR * (0.85 + 0.3*(((d*7)%10)/10)));
-        cell.appendChild(price);
-        if(savedOverrides.has(k)){
-          var dot = document.createElement('span');
-          dot.className = 'dso-dot';
-          dot.textContent = '🚫';
-          dot.style.fontSize = '10px';
-          cell.appendChild(dot);
-        }
-        dayEls[k] = cell;
-        cell.addEventListener('mousedown', (function(dt){ return function(ev){
-          dragging = true; dragStart = dt; highlightRange(dt, dt); ev.preventDefault();
-        }; })(thisDate));
-        cell.addEventListener('mouseenter', (function(dt){ return function(){
-          if(dragging) highlightRange(dragStart, dt);
-        }; })(thisDate));
-        cell.addEventListener('mouseup', (function(dt){ return function(){
-          if(dragging){ dragging = false; openDsoModal(dragStart, dt); }
-        }; })(thisDate));
-        calGrid.appendChild(cell);
-      }
-    }
-    document.addEventListener('mouseup', function(){ dragging = false; });
-
-    function resetPriceUnits(cfg){
-      ['priceUnit1','priceUnit2','priceUnit3','priceUnit4'].forEach(function(id){
-        document.getElementById(id).textContent = cfg.currency;
-      });
-      document.getElementById('priceTypeSelect').value = 'fixed';
-      document.getElementById('minPriceTypeSelect').value = 'fixed';
-      document.getElementById('maxPriceTypeSelect').value = 'fixed';
-    }
-
-    function openDsoModal(a, b){
-      selectedStart = a < b ? a : b;
-      selectedEnd = a < b ? b : a;
-      var cfg = currentListing();
-      highlightRange(selectedStart, selectedEnd);
-
-      document.getElementById('dsoListingName').textContent = cfg.name;
-      document.getElementById('dsoDateStart').textContent = fmtFull(selectedStart);
-      document.getElementById('dsoDateEnd').textContent = fmtFull(selectedEnd);
-      resetPriceUnits(cfg);
-
-      var nights = Math.round((selectedEnd - selectedStart) / 86400000) + 1;
-      document.getElementById('dsoAdrVal').textContent = cfg.baseADR;
-      document.getElementById('dsoTotalVal').textContent = cfg.baseADR * nights;
-
-      var minStayInput = document.getElementById('minStayInput');
-      minStayInput.disabled = !cfg.minStayConfigured;
-      minStayInput.value = '';
-      document.getElementById('minStayHelper').style.display = cfg.minStayConfigured ? 'block' : 'none';
-      document.getElementById('minStayWarning').style.display = cfg.minStayConfigured ? 'none' : 'block';
-
-      document.getElementById('checkinoutSwitchWrap').classList.toggle('disabled', !cfg.checkinoutConfigured);
-      document.getElementById('checkinoutWarning').style.display = cfg.checkinoutConfigured ? 'none' : 'block';
-      document.getElementById('checkinoutToggle').checked = false;
-      document.getElementById('checkinoutFields').style.display = 'none';
-      document.getElementById('enforceWeeklySelect').value = 'disabled';
-
-      document.getElementById('dsoApplyDaysToggle').checked = false;
-      document.getElementById('pillrow-applydays').style.display = 'none';
-      applyPills.reset();
-      checkinPills.reset(); checkoutPills.reset();
-      updateCheckinError(); updateCheckoutError();
-      document.getElementById('noteCheck').checked = true;
-      document.getElementById('noteArea').style.display = 'block';
-      document.getElementById('noteArea').value = '';
-      moreKebabMenu.classList.remove('open');
-      overlay.classList.add('open');
-    }
-    function closeDsoModal(){ overlay.classList.remove('open'); clearDragHighlight(); }
-
-    document.getElementById('dsoClose').addEventListener('click', closeDsoModal);
-    document.getElementById('dsoCancelBtn').addEventListener('click', closeDsoModal);
-    overlay.addEventListener('click', function(e){ if(e.target===overlay) closeDsoModal(); });
-    document.getElementById('dsoDupeBtn').addEventListener('click', function(){ showToast('Date range duplicated (demo)'); });
-    document.getElementById('dsoTrashBtn').addEventListener('click', function(){ showToast('Override deleted (demo)'); closeDsoModal(); });
-
-    document.getElementById('dsoAddConfirmBtn').addEventListener('click', function(){
-      if(document.getElementById('checkinoutToggle').checked){
-        if(checkinPills.selected.size===0 || checkoutPills.selected.size===0){
-          updateCheckinError(); updateCheckoutError();
-          showToast('Select at least one check-in and check-out day');
-          return;
-        }
-      }
-      var cur = new Date(selectedStart);
-      while(cur <= selectedEnd){ savedOverrides.add(key(cur)); cur.setDate(cur.getDate()+1); }
-      var nights = Math.round((selectedEnd - selectedStart) / 86400000) + 1;
-      showToast('Date-Specific Override saved · ' + fmtFull(selectedStart) + (nights>1 ? ' – ' + fmtFull(selectedEnd) : ''));
-      closeDsoModal();
-      renderCalendar();
+      var total = nights(start, end);
+      toast('Override added · ' + rangeLabel(start, end) + (n < total ? ' (' + n + ' of ' + total + ' nights)' : ''));
+      close(); cal.render();
     });
-
-    document.getElementById('prevMonth0').addEventListener('click', function(){
-      monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()-1, 1); renderCalendar();
-    });
-    document.getElementById('nextMonth0').addEventListener('click', function(){
-      monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 1); renderCalendar();
-    });
-    document.getElementById('dsoAddBtn').addEventListener('click', function(){
-      var d = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), 1);
-      openDsoModal(d, d);
-    });
-    listingSelect.addEventListener('change', renderCalendar);
-
-    renderCalendar();
+    sel.addEventListener('change', function(){ cal.render(); });
+    cal.render();
+    return { close:close, open:open, goTo:cal.goTo, setListing:function(v){ sel.value = v; cal.render(); } };
   })();
 
+  /* ================================================================
+     PROPOSED FLOW — same drawer, simplifications built in
+     ================================================================ */
+  var P = (function(){
+    var p = 'p', L = listingsFresh(), M = {}, ranges = [], restrict = 'none', mode = 'dates';
+    var sel = $('pListing'); fillListingSelect(sel, L, 'jefferson');
+    function cur(){ return L[sel.value]; }
+    function marks(){ return M[sel.value] || (M[sel.value] = {}); }
+    var cal = makeCalendar({ grid:$('pGrid'), label:$('pMonth'), prev:$('pPrev'), next:$('pNext'), getListing:cur, getMarks:marks, onRange:function(a,b){ open(a,b); } });
+    var pApply = makePillGroup($('pPillApply'), refresh);
+    var pIn = makePillGroup($('pPillIn'), errs), pOut = makePillGroup($('pPillOut'), errs);
+    function errs(){ $('pErrIn').hidden = pIn.selected.size > 0; $('pErrOut').hidden = pOut.selected.size > 0; }
+    wirePrices(p, cur);
+    wireCommon(p, close);
+    $('pApplyDays').addEventListener('change', function(){ $('pPillApply').hidden = !this.checked; refresh(); });
+    $('pScope').addEventListener('change', refresh);
+
+    function allDates(){
+      var seen = {}, out = [];
+      ranges.forEach(function(r){ eachDay(r[0], r[1], function(d){ var k = key(d); if(!seen[k]){ seen[k] = 1; out.push(d); } }); });
+      return out.sort(function(a, b){ return a - b; });
+    }
+    function affectedDates(){
+      var ds = allDates();
+      if($('pApplyDays').checked && pApply.selected.size) ds = ds.filter(function(d){ return pApply.selected.has(dayIdx(d)); });
+      return ds;
+    }
+    function stateOf(d){
+      var m = marks()[key(d)];
+      if(!m) return 'none';
+      return m.ci && m.co ? 'both' : m.ci ? 'ci' : m.co ? 'co' : 'none';
+    }
+    function blocks(v){ return { ci: v === 'ci' || v === 'both', co: v === 'co' || v === 'both' }; }
+
+    function parseOne(s, ref){
+      s = s.trim().replace(/\./g, '');
+      var m = s.match(/^([A-Za-z]{3,})\s+(\d{1,2})(?:,?\s*(\d{4}))?$/), mon, day, yr = null;
+      if(m){ mon = MON_IDX[m[1].slice(0,3).toLowerCase()]; day = +m[2]; yr = m[3] ? +m[3] : null; }
+      else {
+        m = s.match(/^(\d{1,2})\s+([A-Za-z]{3,})(?:,?\s*(\d{4}))?$/);
+        if(m){ day = +m[1]; mon = MON_IDX[m[2].slice(0,3).toLowerCase()]; yr = m[3] ? +m[3] : null; }
+      }
+      if(mon === undefined || !day) return null;
+      var y = yr || ref.getFullYear(), d = new Date(y, mon, day);
+      if(d.getMonth() !== mon) return null;
+      if(!yr && d < addDays(ref, -180)) d = new Date(y+1, mon, day);
+      return d;
+    }
+    function parseRanges(text, ref){
+      var out = [], bad = [];
+      text.split(',').forEach(function(part){
+        part = part.trim(); if(!part) return;
+        var bits = part.split(/\s+to\s+|\s*[–—-]\s*/);
+        if(bits.length === 2){
+          var a = parseOne(bits[0], ref), b = null;
+          if(a) b = /^\d{1,2}$/.test(bits[1].trim()) ? new Date(a.getFullYear(), a.getMonth(), +bits[1]) : parseOne(bits[1], a);
+          if(a && b){ out.push(a <= b ? [a, b] : [b, a]); } else bad.push(part);
+        } else if(bits.length === 1){
+          var d = parseOne(bits[0], ref);
+          if(d) out.push([d, d]); else bad.push(part);
+        } else bad.push(part);
+      });
+      return { ranges:out, bad:bad };
+    }
+
+    function renderRanges(){
+      var box = $('pRanges');
+      box.innerHTML = '';
+      ranges.forEach(function(r, i){
+        var chip = document.createElement('span');
+        chip.className = 'rchip';
+        chip.innerHTML = '<span class="cal-ico" aria-hidden="true">📅</span>';
+        chip.appendChild(document.createTextNode(rangeLabel(r[0], r[1])));
+        if(ranges.length > 1){
+          var x = document.createElement('button');
+          x.type = 'button'; x.textContent = '×'; x.setAttribute('aria-label', 'Remove ' + rangeLabel(r[0], r[1]));
+          x.addEventListener('click', function(){ ranges.splice(i, 1); renderRanges(); refresh(); });
+          chip.appendChild(x);
+        }
+        box.appendChild(chip);
+      });
+      var add = document.createElement('button');
+      add.type = 'button'; add.className = 'add-dates-btn';
+      add.innerHTML = '+ Add dates <span class="new-tag">New</span>';
+      add.addEventListener('click', function(){ $('pAddRow').hidden = false; $('pAddInput').focus(); });
+      box.appendChild(add);
+    }
+    function addFromInput(){
+      var txt = $('pAddInput').value;
+      if(!txt.trim()) return;
+      var res = parseRanges(txt, ranges[0][0]);
+      if(!res.ranges.length){ toast('Couldn’t read “' + res.bad.join(', ') + '” — try “Dec 31” or “Jan 1 – Jan 3”'); return; }
+      ranges = ranges.concat(res.ranges).sort(function(a, b){ return a[0] - b[0]; });
+      $('pAddInput').value = ''; $('pAddRow').hidden = true;
+      if(res.bad.length) toast('Skipped “' + res.bad.join(', ') + '” — couldn’t read it');
+      renderRanges(); refresh();
+    }
+    $('pAddGo').addEventListener('click', addFromInput);
+    $('pAddInput').addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){ e.preventDefault(); addFromInput(); }
+      if(e.key === 'Escape'){ e.stopPropagation(); $('pAddRow').hidden = true; }
+    });
+
+    Array.prototype.forEach.call($('pSeg').children, function(b){
+      b.addEventListener('click', function(){ restrict = b.dataset.v; refresh(); });
+    });
+    $('pWeeklyLink').addEventListener('click', function(){ mode = 'weekly'; refresh(); });
+    $('pDatesLink').addEventListener('click', function(){ mode = 'dates'; refresh(); });
+    $('pCiDefaultBtn').addEventListener('click', function(){
+      cur().ciDefault = true; refresh();
+      toast('Default saved · check-in and checkout allowed every day');
+    });
+    $('pMinDefaultBtn').addEventListener('click', function(){
+      cur().minStayDefault = true; $('pMinNote').hidden = true;
+      toast('Default minimum stay saved · 1 night');
+    });
+
+    function refresh(){
+      var l = cur(), ds = allDates(), aff = affectedDates(), mk = marks();
+      $('pAdr').textContent = money(l.adr);
+      $('pTotal').textContent = money(l.adr * ds.length);
+      var existing = ds.some(function(d){ return mk[key(d)]; });
+      $('pMergeRow').hidden = !existing; $('pTrash').hidden = !existing;
+
+      Array.prototype.forEach.call($('pSeg').children, function(b){
+        var on = b.dataset.v === restrict;
+        b.classList.toggle('on', on); b.setAttribute('aria-checked', on ? 'true' : 'false');
+      });
+      var datesMode = mode === 'dates';
+      $('pSeg').hidden = !datesMode;
+      $('pSeg').classList.toggle('disabled', !l.ciSupported);
+      $('pCiUnsupported').hidden = l.ciSupported;
+      $('pCiDefaultNote').hidden = !l.ciSupported || l.ciDefault;
+      $('pWeeklyLink').hidden = !l.ciSupported || !datesMode;
+      $('pWeekly').hidden = datesMode;
+
+      var restricted = aff.some(function(d){ return stateOf(d) !== 'none'; });
+      var show = l.ciSupported && datesMode && aff.length > 0 && (restrict !== 'none' || restricted);
+      var pv = $('pPreview');
+      pv.hidden = !show;
+      $('pSaved').hidden = !show;
+      if(!show) return;
+
+      pv.innerHTML = '';
+      var bl = blocks(restrict);
+      aff.slice(0, 6).forEach(function(d){
+        var li = document.createElement('li');
+        li.innerHTML = '<span class="d">' + WD_LONG[dayIdx(d)] + ', ' + fmtShort(d) + '</span>' +
+          '<span class="' + (bl.ci ? 'no' : 'ok') + '">Check-in ' + (bl.ci ? '✕' : '✓') + '</span>' +
+          '<span class="' + (bl.co ? 'no' : 'ok') + '">Checkout ' + (bl.co ? '✕' : '✓') + '</span>';
+        pv.appendChild(li);
+      });
+      if(aff.length > 6){
+        var more = document.createElement('li'); more.className = 'more';
+        more.textContent = '+ ' + (aff.length - 6) + ' more date' + (aff.length - 6 === 1 ? '' : 's');
+        pv.appendChild(more);
+      }
+
+      var runs = [];
+      aff.forEach(function(d){
+        var last = runs[runs.length - 1];
+        if(last && nights(last[last.length - 1], d) === 2) last.push(d); else runs.push([d]);
+      });
+      var chunks = [];
+      runs.forEach(function(r){ for(var i = 0; i < r.length; i += 6) chunks.push(r.slice(i, i + 6)); });
+      var lines = chunks.map(function(c){
+        var a = c[0], b = c[c.length - 1], inChunk = {};
+        c.forEach(function(d){ inChunk[dayIdx(d)] = 1; });
+        var allowed = WD.filter(function(w, i){ return !inChunk[i]; }).join(' ');
+        return (c.length > 1 ? fmtShort(a) + ' – ' + fmtShort(b) : fmtShort(a)) +
+          '\n  Allow Check-In On:  ' + (bl.ci ? allowed : 'All') +
+          '\n  Allow Check-Out On: ' + (bl.co ? allowed : 'All') +
+          '\n  Enforce Weekly:     Disabled';
+      });
+      var scope = $('pScope').value;
+      $('pSavedSum').textContent = 'Saved as ' + chunks.length + ' date-specific override' + (chunks.length === 1 ? '' : 's') +
+        (scope === 'account' ? ' on the account calendar' : scope === 'all' ? ' on every account calendar' : '');
+      $('pSavedCode').textContent = lines.join('\n\n');
+    }
+
+    function open(a, b, preset){
+      preset = preset || {};
+      var lo = a < b ? a : b, hi = a < b ? b : a;
+      if(preset.seed){ seedMarks(marks(), preset.seed); cal.render(); }
+      ranges = [[lo, hi]].concat((preset.extra || []).map(function(r){ return [ymd(r[0]), ymd(r[1])]; }));
+      mode = preset.mode || 'dates';
+      var ds = allDates(), states = ds.map(stateOf);
+      restrict = preset.restrict || (states.every(function(s){ return s === states[0]; }) ? states[0] : 'none');
+      $('pScope').value = preset.scope || 'listing';
+
+      var l = cur();
+      $('pListingName').textContent = l.name;
+      $('pPmsName').textContent = l.pms || 'This PMS';
+      $('pPmsName2').textContent = l.pms || 'the PMS';
+      $('pScopeAcct').textContent = 'All listings in ' + (l.pms ? 'the ' + l.pms : 'this PMS') + ' account';
+      resetPrices(p, l.currency);
+      $('pMinStay').value = '';
+      $('pMinNote').hidden = l.minStayDefault;
+
+      pIn.set(preset.ciAllowed || ALL); pOut.set(preset.coAllowed || ALL); errs();
+      $('pEnforce').value = 'disabled';
+      $('pApplyDays').checked = false; $('pPillApply').hidden = true; pApply.set([]);
+      $('pAddRow').hidden = true; $('pAddInput').value = '';
+      resetCommon(p, false);
+      renderRanges(); refresh();
+      cal.highlight(lo, hi);
+      openOverlay(p);
+    }
+    function close(){ closeOverlay(p); cal.clear(); }
+
+    $('pTrash').addEventListener('click', function(){
+      var mk = marks();
+      allDates().forEach(function(d){ delete mk[key(d)]; });
+      toast('Override removed');
+      close(); cal.render();
+    });
+    $('pSave').addEventListener('click', function(){
+      var l = cur();
+      if(mode === 'weekly' && (pIn.selected.size === 0 || pOut.selected.size === 0)){
+        errs(); toast('Allow at least one check-in day and one check-out day');
+        return;
+      }
+      var aff = affectedDates(), mk = marks(), bl = blocks(restrict);
+      aff.forEach(function(d){
+        var k = key(d), prev = mk[k], m = { ov:true, ci:false, co:false };
+        if(!l.ciSupported){ if(prev){ m.ci = prev.ci; m.co = prev.co; } }
+        else if(mode === 'weekly'){ m.ci = !pIn.selected.has(dayIdx(d)); m.co = !pOut.selected.has(dayIdx(d)); }
+        else { m.ci = bl.ci; m.co = bl.co; }
+        mk[k] = m;
+      });
+      var scope = $('pScope').value;
+      var scopeLbl = scope === 'listing' ? 'This listing' : scope === 'account' ? 'All listings in ' + (l.pms || 'this PMS') + ' account' : 'All listings';
+      var what = mode === 'weekly' ? 'Weekly pattern saved'
+        : { none:'Override saved', ci:'Check-in blocked', co:'Checkout blocked', both:'Check-in & checkout blocked' }[restrict];
+      toast(what + ' on ' + aff.length + ' date' + (aff.length === 1 ? '' : 's') + ' · ' + scopeLbl);
+      close(); cal.render();
+    });
+    sel.addEventListener('change', function(){ cal.render(); });
+    cal.render();
+    return { close:close, open:open, goTo:cal.goTo, setListing:function(v){ sel.value = v; cal.render(); } };
+  })();
+
+  WS = { c:C, p:P };
+
+  /* ================================================================
+     TABS
+     ================================================================ */
+  var tabs = document.querySelectorAll('#tabswitch [role="tab"]');
+  function setTab(name){
+    tabs.forEach(function(t){
+      var on = t.dataset.tab === name;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      $('tab-' + t.dataset.tab).hidden = !on;
+    });
+  }
+  tabs.forEach(function(t){ t.addEventListener('click', function(){ setTab(t.dataset.tab); }); });
+
+  /* ================================================================
+     SUPPORT CASES
+     ================================================================ */
+  var WEEKDAYS_BUT_FRI = [0,1,2,3,5,6];
+  var CASES = [
+    { id:'C1', f:['single'], tags:['Checkout','Single date'],
+      ticket:'Can you make sure nobody checks out on Christmas Day? Only Dec 25 — leave everything else as it is.',
+      cur:[
+        'Open the listing’s pricing calendar and drag (or click) Dec 25. Date Specific Overrides opens for Dec 25, 2026 – Dec 25, 2026.',
+        'Leave Price Settings empty.',
+        'Turn on Check-In/Check-Out.',
+        'Allow Check-In On: click All.',
+        'Allow Check-Out On: click All, then cross out Fr — Dec 25, 2026 is a Friday.',
+        'Leave Enforce Weekly on Disabled.',
+        'Click Add.'
+      ],
+      gotcha:'The agent has to turn “Dec 25” into “every weekday except Friday”, and fill in check-in days too even though check-in isn’t changing.',
+      pro:['Drag Dec 25.','Check-in & check-out on these dates → No checkout.','Click Add.'],
+      rc:{ listing:'jefferson', start:'2026-12-25', end:'2026-12-25', preset:{ ciOn:true, ciAllowed:ALL, coAllowed:WEEKDAYS_BUT_FRI } },
+      rp:{ listing:'jefferson', start:'2026-12-25', end:'2026-12-25', preset:{ restrict:'co' } } },
+
+    { id:'C2', f:['multi'], tags:['Check-in','Two dates'],
+      ticket:'We’re short-staffed on Dec 24 and Dec 31. No arrivals on those two days please — departures are fine.',
+      cur:[
+        'Drag Dec 24 — the override opens for Dec 24 – Dec 24.',
+        'Turn on Check-In/Check-Out.',
+        'Allow Check-In On: All, then cross out Th (Dec 24 is a Thursday).',
+        'Allow Check-Out On: All.',
+        'Click Add.',
+        'Repeat all of the above for Dec 31.'
+      ],
+      gotcha:'Shortcut some agents use: one override for Dec 24 – Dec 31 with Th crossed out under check-in. It only works because both dates fall on a Thursday.',
+      pro:['Drag Dec 24.','+ Add dates → “Dec 31”.','No check-in → Add.'],
+      rc:{ listing:'jefferson', start:'2026-12-24', end:'2026-12-24', preset:{ ciOn:true, ciAllowed:[0,1,2,4,5,6], coAllowed:ALL } },
+      rp:{ listing:'jefferson', start:'2026-12-24', end:'2026-12-24', preset:{ extra:[['2026-12-31','2026-12-31']], restrict:'ci' } } },
+
+    { id:'C3', f:['multi','portfolio'], tags:['Check-in + checkout','Two dates','Whole account'],
+      ticket:'Please block both check-ins and check-outs on Dec 25 and Jan 1 for every listing on our account.',
+      cur:[
+        'Dynamic Pricing → Customizations → Accounts → select the PMS account → Account Calendar.',
+        'Click Add and set the range to Dec 25 – Dec 25.',
+        'Turn on Check-In/Check-Out and cross out Fr under both Allow Check-In On and Allow Check-Out On.',
+        'Click Add, then repeat for Jan 1.',
+        'Find listings that already have their own rules on those dates — account-level rules skip them — and make the same change on each one.'
+      ],
+      gotcha:'Dec 25, 2026 and Jan 1, 2027 are both Fridays, so a single Dec 25 – Jan 1 override with Fr crossed out also works. Two dates on different weekdays and it doesn’t.',
+      pro:['Drag Dec 25 on any listing in the account.','Apply to → All listings in this PMS account; + Add dates → “Jan 1”.','Neither → Add.'],
+      rc:{ listing:'jefferson', start:'2026-12-25', end:'2026-12-25', preset:{ ciOn:true, ciAllowed:WEEKDAYS_BUT_FRI, coAllowed:WEEKDAYS_BUT_FRI } },
+      rp:{ listing:'jefferson', start:'2026-12-25', end:'2026-12-25', preset:{ extra:[['2027-01-01','2027-01-01']], restrict:'both', scope:'account' } } },
+
+    { id:'C4', f:['setup'], tags:['Setup','Blocked by missing default'],
+      ticket:'I’m trying to stop checkouts on Dec 25 but the Check-In/Check-Out switch won’t turn on. It says I need a default first?',
+      cur:[
+        'Close the override — check-in/check-out can’t be saved on this account yet.',
+        'Go to Customization → Stay Restrictions and add a default Check In/Out (usually every day allowed).',
+        'Save the customization.',
+        'Go back to the listing’s pricing calendar and drag Dec 25 again.',
+        'The switch now works — finish as in C1.'
+      ],
+      gotcha:'Accounts without a default minimum stay hit the same wall on Minimum Stay — pick “Asd” in the current flow to see both.',
+      pro:['Drag Dec 25.','The panel says every day goes back to allowed when the override ends, with a one-click option to save that as the default.','No checkout → Add.'],
+      rc:{ listing:'beach', start:'2026-12-25', end:'2026-12-25', preset:{} },
+      rp:{ listing:'beach', start:'2026-12-25', end:'2026-12-25', preset:{ restrict:'co' } } },
+
+    { id:'C5', f:['setup'], tags:['Setup','PMS doesn’t support it'],
+      ticket:'There’s no Check-In/Check-Out option anywhere in my override panel. Did it get removed?',
+      cur:[
+        'Check which PMS the listing syncs through (shown under the listing name on the pricing page).',
+        'For some connections — SabeeApp in our testing — the panel has no Check-In/Check-Out row, so the restriction can’t be sent from PriceLabs.',
+        'Tell the user to set the restriction in their PMS.',
+        'If the PMS should support it, escalate to the integrations team.'
+      ],
+      gotcha:'Nothing in the panel says the option is unavailable — the row just isn’t there, so it reads as a bug.',
+      pro:['The row stays in the panel, disabled, with the reason and where to set it instead. Most users won’t need to write in.'],
+      rc:{ listing:'sabee', start:'2026-12-25', end:'2026-12-25', preset:{} },
+      rp:{ listing:'sabee', start:'2026-12-25', end:'2026-12-25', preset:{} } },
+
+    { id:'C6', f:['recurring'], tags:['Check-in','Every week'],
+      ticket:'We never want guests arriving on a Sunday. Not just one weekend — all year.',
+      cur:[
+        'This is a default, not a date-specific override: Customization → Stay Restrictions → default Check In/Out.',
+        'Allow check-in every day except Su; allow check-out every day.',
+        'Save.',
+        'If it’s only for a season: drag the season on the pricing calendar, turn on Check-In/Check-Out, cross out Su under Allow Check-In On, set Allow Check-Out On to All, Add.'
+      ],
+      gotcha:'A year-long override would also do it, but it has to be renewed each year and sits on top of the default.',
+      pro:['Year-round: unchanged — set the default.','For a season: drag the season → Repeat on weekdays instead → cross out Su under check-in → Add.'],
+      rc:{ listing:'jefferson', start:'2026-12-01', end:'2026-12-31', preset:{ ciOn:true, ciAllowed:[0,1,2,3,4,5], coAllowed:ALL } },
+      rp:{ listing:'jefferson', start:'2026-12-01', end:'2026-12-31', preset:{ mode:'weekly', ciAllowed:[0,1,2,3,4,5], coAllowed:ALL } } },
+
+    { id:'C7', f:['setup'], tags:['Checkout','Blocked too much'],
+      ticket:'I blocked checkout for Christmas and now none of my December Fridays allow checkout!',
+      cur:[
+        'Drag any affected Friday to open the override.',
+        'Check the date range: Dec 1 – Dec 31 with Fr crossed out blocks every Friday in the month, not just Dec 25.',
+        'Change the range to Dec 25 – Dec 25, or delete it with the trash icon and redo it as in C1.',
+        'Click Add.'
+      ],
+      gotcha:'An easy mistake in the weekday model — the pills say “Friday”, not “Dec 25”.',
+      pro:['Doesn’t happen with exact dates: only the dates picked are blocked, and “Saved as” shows the exact range before Add.'],
+      rc:{ listing:'jefferson', start:'2026-12-01', end:'2026-12-31', preset:{ ciOn:true, ciAllowed:ALL, coAllowed:WEEKDAYS_BUT_FRI } },
+      rp:{ listing:'jefferson', start:'2026-12-25', end:'2026-12-25', preset:{ restrict:'co' } } },
+
+    { id:'C8', f:['setup'], tags:['Checkout','Existing override'],
+      ticket:'I added a checkout block on Dec 25 and the custom price I’d set for that night disappeared.',
+      cur:[
+        'Drag Dec 25 to open its override.',
+        'Re-enter the price under Price Settings.',
+        'Keep Merge with Existing Overrides checked — it only shows when the dates already have an override. Blank fields then keep what’s there; filled fields replace it.',
+        'Click Add.'
+      ],
+      gotcha:'With Merge unchecked, the new override replaces the old one — price included.',
+      pro:['Same fix. Check-in & check-out is its own control, separate from Price Settings, so changing a restriction never needs the price fields.'],
+      rc:{ listing:'jefferson', start:'2026-12-25', end:'2026-12-25', preset:{ seed:{ '2026-12-25':{} }, ciOn:true, ciAllowed:ALL, coAllowed:WEEKDAYS_BUT_FRI } },
+      rp:{ listing:'jefferson', start:'2026-12-25', end:'2026-12-25', preset:{ seed:{ '2026-12-25':{} }, restrict:'co' } } },
+
+    { id:'C9', f:['setup'], tags:['Sync'],
+      ticket:'PriceLabs shows checkout restricted on Dec 25, but a guest just booked a stay ending on the 25th.',
+      cur:[
+        'Confirm the override saved — Dec 25 shows the restriction icon on the pricing calendar.',
+        'Check that Enable Price Sync is on for the listing, then click Sync Now.',
+        'Check the restriction shows up in the PMS after the sync.',
+        'Check when the booking came in — anything booked before the sync went out isn’t affected.',
+        'Still missing: confirm the PMS accepts check-in/check-out restrictions from PriceLabs (see C5) and escalate.'
+      ],
+      gotcha:'Not a panel problem, but it lands in the same queue.',
+      pro:['Unchanged — syncing happens outside the panel.'] },
+
+    { id:'C10', f:['single'], tags:['Checkout','Undo'],
+      ticket:'How do I undo the checkout block on Dec 25? Guests should be able to leave that day again.',
+      cur:[
+        'Drag Dec 25 to open its override.',
+        'To keep any price changes: set Allow Check-Out On back to All, then Add.',
+        'To remove the override entirely: click the trash icon.'
+      ],
+      gotcha:'The trash icon also removes any price change on those dates, so agents check which one the user wants.',
+      pro:['Drag Dec 25 — the control already shows No checkout.','Switch it to Allowed → Add.'],
+      rc:{ listing:'jefferson', start:'2026-12-25', end:'2026-12-25', preset:{ seed:{ '2026-12-25':{ co:true } }, ciOn:true, ciAllowed:ALL, coAllowed:ALL } },
+      rp:{ listing:'jefferson', start:'2026-12-25', end:'2026-12-25', preset:{ seed:{ '2026-12-25':{ co:true } } } } },
+
+    { id:'C11', f:['multi'], tags:['Check-in','Full week'],
+      ticket:'No check-ins at all from Dec 21 to Dec 27, please — we’re closed for arrivals that week.',
+      cur:[
+        'Drag Dec 21 – Dec 27 and turn on Check-In/Check-Out.',
+        'Cross out every day under Allow Check-In On — the panel won’t save it: at least one check-in day has to stay allowed, and a 7-night range covers all seven.',
+        'Close it. Drag Dec 21 – Dec 24 (Mon–Thu): Allow Check-In On Fr Sa Su only, Allow Check-Out On All, Add.',
+        'Drag Dec 25 – Dec 27 (Fri–Sun): Allow Check-In On Mo Tu We Th only, Allow Check-Out On All, Add.'
+      ],
+      gotcha:'Any range of 7 nights or more hits this — the weekday model can’t say “none of these days”.',
+      pro:['Drag Dec 21 – Dec 27.','No check-in → Add. The panel splits it into two overrides behind the scenes (see “Saved as”).'],
+      rc:{ listing:'jefferson', start:'2026-12-21', end:'2026-12-27', preset:{ ciOn:true, ciAllowed:[], coAllowed:ALL } },
+      rp:{ listing:'jefferson', start:'2026-12-21', end:'2026-12-27', preset:{ restrict:'ci' } } }
+  ];
+
+  var FILTERS = [['all','All'],['single','Single date'],['multi','Multiple dates'],['portfolio','Whole account'],['recurring','Recurring'],['setup','Setup & errors']];
+  var activeFilter = 'all';
+  $('caseCount').textContent = CASES.length;
+
+  function runRepro(which, r){
+    var ws = which === 'current' ? C : P;
+    setTab(which);
+    window.scrollTo(0, 0);
+    ws.setListing(r.listing);
+    var s = ymd(r.start), e = ymd(r.end);
+    ws.goTo(s);
+    ws.open(s, e, r.preset);
+  }
+
+  function el(tag, cls, text){
+    var n = document.createElement(tag);
+    if(cls) n.className = cls;
+    if(text !== undefined) n.textContent = text;
+    return n;
+  }
+  function stepCol(kind, title, steps, gotcha, repro){
+    var col = el('div', 'case-col ' + kind);
+    var h = el('h4');
+    h.appendChild(el('span', '', title));
+    h.appendChild(el('span', 'steps-count', steps.length + (steps.length === 1 ? ' step' : ' steps')));
+    col.appendChild(h);
+    var ol = el('ol');
+    steps.forEach(function(s){ ol.appendChild(el('li', '', s)); });
+    col.appendChild(ol);
+    if(gotcha){
+      var g = el('div', 'gotcha');
+      g.appendChild(el('b', '', 'Watch out: '));
+      g.appendChild(document.createTextNode(gotcha));
+      col.appendChild(g);
+    }
+    if(repro){
+      var b = el('button', 'try-btn', kind === 'cur' ? 'Open in current flow, pre-filled →' : 'Open in proposed flow, pre-filled →');
+      b.type = 'button';
+      b.addEventListener('click', repro);
+      col.appendChild(b);
+    }
+    return col;
+  }
+
+  function renderFilters(){
+    var box = $('caseFilters');
+    box.innerHTML = '';
+    FILTERS.forEach(function(f){
+      var n = f[0] === 'all' ? CASES.length : CASES.filter(function(c){ return c.f.indexOf(f[0]) >= 0; }).length;
+      var b = el('button', 'fchip');
+      b.type = 'button';
+      b.setAttribute('aria-pressed', activeFilter === f[0] ? 'true' : 'false');
+      b.appendChild(document.createTextNode(f[1]));
+      b.appendChild(el('span', 'n', String(n)));
+      b.addEventListener('click', function(){ activeFilter = f[0]; renderFilters(); renderCases(); });
+      box.appendChild(b);
+    });
+  }
+  function renderCases(){
+    var list = $('caseList');
+    list.innerHTML = '';
+    CASES.filter(function(c){ return activeFilter === 'all' || c.f.indexOf(activeFilter) >= 0; }).forEach(function(c){
+      var card = el('article', 'case');
+      var head = el('div', 'case-head');
+      head.appendChild(el('span', 'case-id', c.id));
+      c.tags.forEach(function(t){ head.appendChild(el('span', 'tag', t)); });
+      card.appendChild(head);
+      card.appendChild(el('p', 'ticket', c.ticket));
+      var cols = el('div', 'case-cols');
+      cols.appendChild(stepCol('cur', 'How we solve it today', c.cur, c.gotcha, c.rc ? function(){ runRepro('current', c.rc); } : null));
+      cols.appendChild(stepCol('pro', 'With the proposed panel', c.pro, null, c.rp ? function(){ runRepro('proposed', c.rp); } : null));
+      card.appendChild(cols);
+      list.appendChild(card);
+    });
+  }
+  renderFilters();
+  renderCases();
 })();
 </script>
