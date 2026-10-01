@@ -510,6 +510,39 @@
   .dso-day.today-mark{ background:var(--accent-tint); border-color:var(--accent-tint); }
   .dso-day.empty{ visibility:hidden; }
   .dso-day .dso-dot{ position:absolute; bottom:6px; right:6px; width:7px; height:7px; border-radius:50%; background:var(--accent); }
+  .dso-day{ flex-direction:column; justify-content:space-between; user-select:none; }
+  .dso-day .price-num{ font-size:11px; color:var(--ink-soft); align-self:flex-start; }
+  .dso-day.demand-low{ background:#eaf5e9; border-color:#d7ecd4; }
+  .dso-day.demand-normal{ background:#d8edd3; border-color:#c3e3bc; }
+  .dso-day.demand-good{ background:#dbeaf7; border-color:#c4def1; }
+  .dso-day.demand-high{ background:#c3dcf2; border-color:#aecfec; }
+  :root[data-theme="dark"] .dso-day.demand-low,
+  :root:not([data-theme="light"]) .dso-day.demand-low{ background:#1d2a1d; border-color:#28381f; }
+  :root[data-theme="dark"] .dso-day.demand-normal,
+  :root:not([data-theme="light"]) .dso-day.demand-normal{ background:#203322; border-color:#2b4228; }
+  :root[data-theme="dark"] .dso-day.demand-good,
+  :root:not([data-theme="light"]) .dso-day.demand-good{ background:#1b2a38; border-color:#223a4c; }
+  :root[data-theme="dark"] .dso-day.demand-high,
+  :root:not([data-theme="light"]) .dso-day.demand-high{ background:#1b3049; border-color:#204266; }
+  .dso-day.drag-selecting{ outline:2px solid var(--accent); outline-offset:-2px; }
+  .dso-legend{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:10px 22px 16px; font-size:11px; color:var(--ink-soft); border-top:1px solid var(--line); }
+  .dso-legend b{ color:var(--ink); font-weight:600; }
+  .dso-legend .sw{ width:10px; height:10px; border-radius:3px; display:inline-block; margin-right:5px; vertical-align:-1px; }
+
+  .dso-warning{
+    display:flex; gap:9px; align-items:flex-start; font-size:12px; line-height:1.5;
+    background:var(--accent-tint); border:1px solid var(--accent); color:var(--ink);
+    border-radius:9px; padding:10px 12px; margin-top:8px;
+  }
+  .dso-warning a{ color:var(--type-checkin); font-weight:600; text-decoration:none; white-space:nowrap; }
+  .dso-warning a:hover{ text-decoration:underline; }
+  .dso-warning .wicon{ flex:none; }
+  .dso-field input:disabled, .dso-field-wrap input:disabled{ opacity:0.55; cursor:not-allowed; }
+  .switch.disabled{ pointer-events:none; opacity:0.5; }
+  .dso-select{
+    font-family:"IBM Plex Sans"; font-size:12.5px; font-weight:600; color:var(--ink);
+    border:1px solid var(--line-strong); border-radius:8px; padding:8px 10px; background:var(--surface); cursor:pointer;
+  }
 
   .dso-modal-card{ width:460px; max-height:85vh; overflow:auto; }
   .dso-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
@@ -535,8 +568,12 @@
     background:var(--canvas); border-radius:8px; padding:8px 10px;
     font-size:12.5px; font-weight:700; color:var(--ink); position:relative;
   }
-  .dso-sec-head .kebab{ background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:14px; padding:2px 6px; border-radius:5px; }
-  .dso-sec-head .kebab:hover{ background:var(--line); }
+  .dso-sec-head .kebab{
+    width:22px; height:22px; display:flex; align-items:center; justify-content:center;
+    background:var(--surface); border:1px solid var(--line-strong); color:var(--ink-soft);
+    cursor:pointer; font-size:13px; border-radius:6px;
+  }
+  .dso-sec-head .kebab:hover{ border-color:var(--accent); color:var(--accent-dark); }
   .dso-kebab-menu{
     display:none; position:absolute; top:calc(100% + 4px); right:0; z-index:10;
     background:var(--surface); border:1px solid var(--line-strong); border-radius:10px;
@@ -695,11 +732,15 @@
 
     <!-- ============ VARIANT 0 : TODAY'S REAL DSO MODAL ============ -->
     <div class="variant-panel active" id="panel-0">
-      <div class="variant-desc"><b>Today, for real —</b> recreated field-for-field from <code>app.pricelabs.co</code>: Dynamic Pricing → Customizations → Account Calendar → Date Specific Overrides. Click a date, then Add, to try the actual current flow yourself. The Check-In/Check-Out toggle only appears for PMS connections that support it (e.g. Hostaway) — SabeeApp and some others don't expose it at all.</div>
+      <div class="variant-desc"><b>Today, for real —</b> recreated field-for-field from <code>app.pricelabs.co</code>'s pricing calendar. <b>Drag across date cells</b> (exactly like the live app) to open Date Specific Overrides pre-filled with that range — a single click works too, for a one-night range. Switch listings below: the Check-In/Check-Out toggle is only usable once an account has a default Check In/Out set up elsewhere — until then it's locked behind a warning, which is friction on top of the friction.</div>
 
       <div class="app">
         <div class="dso-toolbar">
-          <span class="pms-tag">Hostaway · 12 Birch Lane</span>
+          <select class="dso-select" id="listingSelect0">
+            <option value="beach">Beach Town Guest House 2 · USD</option>
+            <option value="asd">Asd · INR</option>
+            <option value="jefferson" selected>Jefferson St · USD</option>
+          </select>
           <div class="month-nav" style="margin-left:16px;">
             <button id="prevMonth0" aria-label="Previous month">‹</button>
             <span class="month-label" id="monthLabel0"></span>
@@ -712,6 +753,13 @@
             <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
           </div>
           <div class="dso-cal-grid" id="calGrid0"></div>
+        </div>
+        <div class="dso-legend">
+          <span><span class="sw" style="background:#d8edd3;"></span><b>Low</b></span>
+          <span><span class="sw" style="background:#c3e3bc;"></span><b>Normal</b></span>
+          <span><span class="sw" style="background:#dbeaf7;"></span><b>Good</b></span>
+          <span><span class="sw" style="background:#c3dcf2;"></span><b>High</b></span>
+          <span>🚫 restriction saved on this date</span>
         </div>
       </div>
     </div>
@@ -981,7 +1029,7 @@
       </div>
       <button class="dso-close" id="dsoClose" aria-label="Close">×</button>
     </div>
-    <p class="dso-sub">12 Birch Lane · Hostaway | Created &amp; Last Updated At <span title="Audit info">ⓘ</span></p>
+    <p class="dso-sub"><span id="dsoListingName">Jefferson St</span> | <a href="#" onclick="return false;">Learn More ↗</a></p>
 
     <div class="dso-daterow">
       <div class="dso-date-field">📅 <span id="dsoDateStart">Oct 7, 2026</span></div>
@@ -1002,46 +1050,54 @@
       <label>New Final Price</label>
       <div class="dso-field-combo">
         <select id="priceTypeSelect">
+          <option value="fixed" selected>Fixed</option>
           <option value="percent">Percent</option>
-          <option value="fixed">Fixed</option>
         </select>
-        <div class="combo-input"><input type="text" placeholder="-75 to 1000"><span class="unit" id="priceUnit1">%</span></div>
+        <div class="combo-input"><input type="text" placeholder=""><span class="unit" id="priceUnit1">USD</span></div>
       </div>
     </div>
     <div class="dso-field-grid">
       <div class="dso-field">
         <label>Minimum Price</label>
         <div class="dso-field-combo">
-          <select id="minPriceTypeSelect"><option value="percent">Percent</option><option value="fixed">Fixed</option></select>
-          <div class="combo-input"><input type="text" placeholder="-75 to 1000"><span class="unit" id="priceUnit2">%</span></div>
+          <select id="minPriceTypeSelect"><option value="fixed" selected>Fixed</option><option value="percent">Percent</option></select>
+          <div class="combo-input"><input type="text" placeholder=""><span class="unit" id="priceUnit2">USD</span></div>
         </div>
       </div>
       <div class="dso-field">
         <label>Maximum Price</label>
         <div class="dso-field-combo">
-          <select id="maxPriceTypeSelect"><option value="percent">Percent</option><option value="fixed">Fixed</option></select>
-          <div class="combo-input"><input type="text" placeholder="-75 to 1000"><span class="unit" id="priceUnit3">%</span></div>
+          <select id="maxPriceTypeSelect"><option value="fixed" selected>Fixed</option><option value="percent">Percent</option></select>
+          <div class="combo-input"><input type="text" placeholder=""><span class="unit" id="priceUnit3">USD</span></div>
         </div>
       </div>
     </div>
     <div class="dso-field">
       <label>Base Price</label>
-      <div class="dso-field-wrap"><input type="text" class="plain" placeholder="Currency"><span class="unit">EUR</span></div>
+      <div class="dso-field-wrap"><input type="text" class="plain" placeholder=""><span class="unit" id="priceUnit4">USD</span></div>
     </div>
 
     <div class="dso-sec-head">Stay Restrictions</div>
     <div class="dso-field">
       <label>Minimum Stay</label>
-      <div class="dso-field-wrap"><input type="text" class="plain" placeholder="Night(s)"><span class="unit">Night(s)</span></div>
-      <div class="dso-helper">Can be overridden by orphan day customization ⓘ</div>
+      <div class="dso-field-wrap"><input type="text" class="plain" id="minStayInput" placeholder="Night(s)"><span class="unit">Night(s)</span></div>
+      <div class="dso-helper" id="minStayHelper">Can be overridden by orphan day customization ⓘ</div>
+      <div class="dso-warning" id="minStayWarning" style="display:none;">
+        <span class="wicon">⚠️</span>
+        <span>You need to set up a default minimum stay under <b>Customization → Stay Restrictions</b> before adding an override. The default helps apply restrictions if a date-specific override is removed. <a href="#" onclick="return false;">Learn More ↗</a></span>
+      </div>
     </div>
 
     <div class="dso-switch-row" style="margin-top:14px;">
-      <label class="switch">
+      <label class="switch" id="checkinoutSwitchWrap">
         <input type="checkbox" id="checkinoutToggle">
         <span class="track"><span class="thumb"></span></span>
       </label>
       <span class="lbl">Check-In/Check-Out</span>
+    </div>
+    <div class="dso-warning" id="checkinoutWarning" style="display:none;">
+      <span class="wicon">⚠️</span>
+      <span>You need to set up a default Check In/Out under <b>Customization → Stay Restrictions</b> before adding an override. The default helps apply restrictions if a date-specific override is removed. <a href="#" onclick="return false;">Learn More ↗</a></span>
     </div>
     <div id="checkinoutFields" style="display:none;">
       <div class="dso-pill-block">
@@ -1053,6 +1109,13 @@
         <div class="pb-label">Allow Check-Out On*:</div>
         <div class="pill-row" id="pillrow-checkout"></div>
         <div class="dso-error" id="checkoutError">At least one check-out day should be selected</div>
+      </div>
+      <div class="dso-field" style="margin-top:12px;">
+        <label>Enforce Weekly</label>
+        <select class="dso-select" id="enforceWeeklySelect" style="width:100%;">
+          <option value="disabled" selected>Disabled</option>
+          <option value="enable">Enable</option>
+        </select>
       </div>
     </div>
 
@@ -1073,7 +1136,7 @@
 
     <div class="dso-footer">
       <button class="dso-trash" id="dsoTrashBtn" title="Delete override">🗑</button>
-      <div class="dso-adr">ADR: <b>123</b><br>Total: <b>123</b></div>
+      <div class="dso-adr">ADR: <b id="dsoAdrVal">123</b><br>Total: <b id="dsoTotalVal">123</b></div>
       <div class="dso-footer-actions">
         <button class="dso-btn dso-btn-cancel" id="dsoCancelBtn">Cancel</button>
         <button class="dso-btn dso-btn-add" id="dsoAddConfirmBtn">Add <span class="caret">▾</span></button>
@@ -1624,13 +1687,25 @@
      VARIANT 0 — today's real Date Specific Overrides modal
      ================================================================ */
   (function initVariant0(){
+    var LISTINGS = {
+      beach:     { name:'Beach Town Guest House 2', currency:'USD', minStayConfigured:true,  checkinoutConfigured:false, baseADR:80  },
+      asd:       { name:'Asd',                      currency:'INR', minStayConfigured:false, checkinoutConfigured:false, baseADR:6200 },
+      jefferson: { name:'Jefferson St',              currency:'USD', minStayConfigured:true,  checkinoutConfigured:true,  baseADR:341 }
+    };
+    var DEMAND_CLASSES = ['demand-low','demand-normal','demand-good','demand-high'];
+
     var monthCursor = new Date(2026, 11, 1);
     var savedOverrides = new Set();
-    var selectedDate = null;
+    var selectedStart = null, selectedEnd = null;
+    var dragStart = null, dragging = false;
+    var dayEls = {};
 
     var calGrid = document.getElementById('calGrid0');
     var monthLabel = document.getElementById('monthLabel0');
     var overlay = document.getElementById('dsoOverlay');
+    var listingSelect = document.getElementById('listingSelect0');
+
+    function currentListing(){ return LISTINGS[listingSelect.value]; }
 
     function makePillGroup(container, onChange){
       var selected = new Set();
@@ -1690,7 +1765,7 @@
     function wirePriceType(selectId, unitId){
       var sel = document.getElementById(selectId);
       var unit = document.getElementById(unitId);
-      sel.addEventListener('change', function(){ unit.textContent = sel.value==='percent' ? '%' : 'EUR'; });
+      sel.addEventListener('change', function(){ unit.textContent = sel.value==='percent' ? '%' : currentListing().currency; });
     }
     wirePriceType('priceTypeSelect','priceUnit1');
     wirePriceType('minPriceTypeSelect','priceUnit2');
@@ -1704,9 +1779,23 @@
     moreKebabMenu.addEventListener('click', function(e){ e.stopPropagation(); });
     document.addEventListener('click', function(){ moreKebabMenu.classList.remove('open'); });
 
+    function clearDragHighlight(){
+      Object.keys(dayEls).forEach(function(k){ dayEls[k].classList.remove('drag-selecting'); });
+    }
+    function highlightRange(a, b){
+      clearDragHighlight();
+      var lo = a < b ? a : b, hi = a < b ? b : a;
+      Object.keys(dayEls).forEach(function(k){
+        var dt = parseDateFromKey(k);
+        if(dt >= lo && dt <= hi) dayEls[k].classList.add('drag-selecting');
+      });
+    }
+
     function renderCalendar(){
       monthLabel.textContent = MONTHS[monthCursor.getMonth()] + ' ' + monthCursor.getFullYear();
       calGrid.innerHTML = '';
+      dayEls = {};
+      var cfg = currentListing();
       var first = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), 1);
       var mondayIndex = (first.getDay() + 6) % 7;
       var daysInMonth = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 0).getDate();
@@ -1719,27 +1808,75 @@
         var thisDate = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), d);
         var k = key(thisDate);
         var cell = document.createElement('div');
-        cell.className = 'dso-day' + (d===25 && monthCursor.getMonth()===11 ? ' today-mark' : '');
-        cell.textContent = d;
+        cell.className = 'dso-day ' + DEMAND_CLASSES[(d+monthCursor.getMonth())%4] + (d===25 && monthCursor.getMonth()===11 ? ' today-mark' : '');
+        var num = document.createElement('span');
+        num.textContent = d;
+        cell.appendChild(num);
+        var price = document.createElement('span');
+        price.className = 'price-num';
+        price.textContent = Math.round(cfg.baseADR * (0.85 + 0.3*(((d*7)%10)/10)));
+        cell.appendChild(price);
         if(savedOverrides.has(k)){
           var dot = document.createElement('span');
           dot.className = 'dso-dot';
+          dot.textContent = '🚫';
+          dot.style.fontSize = '10px';
           cell.appendChild(dot);
         }
-        cell.addEventListener('click', (function(dt){ return function(){ openDsoModal(dt); }; })(thisDate));
+        dayEls[k] = cell;
+        cell.addEventListener('mousedown', (function(dt){ return function(ev){
+          dragging = true; dragStart = dt; highlightRange(dt, dt); ev.preventDefault();
+        }; })(thisDate));
+        cell.addEventListener('mouseenter', (function(dt){ return function(){
+          if(dragging) highlightRange(dragStart, dt);
+        }; })(thisDate));
+        cell.addEventListener('mouseup', (function(dt){ return function(){
+          if(dragging){ dragging = false; openDsoModal(dragStart, dt); }
+        }; })(thisDate));
         calGrid.appendChild(cell);
       }
     }
+    document.addEventListener('mouseup', function(){ dragging = false; });
 
-    function openDsoModal(d){
-      selectedDate = d;
-      document.getElementById('dsoDateStart').textContent = fmtFull(d);
-      document.getElementById('dsoDateEnd').textContent = fmtFull(d);
+    function resetPriceUnits(cfg){
+      ['priceUnit1','priceUnit2','priceUnit3','priceUnit4'].forEach(function(id){
+        document.getElementById(id).textContent = cfg.currency;
+      });
+      document.getElementById('priceTypeSelect').value = 'fixed';
+      document.getElementById('minPriceTypeSelect').value = 'fixed';
+      document.getElementById('maxPriceTypeSelect').value = 'fixed';
+    }
+
+    function openDsoModal(a, b){
+      selectedStart = a < b ? a : b;
+      selectedEnd = a < b ? b : a;
+      var cfg = currentListing();
+      highlightRange(selectedStart, selectedEnd);
+
+      document.getElementById('dsoListingName').textContent = cfg.name;
+      document.getElementById('dsoDateStart').textContent = fmtFull(selectedStart);
+      document.getElementById('dsoDateEnd').textContent = fmtFull(selectedEnd);
+      resetPriceUnits(cfg);
+
+      var nights = Math.round((selectedEnd - selectedStart) / 86400000) + 1;
+      document.getElementById('dsoAdrVal').textContent = cfg.baseADR;
+      document.getElementById('dsoTotalVal').textContent = cfg.baseADR * nights;
+
+      var minStayInput = document.getElementById('minStayInput');
+      minStayInput.disabled = !cfg.minStayConfigured;
+      minStayInput.value = '';
+      document.getElementById('minStayHelper').style.display = cfg.minStayConfigured ? 'block' : 'none';
+      document.getElementById('minStayWarning').style.display = cfg.minStayConfigured ? 'none' : 'block';
+
+      document.getElementById('checkinoutSwitchWrap').classList.toggle('disabled', !cfg.checkinoutConfigured);
+      document.getElementById('checkinoutWarning').style.display = cfg.checkinoutConfigured ? 'none' : 'block';
+      document.getElementById('checkinoutToggle').checked = false;
+      document.getElementById('checkinoutFields').style.display = 'none';
+      document.getElementById('enforceWeeklySelect').value = 'disabled';
+
       document.getElementById('dsoApplyDaysToggle').checked = false;
       document.getElementById('pillrow-applydays').style.display = 'none';
       applyPills.reset();
-      document.getElementById('checkinoutToggle').checked = false;
-      document.getElementById('checkinoutFields').style.display = 'none';
       checkinPills.reset(); checkoutPills.reset();
       updateCheckinError(); updateCheckoutError();
       document.getElementById('noteCheck').checked = true;
@@ -1748,7 +1885,7 @@
       moreKebabMenu.classList.remove('open');
       overlay.classList.add('open');
     }
-    function closeDsoModal(){ overlay.classList.remove('open'); }
+    function closeDsoModal(){ overlay.classList.remove('open'); clearDragHighlight(); }
 
     document.getElementById('dsoClose').addEventListener('click', closeDsoModal);
     document.getElementById('dsoCancelBtn').addEventListener('click', closeDsoModal);
@@ -1764,8 +1901,10 @@
           return;
         }
       }
-      savedOverrides.add(key(selectedDate));
-      showToast('Date-Specific Override saved · ' + fmtFull(selectedDate));
+      var cur = new Date(selectedStart);
+      while(cur <= selectedEnd){ savedOverrides.add(key(cur)); cur.setDate(cur.getDate()+1); }
+      var nights = Math.round((selectedEnd - selectedStart) / 86400000) + 1;
+      showToast('Date-Specific Override saved · ' + fmtFull(selectedStart) + (nights>1 ? ' – ' + fmtFull(selectedEnd) : ''));
       closeDsoModal();
       renderCalendar();
     });
@@ -1777,8 +1916,10 @@
       monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 1); renderCalendar();
     });
     document.getElementById('dsoAddBtn').addEventListener('click', function(){
-      openDsoModal(selectedDate || new Date(monthCursor.getFullYear(), monthCursor.getMonth(), 1));
+      var d = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), 1);
+      openDsoModal(d, d);
     });
+    listingSelect.addEventListener('change', renderCalendar);
 
     renderCalendar();
   })();
