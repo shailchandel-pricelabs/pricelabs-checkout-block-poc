@@ -227,12 +227,18 @@
     .seg button:nth-child(3){ border-left:none; }
     .seg button:nth-child(n+3){ border-top:1px solid var(--line-strong); }
   }
-  .rpreview{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:3px; font-size:12.5px; }
-  .rpreview li{ display:flex; gap:12px; align-items:baseline; flex-wrap:wrap; }
-  .rpreview .d{ font-family:"IBM Plex Mono"; font-weight:600; min-width:96px; }
-  .rpreview .ok{ color:var(--good); }
-  .rpreview .no{ color:var(--accent-dark); font-weight:600; }
-  .rpreview .more{ color:var(--ink-soft); }
+  .seg-label{ font-size:11.5px; color:var(--ink-soft); margin:0 0 -4px; }
+  .dtable{ border:1px solid var(--line-strong); border-radius:8px; overflow:hidden; }
+  .dtable-scroll{ max-height:280px; overflow:auto; }
+  .drow{ display:grid; grid-template-columns:minmax(92px, 1fr) 1fr 1fr; gap:8px; align-items:center; padding:5px 10px; border-top:1px solid var(--line); }
+  .drow:first-child{ border-top:none; }
+  .drow.head{ position:sticky; top:0; z-index:1; background:var(--canvas); padding-top:7px; padding-bottom:7px; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-soft); }
+  .drow .d{ font-family:"IBM Plex Mono"; font-size:12px; font-weight:600; white-space:nowrap; }
+  .drow .d span{ color:var(--ink-soft); font-weight:500; margin-right:4px; }
+  .dtoggle{ display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; border:1px solid var(--line); border-radius:6px; padding:5px 8px; background:var(--surface); color:var(--good); cursor:pointer; text-align:left; }
+  .dtoggle:hover{ border-color:var(--accent); }
+  .dtoggle[aria-pressed="true"]{ background:var(--accent-tint); border-color:var(--accent); color:var(--accent-dark); }
+  .dtable-foot{ display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:7px 10px; border-top:1px solid var(--line); font-size:11.5px; color:var(--ink-soft); background:var(--canvas); }
   details.saved-as{ font-size:12px; color:var(--ink-soft); }
   details.saved-as summary{ cursor:pointer; width:fit-content; }
   details.saved-as pre{ margin:6px 0 0; font-family:"IBM Plex Mono"; font-size:11.5px; color:var(--ink); background:var(--canvas); padding:8px 10px; border-radius:7px; white-space:pre-wrap; overflow-x:auto; }
@@ -628,7 +634,8 @@
     </div>
     <div id="pCiBlock" style="display:flex; flex-direction:column; gap:10px;">
       <div class="f-label" style="margin:0;">Check-in &amp; check-out on these dates <span class="new-tag">New</span></div>
-      <div class="seg" id="pSeg" role="radiogroup" aria-label="Check-in and check-out on these dates">
+      <p class="seg-label" id="pSegLabel">Set all dates to</p>
+      <div class="seg" id="pSeg" role="radiogroup" aria-label="Set check-in and check-out for all selected dates">
         <button type="button" role="radio" data-v="none">Allowed</button>
         <button type="button" role="radio" data-v="ci">No check-in</button>
         <button type="button" role="radio" data-v="co">No checkout</button>
@@ -636,7 +643,10 @@
       </div>
       <div class="dso-note" id="pCiUnsupported" hidden><span class="wicon">i</span><span><b id="pPmsName"></b> doesn't accept check-in/check-out restrictions from PriceLabs. Set them in <span id="pPmsName2"></span> directly — prices from this panel still sync.</span></div>
       <div class="dso-note" id="pCiDefaultNote" hidden><span class="wicon">i</span><span>No default Check In/Out on this account yet — when this override ends, every day goes back to allowed. <button class="linkish" id="pCiDefaultBtn">Save that as the default</button></span></div>
-      <ul class="rpreview" id="pPreview" hidden></ul>
+      <div class="dtable" id="pTable" hidden>
+        <div class="dtable-scroll" id="pTableRows"></div>
+        <div class="dtable-foot"><span id="pTableSummary"></span><span>Click a cell to switch it</span></div>
+      </div>
       <details class="saved-as" id="pSaved" hidden><summary id="pSavedSum"></summary><pre id="pSavedCode"></pre></details>
       <button class="linkish" id="pWeeklyLink" style="width:fit-content;">Repeat on weekdays instead</button>
       <div id="pWeekly" hidden style="display:flex; flex-direction:column; gap:12px;">
@@ -781,7 +791,7 @@
      PROPOSED FLOW — same drawer, simplifications built in
      ================================================================ */
   var P = (function(){
-    var p = 'p', L = listingsFresh(), M = {}, ranges = [], restrict = 'none', mode = 'dates';
+    var p = 'p', L = listingsFresh(), M = {}, ranges = [], perDate = {}, mode = 'dates';
     var sel = $('pListing'); fillListingSelect(sel, L, 'jefferson');
     function cur(){ return L[sel.value]; }
     function marks(){ return M[sel.value] || (M[sel.value] = {}); }
@@ -804,12 +814,19 @@
       if($('pApplyDays').checked && pApply.selected.size) ds = ds.filter(function(d){ return pApply.selected.has(dayIdx(d)); });
       return ds;
     }
-    function stateOf(d){
-      var m = marks()[key(d)];
-      if(!m) return 'none';
-      return m.ci && m.co ? 'both' : m.ci ? 'ci' : m.co ? 'co' : 'none';
-    }
     function blocks(v){ return { ci: v === 'ci' || v === 'both', co: v === 'co' || v === 'both' }; }
+    function stateName(e){ return e.ci && e.co ? 'both' : e.ci ? 'ci' : e.co ? 'co' : 'none'; }
+    function uniformState(ds){
+      if(!ds.length) return null;
+      var first = stateName(perDate[key(ds[0])]);
+      return ds.every(function(d){ return stateName(perDate[key(d)]) === first; }) ? first : null;
+    }
+    // One {ci, co} entry per selected date; newly added dates copy the current choice if it's uniform.
+    function syncPerDate(){
+      var fill = uniformState(Object.keys(perDate).map(parseKey)) || 'none', next = {};
+      allDates().forEach(function(d){ var k = key(d); next[k] = perDate[k] || blocks(fill); });
+      perDate = next;
+    }
 
     function parseOne(s, ref){
       s = s.trim().replace(/\./g, '');
@@ -881,7 +898,11 @@
     });
 
     Array.prototype.forEach.call($('pSeg').children, function(b){
-      b.addEventListener('click', function(){ restrict = b.dataset.v; refresh(); });
+      b.addEventListener('click', function(){
+        var bl = blocks(b.dataset.v);
+        affectedDates().forEach(function(d){ perDate[key(d)] = { ci:bl.ci, co:bl.co }; });
+        refresh();
+      });
     });
     $('pWeeklyLink').addEventListener('click', function(){ mode = 'weekly'; refresh(); });
     $('pDatesLink').addEventListener('click', function(){ mode = 'dates'; refresh(); });
@@ -894,18 +915,54 @@
       toast('Default minimum stay saved · 1 night');
     });
 
+    function renderTable(aff){
+      var rows = $('pTableRows');
+      rows.innerHTML = '';
+      var head = document.createElement('div');
+      head.className = 'drow head';
+      head.innerHTML = '<span>Date</span><span>Check-in</span><span>Checkout</span>';
+      rows.appendChild(head);
+      aff.forEach(function(d){
+        var k = key(d), e = perDate[k];
+        var row = document.createElement('div');
+        row.className = 'drow';
+        var lbl = document.createElement('span');
+        lbl.className = 'd';
+        lbl.innerHTML = '<span>' + WD_LONG[dayIdx(d)] + '</span>' + fmtShort(d);
+        row.appendChild(lbl);
+        [['ci', 'Check-in'], ['co', 'Checkout']].forEach(function(f){
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'dtoggle';
+          b.setAttribute('aria-pressed', e[f[0]] ? 'true' : 'false');
+          b.setAttribute('aria-label', f[1] + ' on ' + fmtFull(d) + ': ' + (e[f[0]] ? 'blocked' : 'allowed'));
+          b.textContent = e[f[0]] ? '✕ Blocked' : '✓ Allowed';
+          b.addEventListener('click', function(){ e[f[0]] = !e[f[0]]; refresh(); });
+          row.appendChild(b);
+        });
+        rows.appendChild(row);
+      });
+      var nCi = aff.filter(function(d){ return perDate[key(d)].ci; }).length;
+      var nCo = aff.filter(function(d){ return perDate[key(d)].co; }).length;
+      $('pTableSummary').textContent = 'Check-in blocked on ' + nCi + ' · Checkout blocked on ' + nCo;
+    }
+
     function refresh(){
+      syncPerDate();
       var l = cur(), ds = allDates(), aff = affectedDates(), mk = marks();
       $('pAdr').textContent = money(l.adr);
       $('pTotal').textContent = money(l.adr * ds.length);
       var existing = ds.some(function(d){ return mk[key(d)]; });
       $('pMergeRow').hidden = !existing; $('pTrash').hidden = !existing;
 
+      var uni = uniformState(aff);
       Array.prototype.forEach.call($('pSeg').children, function(b){
-        var on = b.dataset.v === restrict;
+        var on = b.dataset.v === uni;
         b.classList.toggle('on', on); b.setAttribute('aria-checked', on ? 'true' : 'false');
       });
       var datesMode = mode === 'dates';
+      var single = aff.length <= 1;
+      $('pSegLabel').hidden = !datesMode || single;
       $('pSeg').hidden = !datesMode;
       $('pSeg').classList.toggle('disabled', !l.ciSupported);
       $('pCiUnsupported').hidden = l.ciSupported;
@@ -913,27 +970,14 @@
       $('pWeeklyLink').hidden = !l.ciSupported || !datesMode;
       $('pWeekly').hidden = datesMode;
 
-      var restricted = aff.some(function(d){ return stateOf(d) !== 'none'; });
-      var show = l.ciSupported && datesMode && aff.length > 0 && (restrict !== 'none' || restricted);
-      var pv = $('pPreview');
-      pv.hidden = !show;
+      var anyBlocked = aff.some(function(d){ var e = perDate[key(d)]; return e.ci || e.co; });
+      var hadBlocked = aff.some(function(d){ var m = mk[key(d)]; return m && (m.ci || m.co); });
+      // A single date is fully described by the 4-way control; the table is for 2+ dates.
+      $('pTable').hidden = !(l.ciSupported && datesMode && !single);
+      if(!$('pTable').hidden) renderTable(aff);
+      var show = l.ciSupported && datesMode && aff.length > 0 && (anyBlocked || hadBlocked);
       $('pSaved').hidden = !show;
       if(!show) return;
-
-      pv.innerHTML = '';
-      var bl = blocks(restrict);
-      aff.slice(0, 6).forEach(function(d){
-        var li = document.createElement('li');
-        li.innerHTML = '<span class="d">' + WD_LONG[dayIdx(d)] + ', ' + fmtShort(d) + '</span>' +
-          '<span class="' + (bl.ci ? 'no' : 'ok') + '">Check-in ' + (bl.ci ? '✕' : '✓') + '</span>' +
-          '<span class="' + (bl.co ? 'no' : 'ok') + '">Checkout ' + (bl.co ? '✕' : '✓') + '</span>';
-        pv.appendChild(li);
-      });
-      if(aff.length > 6){
-        var more = document.createElement('li'); more.className = 'more';
-        more.textContent = '+ ' + (aff.length - 6) + ' more date' + (aff.length - 6 === 1 ? '' : 's');
-        pv.appendChild(more);
-      }
 
       var runs = [];
       aff.forEach(function(d){
@@ -942,13 +986,19 @@
       });
       var chunks = [];
       runs.forEach(function(r){ for(var i = 0; i < r.length; i += 6) chunks.push(r.slice(i, i + 6)); });
+      // Within ≤6 consecutive days each weekday appears once, so crossing out a
+      // weekday blocks exactly that date — the existing weekday model is enough.
+      function allowedList(c, field){
+        var blocked = {};
+        c.forEach(function(d){ if(perDate[key(d)][field]) blocked[dayIdx(d)] = 1; });
+        if(!Object.keys(blocked).length) return 'All';
+        return WD.filter(function(w, i){ return !blocked[i]; }).join(' ');
+      }
       var lines = chunks.map(function(c){
-        var a = c[0], b = c[c.length - 1], inChunk = {};
-        c.forEach(function(d){ inChunk[dayIdx(d)] = 1; });
-        var allowed = WD.filter(function(w, i){ return !inChunk[i]; }).join(' ');
+        var a = c[0], b = c[c.length - 1];
         return (c.length > 1 ? fmtShort(a) + ' – ' + fmtShort(b) : fmtShort(a)) +
-          '\n  Allow Check-In On:  ' + (bl.ci ? allowed : 'All') +
-          '\n  Allow Check-Out On: ' + (bl.co ? allowed : 'All') +
+          '\n  Allow Check-In On:  ' + allowedList(c, 'ci') +
+          '\n  Allow Check-Out On: ' + allowedList(c, 'co') +
           '\n  Enforce Weekly:     Disabled';
       });
       var scope = $('pScope').value;
@@ -963,8 +1013,15 @@
       if(preset.seed){ seedMarks(marks(), preset.seed); cal.render(); }
       ranges = [[lo, hi]].concat((preset.extra || []).map(function(r){ return [ymd(r[0]), ymd(r[1])]; }));
       mode = preset.mode || 'dates';
-      var ds = allDates(), states = ds.map(stateOf);
-      restrict = preset.restrict || (states.every(function(s){ return s === states[0]; }) ? states[0] : 'none');
+      perDate = {};
+      var mk = marks();
+      allDates().forEach(function(d){
+        var k = key(d), m = mk[k];
+        perDate[k] = preset.restrict ? blocks(preset.restrict) : { ci: !!(m && m.ci), co: !!(m && m.co) };
+      });
+      if(preset.perDate) Object.keys(preset.perDate).forEach(function(s){
+        var k = key(ymd(s)); if(perDate[k]) perDate[k] = blocks(preset.perDate[s]);
+      });
       $('pScope').value = preset.scope || 'listing';
 
       var l = cur();
@@ -999,19 +1056,24 @@
         errs(); toast('Allow at least one check-in day and one check-out day');
         return;
       }
-      var aff = affectedDates(), mk = marks(), bl = blocks(restrict);
+      var aff = affectedDates(), mk = marks(), nCi = 0, nCo = 0;
       aff.forEach(function(d){
         var k = key(d), prev = mk[k], m = { ov:true, ci:false, co:false };
         if(!l.ciSupported){ if(prev){ m.ci = prev.ci; m.co = prev.co; } }
         else if(mode === 'weekly'){ m.ci = !pIn.selected.has(dayIdx(d)); m.co = !pOut.selected.has(dayIdx(d)); }
-        else { m.ci = bl.ci; m.co = bl.co; }
+        else { m.ci = perDate[k].ci; m.co = perDate[k].co; }
+        if(m.ci) nCi++;
+        if(m.co) nCo++;
         mk[k] = m;
       });
       var scope = $('pScope').value;
       var scopeLbl = scope === 'listing' ? 'This listing' : scope === 'account' ? 'All listings in ' + (l.pms || 'this PMS') + ' account' : 'All listings';
-      var what = mode === 'weekly' ? 'Weekly pattern saved'
-        : { none:'Override saved', ci:'Check-in blocked', co:'Checkout blocked', both:'Check-in & checkout blocked' }[restrict];
-      toast(what + ' on ' + aff.length + ' date' + (aff.length === 1 ? '' : 's') + ' · ' + scopeLbl);
+      function n(x){ return x + ' date' + (x === 1 ? '' : 's'); }
+      var what;
+      if(mode === 'weekly') what = 'Weekly pattern saved on ' + n(aff.length);
+      else if(!nCi && !nCo) what = 'Override saved on ' + n(aff.length);
+      else what = [nCi ? 'Check-in blocked on ' + n(nCi) : '', nCo ? 'checkout blocked on ' + n(nCo) : ''].filter(Boolean).join(', ');
+      toast(what.charAt(0).toUpperCase() + what.slice(1) + ' · ' + scopeLbl);
       close(); cal.render();
     });
     sel.addEventListener('change', function(){ cal.render(); });
@@ -1066,7 +1128,7 @@
         'Repeat all of the above for Dec 31.'
       ],
       gotcha:'Shortcut some agents use: one override for Dec 24 – Dec 31 with Th crossed out under check-in. It only works because both dates fall on a Thursday.',
-      pro:['Drag Dec 24.','+ Add dates → “Dec 31”.','No check-in → Add.'],
+      pro:['Drag Dec 24.','+ Add dates → “Dec 31”.','Set all dates to No check-in → Add.'],
       rc:{ listing:'jefferson', start:'2026-12-24', end:'2026-12-24', preset:{ ciOn:true, ciAllowed:[0,1,2,4,5,6], coAllowed:ALL } },
       rp:{ listing:'jefferson', start:'2026-12-24', end:'2026-12-24', preset:{ extra:[['2026-12-31','2026-12-31']], restrict:'ci' } } },
 
@@ -1080,7 +1142,7 @@
         'Find listings that already have their own rules on those dates — account-level rules skip them — and make the same change on each one.'
       ],
       gotcha:'Dec 25, 2026 and Jan 1, 2027 are both Fridays, so a single Dec 25 – Jan 1 override with Fr crossed out also works. Two dates on different weekdays and it doesn’t.',
-      pro:['Drag Dec 25 on any listing in the account.','Apply to → All listings in this PMS account; + Add dates → “Jan 1”.','Neither → Add.'],
+      pro:['Drag Dec 25 on any listing in the account.','Apply to → All listings in this PMS account; + Add dates → “Jan 1”.','Set all dates to Neither → Add.'],
       rc:{ listing:'jefferson', start:'2026-12-25', end:'2026-12-25', preset:{ ciOn:true, ciAllowed:WEEKDAYS_BUT_FRI, coAllowed:WEEKDAYS_BUT_FRI } },
       rp:{ listing:'jefferson', start:'2026-12-25', end:'2026-12-25', preset:{ extra:[['2027-01-01','2027-01-01']], restrict:'both', scope:'account' } } },
 
@@ -1183,9 +1245,23 @@
         'Drag Dec 25 – Dec 27 (Fri–Sun): Allow Check-In On Mo Tu We Th only, Allow Check-Out On All, Add.'
       ],
       gotcha:'Any range of 7 nights or more hits this — the weekday model can’t say “none of these days”.',
-      pro:['Drag Dec 21 – Dec 27.','No check-in → Add. The panel splits it into two overrides behind the scenes (see “Saved as”).'],
+      pro:['Drag Dec 21 – Dec 27.','Set all dates to No check-in → Add. The panel splits it into two overrides behind the scenes (see “Saved as”).'],
       rc:{ listing:'jefferson', start:'2026-12-21', end:'2026-12-27', preset:{ ciOn:true, ciAllowed:[], coAllowed:ALL } },
-      rp:{ listing:'jefferson', start:'2026-12-21', end:'2026-12-27', preset:{ restrict:'ci' } } }
+      rp:{ listing:'jefferson', start:'2026-12-21', end:'2026-12-27', preset:{ restrict:'ci' } } },
+
+    { id:'C12', f:['multi'], tags:['Check-in','Checkout','Different dates'],
+      ticket:'We’re closed for changeovers over Christmas: no arrivals on Dec 24 and no departures on Dec 26. Christmas Day itself is fine.',
+      cur:[
+        'Drag Dec 24 – Dec 26 and turn on Check-In/Check-Out.',
+        'Allow Check-In On: All, then cross out Th (Dec 24 is a Thursday).',
+        'Allow Check-Out On: All, then cross out Sa (Dec 26 is a Saturday).',
+        'Leave Enforce Weekly on Disabled and click Add.',
+        'Check Dec 25 on the calendar — it’s inside the range, but Fr is still allowed in both rows, so it stays open.'
+      ],
+      gotcha:'Two different weekday translations in one panel, and the range has to stay under a week — stretch it to Dec 24 – Dec 31 and Dec 31 (also a Thursday) loses check-in too.',
+      pro:['Drag Dec 24 – Dec 26.','In the date table: Dec 24 → Check-in Blocked; Dec 26 → Checkout Blocked.','Click Add.'],
+      rc:{ listing:'jefferson', start:'2026-12-24', end:'2026-12-26', preset:{ ciOn:true, ciAllowed:[0,1,2,4,5,6], coAllowed:[0,1,2,3,4,6] } },
+      rp:{ listing:'jefferson', start:'2026-12-24', end:'2026-12-26', preset:{ perDate:{ '2026-12-24':'ci', '2026-12-26':'co' } } } }
   ];
 
   var FILTERS = [['all','All'],['single','Single date'],['multi','Multiple dates'],['portfolio','Whole account'],['recurring','Recurring'],['setup','Setup & errors']];
