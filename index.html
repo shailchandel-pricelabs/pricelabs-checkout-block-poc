@@ -489,6 +489,124 @@
   .bulk-apply-btn:disabled{ background:var(--line-strong); color:var(--ink-soft); cursor:not-allowed; }
   .bulk-apply-btn:not(:disabled):hover{ filter:brightness(1.05); }
 
+  /* ---------- Variant 0: real DSO modal recreation ---------- */
+  .dso-toolbar{ display:flex; align-items:center; gap:14px; padding:14px 22px; border-bottom:1px solid var(--line); background:var(--surface-raised); flex-wrap:wrap; }
+  .dso-toolbar .pms-tag{ font-family:"IBM Plex Mono"; font-size:11.5px; font-weight:600; color:var(--ink-soft); background:var(--canvas); border:1px solid var(--line-strong); border-radius:7px; padding:5px 10px; }
+  .dso-add-btn{
+    margin-left:auto; display:flex; align-items:center; gap:6px;
+    font-family:"Sora"; font-weight:600; font-size:12.5px;
+    background:var(--accent); color:#fff; border:none; border-radius:9px;
+    padding:9px 14px; cursor:pointer;
+  }
+  .dso-add-btn:hover{ background:var(--accent-dark); }
+  .dso-cal-pane{ padding:18px 22px 22px; }
+  .dso-cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+  .dso-day{
+    aspect-ratio:1/0.8; border-radius:9px; border:1px solid var(--line);
+    display:flex; align-items:flex-start; padding:7px; font-family:"IBM Plex Mono"; font-size:12px;
+    cursor:pointer; position:relative; transition:border-color .12s ease;
+  }
+  .dso-day:hover{ border-color:var(--accent); }
+  .dso-day.today-mark{ background:var(--accent-tint); border-color:var(--accent-tint); }
+  .dso-day.empty{ visibility:hidden; }
+  .dso-day .dso-dot{ position:absolute; bottom:6px; right:6px; width:7px; height:7px; border-radius:50%; background:var(--accent); }
+
+  .dso-modal-card{ width:460px; max-height:85vh; overflow:auto; }
+  .dso-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .dso-head-titles h5{ font-size:17px; }
+  .dso-head-titles a{ color:var(--type-checkin); font-size:12.5px; text-decoration:none; font-weight:600; }
+  .dso-head-titles a:hover{ text-decoration:underline; }
+  .dso-close{ background:none; border:none; color:var(--ink-soft); font-size:20px; cursor:pointer; line-height:1; padding:2px; }
+  .dso-close:hover{ color:var(--ink); }
+  .dso-sub{ margin:0; font-size:12px; color:var(--ink-soft); }
+
+  .dso-daterow{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .dso-date-field{
+    display:flex; align-items:center; gap:7px; font-family:"IBM Plex Mono"; font-size:12.5px; font-weight:600;
+    border:1px solid var(--line-strong); border-radius:9px; padding:8px 11px; background:var(--surface); color:var(--ink);
+  }
+  .dso-dupe-btn{ width:32px; height:32px; border-radius:8px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft); cursor:pointer; flex:none; }
+  .dso-dupe-btn:hover{ background:var(--canvas); }
+  .dso-check-row{ display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink); cursor:pointer; }
+  .dso-check-row input{ accent-color:var(--accent); }
+
+  .dso-sec-head{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--canvas); border-radius:8px; padding:8px 10px;
+    font-size:12.5px; font-weight:700; color:var(--ink); position:relative;
+  }
+  .dso-sec-head .kebab{ background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:14px; padding:2px 6px; border-radius:5px; }
+  .dso-sec-head .kebab:hover{ background:var(--line); }
+  .dso-kebab-menu{
+    display:none; position:absolute; top:calc(100% + 4px); right:0; z-index:10;
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:10px;
+    box-shadow:var(--shadow-md); padding:10px 12px; width:260px; text-align:left;
+  }
+  .dso-kebab-menu.open{ display:block; }
+  .dso-kebab-menu .kebab-title{ font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft); font-weight:700; margin:0 0 8px; }
+  .dso-kebab-menu label{ display:flex; align-items:center; gap:8px; font-size:12px; font-weight:500; color:var(--ink); padding:4px 0; cursor:pointer; }
+  .dso-kebab-menu input{ accent-color:var(--accent); }
+
+  .dso-field-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .dso-field label{ display:block; font-size:12px; font-weight:600; color:var(--ink); margin-bottom:6px; }
+  .dso-field-combo{ display:flex; }
+  .dso-field-combo select{
+    font-family:"IBM Plex Sans"; font-size:12.5px; border:1px solid var(--line-strong); border-right:none;
+    border-radius:8px 0 0 8px; padding:8px 8px; background:var(--canvas); color:var(--ink); cursor:pointer; width:84px;
+  }
+  .dso-field-combo .combo-input{ position:relative; flex:1; }
+  .dso-field-combo input{
+    width:100%; font-family:"IBM Plex Mono"; font-size:12.5px; border:1px solid var(--line-strong);
+    border-radius:0 8px 8px 0; padding:8px 34px 8px 10px; background:var(--surface); color:var(--ink);
+  }
+  .dso-field-combo input:focus, .dso-field input:focus{ outline:2px solid var(--accent); outline-offset:-1px; }
+  .dso-field-combo .unit{ position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:11px; color:var(--ink-soft); pointer-events:none; }
+  .dso-field input.plain{ width:100%; font-family:"IBM Plex Mono"; font-size:12.5px; border:1px solid var(--line-strong); border-radius:8px; padding:8px 34px 8px 10px; background:var(--surface); color:var(--ink); }
+  .dso-field-wrap{ position:relative; }
+  .dso-field-wrap .unit{ position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:11px; color:var(--ink-soft); pointer-events:none; }
+  .dso-helper{ font-size:11px; color:var(--ink-soft); margin-top:6px; }
+
+  .dso-switch-row{ display:flex; align-items:center; gap:10px; }
+  .switch{ position:relative; width:36px; height:20px; flex:none; }
+  .switch input{ opacity:0; width:0; height:0; position:absolute; }
+  .switch .track{ position:absolute; inset:0; background:var(--line-strong); border-radius:999px; cursor:pointer; transition:background .15s ease; }
+  .switch .thumb{ position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:#fff; transition:transform .15s ease; box-shadow:var(--shadow-sm); }
+  .switch input:checked + .track{ background:var(--good); }
+  .switch input:checked + .track .thumb{ transform:translateX(16px); }
+  .dso-switch-row .lbl{ font-size:12.5px; font-weight:700; color:var(--ink); }
+
+  .dso-pill-block{ margin-top:12px; }
+  .dso-pill-block .pb-label{ font-size:12px; font-weight:600; color:var(--ink); margin-bottom:7px; }
+  .pill-row{ display:flex; gap:5px; flex-wrap:wrap; }
+  .pill{
+    font-family:"IBM Plex Sans"; font-size:12px; font-weight:600; color:var(--ink-soft);
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:7px;
+    padding:6px 10px; cursor:pointer; min-width:34px; text-align:center;
+  }
+  .pill:hover{ border-color:var(--accent); }
+  .pill.on{ background:var(--accent-tint); border-color:var(--accent); color:var(--accent-dark); }
+  .pill.all-pill{ font-weight:700; }
+  .dso-error{ font-size:11px; color:var(--accent-dark); margin-top:6px; }
+
+  .dso-note-area{
+    width:100%; margin-top:8px; font-family:"IBM Plex Sans"; font-size:12.5px; border:1px solid var(--line-strong);
+    border-radius:8px; padding:10px; background:var(--surface); color:var(--ink); resize:vertical; min-height:56px;
+  }
+  .dso-note-area:focus{ outline:2px solid var(--accent); outline-offset:-1px; }
+
+  .dso-footer{ display:flex; align-items:center; gap:12px; border-top:1px solid var(--line); padding-top:14px; margin-top:4px; }
+  .dso-trash{ width:34px; height:34px; border-radius:8px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft); cursor:pointer; flex:none; font-size:14px; }
+  .dso-trash:hover{ border-color:var(--accent); color:var(--accent-dark); }
+  .dso-adr{ font-family:"IBM Plex Mono"; font-size:11.5px; color:var(--ink-soft); line-height:1.3; }
+  .dso-adr b{ color:var(--ink); }
+  .dso-footer-actions{ margin-left:auto; display:flex; gap:8px; }
+  .dso-btn{ font-family:"Sora"; font-weight:600; font-size:12.5px; border-radius:9px; padding:9px 14px; cursor:pointer; }
+  .dso-btn-cancel{ background:none; border:1px solid var(--line-strong); color:var(--ink-soft); }
+  .dso-btn-cancel:hover{ background:var(--canvas); }
+  .dso-btn-add{ background:var(--accent); border:none; color:#fff; display:flex; align-items:center; gap:6px; }
+  .dso-btn-add:hover{ background:var(--accent-dark); }
+  .dso-btn-add .caret{ border-left:1px solid rgba(255,255,255,0.4); padding-left:6px; font-size:10px; }
+
   /* ---------- Internals disclosure ---------- */
   details.internals{
     background:var(--surface); border:1px solid var(--line); border-radius:14px;
@@ -564,18 +682,42 @@
   <section style="display:flex; flex-direction:column; gap:16px;">
     <div class="proto-label">
       <div>
-        <h2>Three UI directions to try</h2>
-        <p>Same rule underneath — different surface. Pick dates, choose a restriction, apply. Compare which shape fits the dev conversation best.</p>
+        <h2>Today's real modal, plus three ways to simplify it</h2>
+        <p>Tab 0 is pulled field-for-field from the live app. Tabs 1–3 are proposed directions. Pick dates, choose a restriction, apply — compare which shape fits the dev conversation best.</p>
       </div>
       <div class="tabswitch" id="tabswitch">
-        <button class="active" data-tab="1"><span class="num">1</span> Contextual panel</button>
+        <button class="active" data-tab="0"><span class="num">0</span> Today (real app)</button>
+        <button data-tab="1"><span class="num">1</span> Contextual panel</button>
         <button data-tab="2"><span class="num">2</span> Guided modal</button>
         <button data-tab="3"><span class="num">3</span> Portfolio batch</button>
       </div>
     </div>
 
+    <!-- ============ VARIANT 0 : TODAY'S REAL DSO MODAL ============ -->
+    <div class="variant-panel active" id="panel-0">
+      <div class="variant-desc"><b>Today, for real —</b> recreated field-for-field from <code>app.pricelabs.co</code>: Dynamic Pricing → Customizations → Account Calendar → Date Specific Overrides. Click a date, then Add, to try the actual current flow yourself. The Check-In/Check-Out toggle only appears for PMS connections that support it (e.g. Hostaway) — SabeeApp and some others don't expose it at all.</div>
+
+      <div class="app">
+        <div class="dso-toolbar">
+          <span class="pms-tag">Hostaway · 12 Birch Lane</span>
+          <div class="month-nav" style="margin-left:16px;">
+            <button id="prevMonth0" aria-label="Previous month">‹</button>
+            <span class="month-label" id="monthLabel0"></span>
+            <button id="nextMonth0" aria-label="Next month">›</button>
+          </div>
+          <button class="dso-add-btn" id="dsoAddBtn">+ Add</button>
+        </div>
+        <div class="dso-cal-pane">
+          <div class="cal-weekdays">
+            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+          </div>
+          <div class="dso-cal-grid" id="calGrid0"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- ============ VARIANT 1 : CONTEXTUAL SIDE PANEL ============ -->
-    <div class="variant-panel active" id="panel-1">
+    <div class="variant-panel" id="panel-1">
       <div class="variant-desc"><b>Contextual panel —</b> click dates directly on the calendar; the restriction choice appears right next to your selection, docked in a permanent side panel. Best fit for spot-fixing one listing while looking at its calendar.</div>
 
       <div class="app">
@@ -825,6 +967,117 @@
     <div class="apply-row">
       <button class="cancel" id="modalCancel2">Cancel</button>
       <button class="apply" id="modalApply2">Apply</button>
+    </div>
+  </div>
+</div>
+
+<!-- Variant 0: real Date Specific Overrides modal -->
+<div class="modal-overlay" id="dsoOverlay">
+  <div class="modal-card dso-modal-card">
+    <div class="dso-head">
+      <div class="dso-head-titles">
+        <h5>Date Specific Overrides</h5>
+        <a href="#" onclick="return false;">Learn More ↗</a>
+      </div>
+      <button class="dso-close" id="dsoClose" aria-label="Close">×</button>
+    </div>
+    <p class="dso-sub">12 Birch Lane · Hostaway | Created &amp; Last Updated At <span title="Audit info">ⓘ</span></p>
+
+    <div class="dso-daterow">
+      <div class="dso-date-field">📅 <span id="dsoDateStart">Oct 7, 2026</span></div>
+      <div class="dso-date-field"><span id="dsoDateEnd">Oct 7, 2026</span></div>
+      <button class="dso-dupe-btn" id="dsoDupeBtn" title="Duplicate date range">⧉</button>
+      <label class="dso-check-row">
+        <input type="checkbox" id="dsoApplyDaysToggle">
+        Apply on Specific Days of the Week
+      </label>
+    </div>
+    <div class="pill-row" id="pillrow-applydays" style="display:none;"></div>
+
+    <div class="dso-sec-head">
+      Price Settings
+      <button class="kebab" id="priceKebabBtn">⋮</button>
+    </div>
+    <div class="dso-field">
+      <label>New Final Price</label>
+      <div class="dso-field-combo">
+        <select id="priceTypeSelect">
+          <option value="percent">Percent</option>
+          <option value="fixed">Fixed</option>
+        </select>
+        <div class="combo-input"><input type="text" placeholder="-75 to 1000"><span class="unit" id="priceUnit1">%</span></div>
+      </div>
+    </div>
+    <div class="dso-field-grid">
+      <div class="dso-field">
+        <label>Minimum Price</label>
+        <div class="dso-field-combo">
+          <select id="minPriceTypeSelect"><option value="percent">Percent</option><option value="fixed">Fixed</option></select>
+          <div class="combo-input"><input type="text" placeholder="-75 to 1000"><span class="unit" id="priceUnit2">%</span></div>
+        </div>
+      </div>
+      <div class="dso-field">
+        <label>Maximum Price</label>
+        <div class="dso-field-combo">
+          <select id="maxPriceTypeSelect"><option value="percent">Percent</option><option value="fixed">Fixed</option></select>
+          <div class="combo-input"><input type="text" placeholder="-75 to 1000"><span class="unit" id="priceUnit3">%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="dso-field">
+      <label>Base Price</label>
+      <div class="dso-field-wrap"><input type="text" class="plain" placeholder="Currency"><span class="unit">EUR</span></div>
+    </div>
+
+    <div class="dso-sec-head">Stay Restrictions</div>
+    <div class="dso-field">
+      <label>Minimum Stay</label>
+      <div class="dso-field-wrap"><input type="text" class="plain" placeholder="Night(s)"><span class="unit">Night(s)</span></div>
+      <div class="dso-helper">Can be overridden by orphan day customization ⓘ</div>
+    </div>
+
+    <div class="dso-switch-row" style="margin-top:14px;">
+      <label class="switch">
+        <input type="checkbox" id="checkinoutToggle">
+        <span class="track"><span class="thumb"></span></span>
+      </label>
+      <span class="lbl">Check-In/Check-Out</span>
+    </div>
+    <div id="checkinoutFields" style="display:none;">
+      <div class="dso-pill-block">
+        <div class="pb-label">Allow Check-In On*:</div>
+        <div class="pill-row" id="pillrow-checkin"></div>
+        <div class="dso-error" id="checkinError">At least one check-in day should be selected</div>
+      </div>
+      <div class="dso-pill-block">
+        <div class="pb-label">Allow Check-Out On*:</div>
+        <div class="pill-row" id="pillrow-checkout"></div>
+        <div class="dso-error" id="checkoutError">At least one check-out day should be selected</div>
+      </div>
+    </div>
+
+    <div class="dso-sec-head" style="margin-top:14px;">
+      More Options
+      <button class="kebab" id="moreKebabBtn">⋮</button>
+      <div class="dso-kebab-menu" id="moreKebabMenu">
+        <p class="kebab-title">More Settings</p>
+        <label><input type="checkbox"> Keep Merge Checked by Default at Listing Level</label>
+        <label><input type="checkbox" checked> Always Show Notes Input</label>
+      </div>
+    </div>
+    <label class="dso-check-row"><input type="checkbox" checked> Merge with Existing Overrides</label>
+    <div class="dso-helper" style="margin-top:-6px; margin-left:24px;">Blank fields keep existing overrides; entered values replace them.</div>
+    <label class="dso-check-row"><input type="checkbox" id="autoExpireCheck"> Auto Expire Override <span title="Automatically remove this override after it expires">ⓘ</span></label>
+    <label class="dso-check-row"><input type="checkbox" id="noteCheck" checked> Note or Reason for Override</label>
+    <textarea class="dso-note-area" id="noteArea" placeholder="Press 'Shift+Enter' to add a new line"></textarea>
+
+    <div class="dso-footer">
+      <button class="dso-trash" id="dsoTrashBtn" title="Delete override">🗑</button>
+      <div class="dso-adr">ADR: <b>123</b><br>Total: <b>123</b></div>
+      <div class="dso-footer-actions">
+        <button class="dso-btn dso-btn-cancel" id="dsoCancelBtn">Cancel</button>
+        <button class="dso-btn dso-btn-add" id="dsoAddConfirmBtn">Add <span class="caret">▾</span></button>
+      </div>
     </div>
   </div>
 </div>
@@ -1365,6 +1618,169 @@
 
     renderAll();
     renderActiveListWrap();
+  })();
+
+  /* ================================================================
+     VARIANT 0 — today's real Date Specific Overrides modal
+     ================================================================ */
+  (function initVariant0(){
+    var monthCursor = new Date(2026, 11, 1);
+    var savedOverrides = new Set();
+    var selectedDate = null;
+
+    var calGrid = document.getElementById('calGrid0');
+    var monthLabel = document.getElementById('monthLabel0');
+    var overlay = document.getElementById('dsoOverlay');
+
+    function makePillGroup(container, onChange){
+      var selected = new Set();
+      var labels = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+      function render(){
+        container.innerHTML = '';
+        var allBtn = document.createElement('button');
+        allBtn.type = 'button';
+        allBtn.className = 'pill all-pill';
+        allBtn.textContent = 'All';
+        allBtn.addEventListener('click', function(){
+          if(selected.size === 7){ selected.clear(); }
+          else { labels.forEach(function(_, i){ selected.add(i); }); }
+          render();
+          if(onChange) onChange();
+        });
+        container.appendChild(allBtn);
+        labels.forEach(function(lbl, i){
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'pill' + (selected.has(i) ? ' on' : '');
+          b.textContent = lbl;
+          b.addEventListener('click', function(){
+            if(selected.has(i)) selected.delete(i); else selected.add(i);
+            render();
+            if(onChange) onChange();
+          });
+          container.appendChild(b);
+        });
+      }
+      render();
+      return { selected: selected, reset: function(){ selected.clear(); render(); } };
+    }
+
+    function updateCheckinError(){
+      document.getElementById('checkinError').style.display = checkinPills.selected.size===0 ? 'block' : 'none';
+    }
+    function updateCheckoutError(){
+      document.getElementById('checkoutError').style.display = checkoutPills.selected.size===0 ? 'block' : 'none';
+    }
+
+    var applyPills = makePillGroup(document.getElementById('pillrow-applydays'));
+    var checkinPills = makePillGroup(document.getElementById('pillrow-checkin'), updateCheckinError);
+    var checkoutPills = makePillGroup(document.getElementById('pillrow-checkout'), updateCheckoutError);
+
+    document.getElementById('dsoApplyDaysToggle').addEventListener('change', function(e){
+      document.getElementById('pillrow-applydays').style.display = e.target.checked ? 'flex' : 'none';
+    });
+    document.getElementById('checkinoutToggle').addEventListener('change', function(e){
+      document.getElementById('checkinoutFields').style.display = e.target.checked ? 'block' : 'none';
+      updateCheckinError(); updateCheckoutError();
+    });
+    document.getElementById('noteCheck').addEventListener('change', function(e){
+      document.getElementById('noteArea').style.display = e.target.checked ? 'block' : 'none';
+    });
+
+    function wirePriceType(selectId, unitId){
+      var sel = document.getElementById(selectId);
+      var unit = document.getElementById(unitId);
+      sel.addEventListener('change', function(){ unit.textContent = sel.value==='percent' ? '%' : 'EUR'; });
+    }
+    wirePriceType('priceTypeSelect','priceUnit1');
+    wirePriceType('minPriceTypeSelect','priceUnit2');
+    wirePriceType('maxPriceTypeSelect','priceUnit3');
+
+    var moreKebabMenu = document.getElementById('moreKebabMenu');
+    document.getElementById('moreKebabBtn').addEventListener('click', function(e){
+      e.stopPropagation();
+      moreKebabMenu.classList.toggle('open');
+    });
+    moreKebabMenu.addEventListener('click', function(e){ e.stopPropagation(); });
+    document.addEventListener('click', function(){ moreKebabMenu.classList.remove('open'); });
+
+    function renderCalendar(){
+      monthLabel.textContent = MONTHS[monthCursor.getMonth()] + ' ' + monthCursor.getFullYear();
+      calGrid.innerHTML = '';
+      var first = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), 1);
+      var mondayIndex = (first.getDay() + 6) % 7;
+      var daysInMonth = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 0).getDate();
+      for(var i=0;i<mondayIndex;i++){
+        var e = document.createElement('div');
+        e.className = 'dso-day empty';
+        calGrid.appendChild(e);
+      }
+      for(var d=1; d<=daysInMonth; d++){
+        var thisDate = new Date(monthCursor.getFullYear(), monthCursor.getMonth(), d);
+        var k = key(thisDate);
+        var cell = document.createElement('div');
+        cell.className = 'dso-day' + (d===25 && monthCursor.getMonth()===11 ? ' today-mark' : '');
+        cell.textContent = d;
+        if(savedOverrides.has(k)){
+          var dot = document.createElement('span');
+          dot.className = 'dso-dot';
+          cell.appendChild(dot);
+        }
+        cell.addEventListener('click', (function(dt){ return function(){ openDsoModal(dt); }; })(thisDate));
+        calGrid.appendChild(cell);
+      }
+    }
+
+    function openDsoModal(d){
+      selectedDate = d;
+      document.getElementById('dsoDateStart').textContent = fmtFull(d);
+      document.getElementById('dsoDateEnd').textContent = fmtFull(d);
+      document.getElementById('dsoApplyDaysToggle').checked = false;
+      document.getElementById('pillrow-applydays').style.display = 'none';
+      applyPills.reset();
+      document.getElementById('checkinoutToggle').checked = false;
+      document.getElementById('checkinoutFields').style.display = 'none';
+      checkinPills.reset(); checkoutPills.reset();
+      updateCheckinError(); updateCheckoutError();
+      document.getElementById('noteCheck').checked = true;
+      document.getElementById('noteArea').style.display = 'block';
+      document.getElementById('noteArea').value = '';
+      moreKebabMenu.classList.remove('open');
+      overlay.classList.add('open');
+    }
+    function closeDsoModal(){ overlay.classList.remove('open'); }
+
+    document.getElementById('dsoClose').addEventListener('click', closeDsoModal);
+    document.getElementById('dsoCancelBtn').addEventListener('click', closeDsoModal);
+    overlay.addEventListener('click', function(e){ if(e.target===overlay) closeDsoModal(); });
+    document.getElementById('dsoDupeBtn').addEventListener('click', function(){ showToast('Date range duplicated (demo)'); });
+    document.getElementById('dsoTrashBtn').addEventListener('click', function(){ showToast('Override deleted (demo)'); closeDsoModal(); });
+
+    document.getElementById('dsoAddConfirmBtn').addEventListener('click', function(){
+      if(document.getElementById('checkinoutToggle').checked){
+        if(checkinPills.selected.size===0 || checkoutPills.selected.size===0){
+          updateCheckinError(); updateCheckoutError();
+          showToast('Select at least one check-in and check-out day');
+          return;
+        }
+      }
+      savedOverrides.add(key(selectedDate));
+      showToast('Date-Specific Override saved · ' + fmtFull(selectedDate));
+      closeDsoModal();
+      renderCalendar();
+    });
+
+    document.getElementById('prevMonth0').addEventListener('click', function(){
+      monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()-1, 1); renderCalendar();
+    });
+    document.getElementById('nextMonth0').addEventListener('click', function(){
+      monthCursor = new Date(monthCursor.getFullYear(), monthCursor.getMonth()+1, 1); renderCalendar();
+    });
+    document.getElementById('dsoAddBtn').addEventListener('click', function(){
+      openDsoModal(selectedDate || new Date(monthCursor.getFullYear(), monthCursor.getMonth(), 1));
+    });
+
+    renderCalendar();
   })();
 
 })();
